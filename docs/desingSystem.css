@@ -1,0 +1,22 @@
+:root {
+  /* COLORS */
+  --clr--white80: rgb(226, 226, 226);
+  --clr--white: rgb(255, 255, 255);
+  --clr--black: rgb(0, 0, 0);
+  --clr--gray80: rgb(134, 134, 134);
+  --clr--organge: rgb(255, 165, 0);
+  --clr--green: rgb(0, 128, 0);
+
+  /* BACKGROUND COLORS*/
+
+  --mainbackgroundcolor: var(--clr--white80);
+  --formbackgroundcolor: var(--clr--white);
+  --buttonbackcolor: var(--clr--black);
+  --hoverbuttonbackgrouncolor: var(--clr--gray80);
+
+  /* FONT */
+  --ff--poppins: "Poppins", sans-serif;
+
+  /* FONT WEIGHT */
+  --fw--bold: bold;
+}
