@@ -51,7 +51,7 @@ body {
 }
 
 .textanimation {
-  animation: textanimation 10s ease-out infinite;
+  animation: textanimation 20s ease-out infinite;
 }
 @keyframes textanimation {
   0% {
