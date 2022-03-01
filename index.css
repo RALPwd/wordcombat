@@ -14,7 +14,7 @@ body {
 }
 
 .container-information {
-  height: 65vh;
+  height: 70vh;
   width: 20vw;
   background-color: white;
   box-shadow: 0px 3px 17px 5px rgba(0, 0, 0, 0.34);
@@ -50,10 +50,34 @@ body {
   bottom: 2rem;
 }
 
+.textanimation {
+  animation: textanimation 10s ease-out infinite;
+}
+@keyframes textanimation {
+  0% {
+    color: white;
+  }
+  25% {
+    color: orange;
+  }
+  75% {
+    color: green;
+  }
+  100% {
+    color: white;
+  }
+}
+
 .container-form {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.container-form label {
+  padding-bottom: 0.3rem;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .container-form input {
@@ -62,6 +86,7 @@ body {
   border: none;
   outline: none;
   border-bottom: 1px solid black;
+  text-align: center;
 }
 
 .container-form button {
@@ -97,8 +122,8 @@ body {
   }
 }
 
-@media (min-device-width: 700px) and (max-width: 1280px) {
+@media (min-device-width: 690px) and (max-width: 1280px) {
   .container-information {
-    width: 30vw;
+    width: 50vw;
   }
 }
