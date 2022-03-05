@@ -7,7 +7,7 @@
   font-family: var(--ff--poppins);
 }
 
-.container {
+.register-container {
   height: 100vh;
   width: 100vw;
   display: grid;
@@ -34,8 +34,10 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 80%;
-      width: 80%;
+      min-height: 400px;
+      height: 25vw;
+      min-width: 400px;
+      width: 25vw;
       background-color: black;
       color: var(--clr--white);
       border-radius: 50%;
@@ -118,7 +120,7 @@
 }
 
 @media (max-width: 780px) {
-  .container {
+  .register-container {
     &__information{
       width: 80vw;
     }
@@ -127,7 +129,7 @@
     }
   }
 
-  .container__form{
+  .register-container__form{
     label {
       text-align: center;
     }
@@ -135,7 +137,7 @@
 }
 
 @media (min-device-width: 790px) and (max-width: 1380px) {
-  .container__logo__background{
+  .register-container__logo__background{
     p{
       font-size: 25em;
       padding-bottom: 3rem;

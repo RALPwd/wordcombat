@@ -48,26 +48,26 @@ table {
   border-spacing: 0;
 }
 
-.container {
+.index-container {
   height: 100vh;
   width: 100vw;
   display: grid;
   place-content: center;
   background-color: #e2e2e2;
 }
-.container__login {
+.index-container__login {
   height: 30rem;
   width: 20rem;
   background-color: white;
   box-shadow: 0px 3px 17px 5px rgba(0, 0, 0, 0.34);
 }
-.container__logo {
+.index-container__logo {
   height: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.container__logo-background {
+.index-container__logo-background {
   display: flex;
   position: relative;
   flex-direction: column;
@@ -79,25 +79,25 @@ table {
   color: white;
   border-radius: 50%;
 }
-.container__logo-background p {
+.index-container__logo-background p {
   font-size: 6rem;
   padding-bottom: 2rem;
 }
-.container__logo-background span {
+.index-container__logo-background span {
   position: absolute;
   bottom: 2rem;
 }
-.container__form {
+.index-container__form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.container__form label {
+.index-container__form label {
   padding-bottom: 0.3rem;
   text-transform: uppercase;
   font-weight: bold;
 }
-.container__form input {
+.index-container__form input {
   margin-bottom: 1rem;
   width: 10rem;
   border: none;
@@ -105,7 +105,7 @@ table {
   border-bottom: 1px solid black;
   text-align: center;
 }
-.container__form button {
+.index-container__form button {
   border: none;
   color: white;
   background-color: black;
@@ -115,17 +115,17 @@ table {
   display: inline;
   font-weight: bold;
 }
-.container__form button:hover {
+.index-container__form button:hover {
   background-color: #868686;
 }
-.container__form a {
+.index-container__form a {
   margin-top: 1rem;
   text-decoration: none;
   color: black;
   font-weight: bold;
   text-transform: capitalize;
 }
-.container__form a:hover {
+.index-container__form a:hover {
   color: #868686;
 }
 
@@ -170,14 +170,14 @@ table {
   font-family: var(--ff--poppins);
 }
 
-.container {
+.register-container {
   height: 100vh;
   width: 100vw;
   display: grid;
   place-content: center;
   background-color: var(--mainbackgroundcolor);
 }
-.container__information {
+.register-container__information {
   display: flex;
   height: 80vh;
   width: 70vw;
@@ -186,50 +186,52 @@ table {
   background-color: var(--formbackgroundcolor);
   box-shadow: 0px 3px 17px 5px rgba(0, 0, 0, 0.34);
 }
-.container__logo {
+.register-container__logo {
   height: 100%;
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.container__logo__background {
+.register-container__logo__background {
   display: flex;
   position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80%;
-  width: 80%;
+  min-height: 400px;
+  height: 25vw;
+  min-width: 400px;
+  width: 25vw;
   background-color: black;
   color: var(--clr--white);
   border-radius: 50%;
 }
-.container__logo__background p {
+.register-container__logo__background p {
   font-size: 30rem;
   padding-bottom: 3rem;
 }
-.container__logo__background span {
+.register-container__logo__background span {
   font-size: 2rem;
   position: absolute;
   bottom: 4rem;
 }
-.container__form {
+.register-container__form {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 40%;
 }
-.container__form h1 {
+.register-container__form h1 {
   padding-bottom: 5rem;
   font-size: 2rem;
 }
-.container__form label {
+.register-container__form label {
   padding-bottom: 0.3rem;
   text-transform: uppercase;
   font-weight: bold;
 }
-.container__form input {
+.register-container__form input {
   margin-bottom: 1rem;
   width: 15rem;
   border: none;
@@ -237,7 +239,7 @@ table {
   border-bottom: 1px solid black;
   text-align: center;
 }
-.container__form button {
+.register-container__form button {
   border: none;
   color: white;
   background-color: black;
@@ -247,17 +249,17 @@ table {
   display: inline;
   font-weight: bold;
 }
-.container__form button:hover {
+.register-container__form button:hover {
   background-color: #868686;
 }
-.container__form a {
+.register-container__form a {
   margin-top: 1rem;
   text-decoration: none;
   color: black;
   font-weight: bold;
   text-transform: capitalize;
 }
-.container__form a:hover {
+.register-container__form a:hover {
   color: #868686;
 }
 
@@ -281,23 +283,23 @@ table {
   }
 }
 @media (max-width: 780px) {
-  .container__information {
+  .register-container__information {
     width: 80vw;
   }
-  .container__logo {
+  .register-container__logo {
     display: none;
   }
 
-  .container__form label {
+  .register-container__form label {
     text-align: center;
   }
 }
 @media (min-device-width: 790px) and (max-width: 1380px) {
-  .container__logo__background p {
+  .register-container__logo__background p {
     font-size: 25em;
     padding-bottom: 3rem;
   }
-  .container__logo__background span {
+  .register-container__logo__background span {
     font-size: 2rem;
     position: absolute;
     bottom: 3rem;
