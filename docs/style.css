@@ -1,0 +1,164 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-content: center;
+  background-color: #e2e2e2;
+}
+.container__login {
+  height: 30rem;
+  width: 20rem;
+  background-color: white;
+  box-shadow: 0px 3px 17px 5px rgba(0, 0, 0, 0.34);
+}
+.container__logo {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container__logo-background {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 10rem;
+  width: 10rem;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+}
+.container__logo-background p {
+  font-size: 6rem;
+  padding-bottom: 2rem;
+}
+.container__logo-background span {
+  position: absolute;
+  bottom: 2rem;
+}
+.container__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container__form label {
+  padding-bottom: 0.3rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.container__form input {
+  margin-bottom: 1rem;
+  width: 10rem;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+.container__form button {
+  border: none;
+  color: white;
+  background-color: black;
+  padding: 0.5rem;
+  width: 5rem;
+  border-radius: 0.5rem;
+  display: inline;
+  font-weight: bold;
+}
+.container__form button:hover {
+  background-color: #868686;
+}
+.container__form a {
+  margin-top: 1rem;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.container__form a:hover {
+  color: #868686;
+}
+
+.textanimation {
+  -webkit-animation: textanimation 20s ease-out infinite;
+          animation: textanimation 20s ease-out infinite;
+}
+
+@-webkit-keyframes textanimation {
+  0% {
+    color: white;
+  }
+  25% {
+    color: orange;
+  }
+  75% {
+    color: green;
+  }
+  100% {
+    color: white;
+  }
+}
+
+@keyframes textanimation {
+  0% {
+    color: white;
+  }
+  25% {
+    color: orange;
+  }
+  75% {
+    color: green;
+  }
+  100% {
+    color: white;
+  }
+}/*# sourceMappingURL=style.css.map */
