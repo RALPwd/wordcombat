@@ -199,22 +199,20 @@ table {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
-  height: 25vw;
-  min-width: 400px;
-  width: 25vw;
+  height: 400px;
+  width: 400px;
   background-color: black;
   color: var(--clr--white);
   border-radius: 50%;
 }
 .register-container__logo__background p {
-  font-size: 30rem;
+  font-size: 25rem;
   padding-bottom: 3rem;
 }
 .register-container__logo__background span {
   font-size: 2rem;
   position: absolute;
-  bottom: 4rem;
+  bottom: 3rem;
 }
 .register-container__form {
   display: flex;
@@ -298,10 +296,5 @@ table {
   .register-container__logo__background p {
     font-size: 25em;
     padding-bottom: 3rem;
-  }
-  .register-container__logo__background span {
-    font-size: 2rem;
-    position: absolute;
-    bottom: 3rem;
   }
 }/*# sourceMappingURL=style.css.map */

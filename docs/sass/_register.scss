@@ -34,21 +34,19 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 400px;
-      height: 25vw;
-      min-width: 400px;
-      width: 25vw;
+      height: 400px;
+      width: 400px;
       background-color: black;
       color: var(--clr--white);
       border-radius: 50%;
       p{
-        font-size: 30rem;
+        font-size: 25rem;
         padding-bottom: 3rem;
       }
       span{
         font-size: 2rem;
         position: absolute;
-        bottom: 4rem;
+        bottom: 3rem;
       }
     }
   }
@@ -141,11 +139,6 @@
     p{
       font-size: 25em;
       padding-bottom: 3rem;
-    }
-    span{
-      font-size: 2rem;
-      position: absolute;
-      bottom: 3rem;
     }
   }
 }
