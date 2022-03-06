@@ -1,12 +1,8 @@
-@import url(./desingSystem.css);
-* {
-  font-family: "Poppins", sans-serif;
-}
-
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
+@import url(./desingSystem.css);
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -297,4 +293,179 @@ table {
     font-size: 25em;
     padding-bottom: 3rem;
   }
+}
+.lobby-container {
+  background-color: white;
+  height: 100vh;
+}
+.lobby-container nav {
+  height: 10%;
+  padding-inline: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lobby-container nav i {
+  color: black;
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+}
+.lobby-container a {
+  color: #868686;
+  text-transform: capitalize;
+  text-decoration: none;
+}
+.lobby-container__main {
+  height: 90%;
+}
+.lobby-container__game {
+  height: 70%;
+}
+.lobby-container__player-profile {
+  margin: 0 auto;
+  width: 98%;
+  height: 40%;
+  display: flex;
+  position: relative;
+  gap: 0.2rem;
+  background-color: #e2e2e2;
+}
+.lobby-container__player-profile__avatar {
+  display: grid;
+  place-content: center;
+  width: 40%;
+  overflow: hidden;
+}
+.lobby-container__player-profile__avatar img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+}
+.lobby-container__player-profile__information {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.lobby-container__player-profile__information h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.lobby-container__player-profile__information p {
+  font-size: 1.1rem;
+}
+.lobby-container__player-profile__information article {
+  color: #868686;
+  text-transform: capitalize;
+}
+.lobby-container__player-profile i {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border-radius: 50%;
+  width: 27px;
+  height: 27px;
+  text-align: center;
+  padding: 0.3rem;
+  border: 1px solid black;
+}
+.lobby-container__game-option {
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.lobby-container__game-option button {
+  border: none;
+  color: white;
+  background-color: black;
+  padding: 0.5rem;
+  width: 60%;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  letter-spacing: 0.1rem;
+}
+.lobby-container__game-option button:hover {
+  background-color: #868686;
+}
+.lobby-container__chat {
+  height: 30%;
+}
+.lobby-container__chat section {
+  height: 98%;
+  width: 98%;
+  margin: 0 auto;
+  position: relative;
+  border: 1px solid #868686;
+}
+.lobby-container__chat section p {
+  padding: 0.3rem;
+}
+.lobby-container__chat section article {
+  border: 1px solid black;
+  height: 3rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  body {
+    display: grid;
+    place-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #e2e2e2;
+  }
+
+  .lobby-container {
+    width: 80vw;
+    height: 80vh;
+    box-shadow: 0px 3px 17px 5px rgba(0, 0, 0, 0.34);
+  }
+  .lobby-container nav {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .lobby-container__main {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    padding-left: 1rem;
+  }
+  .lobby-container__game {
+    width: 50%;
+    height: 100%;
+  }
+  .lobby-container__player-profile {
+    width: 100%;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+  }
+  .lobby-container__player-profile i {
+    top: 0.5rem;
+    right: 1rem;
+  }
+  .lobby-container__game-option {
+    height: 50%;
+    justify-content: space-evenly;
+  }
+  .lobby-container__game-option button {
+    width: 50%;
+  }
+  .lobby-container__chat {
+    width: 50%;
+    height: 100%;
+  }
+}
+* {
+  font-family: "Poppins", sans-serif;
 }/*# sourceMappingURL=style.css.map */
