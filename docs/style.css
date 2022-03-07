@@ -8,7 +8,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   padding: 0;
   border: 0;
   font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
 }
 
@@ -464,6 +463,177 @@ table {
   .lobby-container__chat {
     width: 50%;
     height: 100%;
+  }
+}
+.game-container {
+  width: 98vw;
+  height: 98vh;
+  margin: 1vw auto;
+}
+.game-container a {
+  color: #868686;
+  text-transform: capitalize;
+  text-decoration: none;
+}
+.game-container__player-profile {
+  margin: 0 auto;
+  width: 95vw;
+  height: 15%;
+  display: flex;
+  position: relative;
+  gap: 0.2rem;
+  background-color: #e2e2e2;
+}
+.game-container__player-profile__avatar {
+  display: grid;
+  place-content: center;
+  width: 40%;
+  overflow: hidden;
+}
+.game-container__player-profile__avatar img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+}
+.game-container__player-profile__information {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.game-container__player-profile__information h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.game-container__player-profile__information p {
+  font-size: 1.1rem;
+}
+.game-container__player-profile__information article {
+  color: #868686;
+  text-transform: capitalize;
+}
+.game-container__player-profile i {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border-radius: 50%;
+  width: 27px;
+  height: 27px;
+  text-align: center;
+  padding: 0.3rem;
+  border: 1px solid black;
+}
+.game-container__game {
+  width: 95vw;
+  min-width: 250px;
+  max-width: 400px;
+  margin: 0 auto;
+  height: 114vw;
+  min-height: 300px;
+  max-height: 480px;
+  margin-top: 1vw;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 1vw;
+}
+.game-container__game__word {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1vw;
+}
+.game-container__game__word__letter {
+  border: 1px solid black;
+}
+.game-container__game__word__letter input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  text-align: center;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+.game-container__game__word__letter--gray {
+  background-color: #868686;
+  color: white;
+}
+.game-container__game__word__letter--orange {
+  background-color: orange;
+  color: white;
+}
+.game-container__game__word__letter--green {
+  color: white;
+  background-color: green;
+}
+.game-container__player2 {
+  height: 100px;
+  width: 95vw;
+  margin: 0 auto;
+  background-color: #868686;
+  margin-top: 1vw;
+  display: flex;
+  align-items: center;
+}
+.game-container__player2__avatar {
+  width: 30%;
+  max-width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.game-container__player2__avatar img {
+  width: 50%;
+}
+.game-container__player2__game {
+  height: 98px;
+  width: 98px;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  gap: 0.5px;
+  margin-left: auto;
+  margin-right: 5px;
+  background-color: white;
+}
+.game-container__player2__game__word {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5px;
+}
+.game-container__player2__game__word__letter {
+  border: 1px solid black;
+}
+.game-container__chat {
+  height: 20%;
+  margin-top: 1vh;
+}
+.game-container__chat section {
+  height: 98%;
+  width: 98%;
+  margin: 0 auto;
+  position: relative;
+  border: 1px solid #868686;
+}
+.game-container__chat section p {
+  padding: 0.3rem;
+}
+.game-container__chat section article {
+  border: 1px solid black;
+  height: 3rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .game-container {
+    background-color: white;
+    padding: 2px;
+    box-shadow: 0px 3px 17px 5px rgba(0, 0, 0, 0.34);
   }
 }
 * {
