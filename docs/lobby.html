@@ -1,78 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="./lobby.css" />
+<head>
+  <meta charset="UTF-8" />
 
-    <!-- GOOGLE FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap"
-      rel="stylesheet"
-    />
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Word Combat</title>
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
 
-    <script
-      src="https://kit.fontawesome.com/0c57296ff2.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    <div class="container">
-      <nav>
-        <i class="fa-solid fa-earth-europe"> Word Combat</i>
-        <a href="">salir</a>
-      </nav>
-      <main class="main-container">
-         <div class="game-container">
-        <div class="player-profile">
-          <figure class="player-avatar">
-            <img " src="./img/mario.svg" alt="avatar" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Combat</title>
+
+  <script src="https://kit.fontawesome.com/0c57296ff2.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="lobby-container">
+    <nav>
+      <i class="fa-solid fa-earth-europe"> Word Combat</i>
+      <a href="">salir</a>
+    </nav>
+    <main class="lobby-container__main">
+      <div class="lobby-container__game">
+        <div class="lobby-container__player-profile">
+          <figure class="lobby-container__player-profile__avatar">
+            <img " src=" ./img/mario.svg" alt="avatar" />
           </figure>
 
-          <section class="player-information">
-            <p>Mellito</p>
+          <section class="lobby-container__player-profile__information">
+            <h3>Mellito</h3>
             <article>
               <p>partidas jugadas: 120</p>
               <p>partidas ganadas: 60</p>
-              <p>porcentaje de victoria: 50%</p>
+              <p>% de victoria: 50%</p>
             </article>
           </section>
           <i class="fa-solid fa-question"></i>
         </div>
 
 
-          <div class="game-option">
-        <button type="button" ">
+        <div class="lobby-container__game-option">
+          <button type="button" onclick="location.href='./game.html';">
           crear partida aleatoria
         </button>
-        <button type="button" ">
+        <button type="button" onclick="location.href='./game.html';">
           invitar a un amigo
         </button>
-        <button type="button" ">
+        <button type="button" onclick="location.href='./game.html';">
           jugar solo
         </button>
       </div>
       </div>
 
-          <div class="chat">
+          <div class="lobby-container__chat">
             <section>
-                <p>pepito: quien quiere jugar?</p>
-                <p>fulanita:ya estoy disponible</p>
+              <p>pepito: quien quiere jugar?</p>
+              <p>fulanita:ya estoy disponible</p>
               <article>
                 <p>hola</p>
                 <img src="./img/enviaricon.svg" alt="" />
               </article>
             </section>
-          </div>
+        </div>
 
-      </main>
-    </div>
-  </body>
+    </main>
+  </div>
+</body>
+
 </html>
