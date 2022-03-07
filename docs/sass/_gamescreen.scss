@@ -175,9 +175,42 @@
 }
 
 @media (min-width: 768px){
-  .game-container{
+   .game-container{
+    height: 80vh;
+    width: 80vw;
+    display: grid;
+    grid-template-areas: "playerprofile playerprofile playerprofile"
+                         "game          playerprofile2 playerprofile2"
+                         "game          chat chat";
+    grid-template-columns: repeat(3 1fr);
+    grid-template-rows: auto;
     background-color: $white-100;
     padding: 2px;
     box-shadow: 0px 3px 17px 5px rgba(0, 0, 0, 0.34);
-  }
+    &__player-profile{
+      grid-area:playerprofile ;
+      width: 100%;
+      height: 100%;
+      margin-top: 0;
+    }
+    &__game{
+      grid-area:game;
+      width: 100%;
+      height: 100%;
+    }
+    &__player2{
+      grid-area:playerprofile2 ;
+      width: 100%;
+      height: 50%;
+    }
+    &__chat{
+      position: relative;;
+      grid-area:chat ;
+      width: 100%;
+      height:150%;
+      top:-50%
+    }
+
+
+}
 }
