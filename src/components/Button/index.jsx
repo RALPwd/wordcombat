@@ -1,13 +1,8 @@
-import React from 'react'
-import "./index.sass"
+import React from "react";
+import "./index.scss";
 
-const Index = ({name,type}) => {
+const Index = ({ name, type }) => {
+  return <button type={type}>{name}</button>;
+};
 
-  return (
-        <button type={type}>
-            {name}
-        </button>  
-  )
-}
-
-export default Index
+export default Index;
