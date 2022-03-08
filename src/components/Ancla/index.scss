@@ -1,0 +1,12 @@
+@import "../../index.scss";
+
+a {
+  margin-top: 1rem;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-weight: $bold;
+  text-transform: capitalize;
+  &:hover {
+    color: $hover-button;
+  }
+}

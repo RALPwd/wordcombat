@@ -1,6 +1,7 @@
 import "./App.css";
 import Input from "./components/Input";
 import Button from "./components/Button";
+import A from "./components/Ancla";
 function App() {
   return (
     <div className="App">
@@ -18,6 +19,7 @@ function App() {
       />
 
       <Button name="jugar solo" type="Button" />
+      <A content="Salir" href="" id="acncla1" />
     </div>
   );
 }
