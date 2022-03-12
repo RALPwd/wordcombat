@@ -3,17 +3,13 @@ import SendButton from '../sendButton'
 import send from "../../assets/img/send.png"
 import './index.scss'
 
-const chatInput = ( {name, id, event} ) => {
-
-  const sendMessageHandler = (e)=>{
-    alert(e.target.previousElementSibling.value)
-  }
+const ChatInput = ( {name, id, placeholder, handleChange} ) => {
   return (
-    <div className='chatInput' onClick={event}>
-        <input name={name} id={id} />
-        <SendButton image={send} alt='Enviar' event={sendMessageHandler} />
+    <div className='chatInput'>
+        <input name={name} id={id} placeholder={placeholder} />
+        <SendButton image={send} alt='Enviar' sendMessage={handleChange} />
     </div>
   )
 }
 
-export default chatInput
+export default ChatInput

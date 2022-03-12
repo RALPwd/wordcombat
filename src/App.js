@@ -1,7 +1,7 @@
 import "./App.css";
 import Input from "./components/Input";
 import Button from "./components/Button";
-import ChatInput from "./components/chatTextInput";
+import ChatBox from "./components/ChatBox";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         id="usuario"
       />
      <Button name="jugar solo" type="Button" />
-     <ChatInput name='chat-input' id='ingreso-texto' />
+     <ChatBox></ChatBox>
     </div>
   );
 }
