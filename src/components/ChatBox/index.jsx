@@ -3,20 +3,17 @@ import ChatInput from '../chatTextInput'
 import './index.scss'
 
 const ChatBox = () => {
-  let [messageContainer, setMessageContainer] = useState('')
+  const [messageContainer, setMessageContainer] = useState([])
 
-  const messages = []
   const sendMessageHandler = (e)=>{
     const input = e.target.previousElementSibling
-    messages.push(input.value)
+    setMessageContainer(messageContainer.concat(input.value))
     input.value = ''
-    setMessageContainer(messages.map(message => messageContainer = messageContainer + message + '\n'))
-    console.log(typeof(messageContainer))
   }
-
+  
   return (
     <div className='chatBox'>
-        <p>{messageContainer.split('\n')}</p>
+        {messageContainer.map(message=><p> {message}</p>)}
         <ChatInput name='chat-input' id='ingreso-texto' placeholder='Escribe tu mensaje' handleChange={sendMessageHandler}/>
     </div>
   )
