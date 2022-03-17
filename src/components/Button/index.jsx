@@ -6,7 +6,8 @@ import './index.scss';
 function Index({
   name, type, handleCLick, ...rest
 }) {
-  return <button type={type} onClick={handleCLick}>{name}</button>;
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return <button type={type} onClick={handleCLick} {...rest}>{name}</button>;
 }
 
 export default Index;
