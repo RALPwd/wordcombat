@@ -20,5 +20,19 @@
       "author": "Yo",
       "id": 4
     }
+  ],
+  "player": [
+    {
+      "id": 1,
+      "nick": "mellito",
+      "correo": "mellito@gmail.com",
+      "password": "mellito567"
+    },
+    {
+      "name": "letrasmaximo",
+      "email": "andres@hotmail.com",
+      "password": "andres321",
+      "id": 2
+    }
   ]
 }
