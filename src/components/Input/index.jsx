@@ -1,13 +1,19 @@
-import React from "react";
-import "./index.scss";
+import React from 'react';
+import './index.scss';
 
-const Index = ({ label, type, placeholder, id }) => {
+function Index({
+  // eslint-disable-next-line react/prop-types
+  label, type, placeholder,
+}) {
   return (
     <div className="input-container">
-      <label>{label}</label>
-      <input type={type} placeholder={placeholder} id={id} />
+      <label htmlFor={label}>
+        {label}
+        <input type={type} placeholder={placeholder} id={label} />
+      </label>
+
     </div>
   );
-};
+}
 
 export default Index;
