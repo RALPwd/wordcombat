@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Input from './components/Input';
 import Button from './components/Button';
+import ChatBox from './components/ChatBox';
 
 function App() {
   return (
@@ -18,8 +19,8 @@ function App() {
         placeholder="ingresa tu contrasena"
         id="usuario"
       />
-
       <Button name="jugar solo" type="Button" />
+      <ChatBox />
     </div>
   );
 }

@@ -1,0 +1,24 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "message": "Bienvenido al chat de WordCombat",
+      "author": "Wordcombat"
+    },
+    {
+      "message": "Hola",
+      "author": "Yo",
+      "id": 2
+    },
+    {
+      "message": "Cómo estás?",
+      "author": "Yo",
+      "id": 3
+    },
+    {
+      "message": "Mis mensajes aun existen :D",
+      "author": "Yo",
+      "id": 4
+    }
+  ]
+}
