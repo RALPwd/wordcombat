@@ -3,8 +3,10 @@
 import React from 'react';
 import './index.scss';
 
-function Index({ name, type }) {
-  return <button type={type}>{name}</button>;
+function Index({
+  name, type, handleCLick, ...rest
+}) {
+  return <button type={type} onClick={handleCLick}>{name}</button>;
 }
 
 export default Index;
