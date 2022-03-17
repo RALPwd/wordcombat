@@ -3,8 +3,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 
-function SendButton({ image, alt, sendMessage }) {
-  return <img src={image} alt={alt} onClick={sendMessage} />;
+function SendButton({ image, alt }) {
+  return <img src={image} alt={alt} />;
 }
 
 export default SendButton;

@@ -5,12 +5,26 @@ import send from '../../assets/img/send.png';
 import './index.scss';
 
 function ChatInput({
-  name, id, placeholder, handleChange,
+  name, id, placeholder, handleSubmit, inputValue, handleChange,
 }) {
+  // const handleChange = (e) => {
+  //   setInputValue(e.target.value);
+  // };
+
   return (
     <div className="chatInput">
-      <input name={name} id={id} placeholder={placeholder} onKeyDown={handleChange} />
-      <SendButton image={send} alt="Enviar" sendMessage={handleChange} />
+      <form onSubmit={handleSubmit}>
+        <input
+          name={name}
+          id={id}
+          placeholder={placeholder}
+          value={inputValue}
+          onChange={handleChange}
+        />
+        <button type="submit" className="chatButton">
+          <SendButton image={send} alt="Enviar" />
+        </button>
+      </form>
     </div>
   );
 }
