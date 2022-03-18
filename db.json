@@ -39,6 +39,12 @@
       "email": "brayanalexandermanriquebonilla@hotmail.com",
       "password": "bk456",
       "id": 3
+    },
+    {
+      "name": "alberto",
+      "email": "alberto@hotmail.com",
+      "password": "alberto321",
+      "id": 4
     }
   ]
 }

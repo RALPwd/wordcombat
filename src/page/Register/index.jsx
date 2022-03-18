@@ -17,9 +17,14 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // eslint-disable-next-line react/prop-types
-    const data = await createPlayer(formInfo);
-    alert(data);
-    console.log(confirmPassWord);
+
+    if (formInfo.password === confirmPassWord) {
+      const data = await createPlayer(formInfo);
+      alert(data);
+      document.getElementById('register-form').reset();
+    } else {
+      console.log('contrasena no son iguales');
+    }
   };
 
   return (
@@ -28,7 +33,7 @@ function Register() {
 
         <img src={logo} alt="logo" className="register-card__logo" />
 
-        <form onSubmit={handleSubmit} className="register-card__form">
+        <form onSubmit={handleSubmit} className="register-card__form" id="register-form">
           <h1 className="register-card__title">registro</h1>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="name">
