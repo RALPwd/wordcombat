@@ -3,15 +3,11 @@
 import React from 'react';
 import './index.scss';
 
-function Index({
-  label, type, placeholder, id,
+function Input({
+  type, placeholder, onChange, ...rest
 }) {
-  return (
-    <div className="input-container">
-      <label>{label}</label>
-      <input type={type} placeholder={placeholder} id={id} />
-    </div>
-  );
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return (<input type={type} placeholder={placeholder} onChange={onChange} {...rest} />);
 }
 
-export default Index;
+export default Input;
