@@ -33,6 +33,12 @@
       "email": "andres@hotmail.com",
       "password": "andres321",
       "id": 2
+    },
+    {
+      "name": "mellobk",
+      "email": "brayanalexandermanriquebonilla@hotmail.com",
+      "password": "bk456",
+      "id": 3
     }
   ]
 }

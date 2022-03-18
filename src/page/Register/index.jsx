@@ -27,9 +27,9 @@ function Register() {
       <div className="register-card">
 
         <img src={logo} alt="logo" className="register-card__logo" />
-        <h1 className="register-card__title">Register</h1>
 
         <form onSubmit={handleSubmit} className="register-card__form">
+          <h1 className="register-card__title">registro</h1>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="name">
             Nick
@@ -54,23 +54,23 @@ function Register() {
 
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="password">
-            password
+            contraseña
           </label>
           <Input
             type="password"
             name="password"
-            placeholder="password"
+            placeholder="contraseña"
             onChange={handleChange}
           />
 
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="Confirpassword">
-            Confirm password
+            Confirmar contraseña
           </label>
           <Input
             type="password"
             name="password"
-            placeholder="confirm password"
+            placeholder="contrasena"
             onChange={(e) => setConfirmPassWord(e.target.value)}
           />
 
