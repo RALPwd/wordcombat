@@ -1,45 +1,44 @@
 import React, { useState } from 'react';
+
+import { Link, useNavigate } from 'react-router-dom';
+
+import { REGISTER_ROUTE } from '../../components/Constans/Routes';
+
 import logo from '../../assets/img/logo word combat.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-
-import { createPlayer } from '../../services/player';
 import CardPresentation from '../../components/CardPresentation';
+
+import { getLoginUser } from '../../services/player';
+
 // eslint-disable-next-line react/prop-types
-function Register() {
+function Home() {
+  const navigate = useNavigate();
   const [formInfo, setFormInfo] = useState([]);
-  const [confirmPassWord, setConfirmPassWord] = useState('');
+
+  const getEmail = async (email) => {
+    const data = await getLoginUser(email);
+    return data;
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormInfo({ ...formInfo, [name]: value });
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // eslint-disable-next-line react/prop-types
+    const data = await getEmail(formInfo.email);
 
-    if (formInfo.password === confirmPassWord) {
-      await createPlayer(formInfo);
-      document.getElementById('register-form').reset();
+    if (formInfo.password === data.password) {
+      navigate(REGISTER_ROUTE);
     } else {
-      alert('contrasena no son iguales');
+      alert('correo o contrasena invalido');
     }
   };
 
   return (
-    <CardPresentation logo={logo} title="Register" handleSubmit={handleSubmit}>
-
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="name">
-        Nick
-      </label>
-      <Input
-        type="text"
-        name="name"
-        placeholder="name"
-        onChange={handleChange}
-      />
-
+    <CardPresentation logo={logo} title="Login" handleSubmit={handleSubmit}>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label htmlFor="email">
         Email
@@ -62,21 +61,11 @@ function Register() {
         onChange={handleChange}
       />
 
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="Confirpassword">
-        Confirmar contraseña
-      </label>
-      <Input
-        type="password"
-        name="password"
-        placeholder="contrasena"
-        onChange={(e) => setConfirmPassWord(e.target.value)}
-      />
-
-      <Button type="submit" name="REGISTRAR" />
+      <Button type="submit" name="Login" />
+      <Link to={REGISTER_ROUTE}>Registrate</Link>
     </CardPresentation>
 
   );
 }
 
-export default Register;
+export default Home;

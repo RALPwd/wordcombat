@@ -1,10 +1,10 @@
 const API_URL = 'http://localhost:65535/api';
 
-export async function getAllMessages() {
+export async function getLoginUser(email) {
   try {
     const response = await fetch(`${API_URL}/player`);
     const data = await response.json();
-    return data;
+    return data.find((emailUser) => emailUser.email === email);
   } catch (error) {
     throw new Error(error);
   }
