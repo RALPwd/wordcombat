@@ -45,6 +45,12 @@
       "email": "alberto@hotmail.com",
       "password": "alberto321",
       "id": 4
+    },
+    {
+      "name": "ralpwd",
+      "email": "ralpwd@gmail.com",
+      "password": "contrasena",
+      "id": 5
     }
   ]
 }
