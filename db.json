@@ -62,27 +62,6 @@
       "partidasganadas": 0,
       "estado": 1,
       "id": 3
-<<<<<<< HEAD
-=======
-    },
-    {
-      "name": "alberto",
-      "email": "alberto@hotmail.com",
-      "password": "alberto321",
-      "id": 4
-    },
-    {
-      "name": "ralpwd",
-      "email": "ralpwd@gmail.com",
-      "password": "contrasena",
-      "id": 5
-    },
-    {
-      "name": "Corys90",
-      "email": "corys90@hotmail.com",
-      "password": "Qwerty.09",
-      "id": 6
->>>>>>> develop
     }
   ]
 }
