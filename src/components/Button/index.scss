@@ -9,6 +9,7 @@ button {
   border-radius: 0.5rem;
   display: inline;
   font-weight: bold;
+  margin-bottom: 0.5rem;
   &:hover {
     background-color: $hover-button;
   }
