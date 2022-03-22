@@ -1,8 +1,8 @@
 import React from 'react';
 import './CardPresentation.scss';
+import PropTypes from 'prop-types';
 
 function CardPresentation({
-  // eslint-disable-next-line react/prop-types
   logo, title, handleSubmit, children,
 }) {
   return (
@@ -19,5 +19,13 @@ function CardPresentation({
     </main>
   );
 }
+
+CardPresentation.propTypes = {
+  logo: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+
+};
 
 export default CardPresentation;

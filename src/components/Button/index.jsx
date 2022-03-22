@@ -1,13 +1,18 @@
-/* eslint-disable react/button-has-type */
-/* eslint-disable react/prop-types */
 import React from 'react';
 import './index.scss';
+import PropTypes from 'prop-types';
 
 function Button({
-  name, type, handleCLick, ...rest
+  name, type,
 }) {
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <button type={type} onClick={handleCLick} {...rest}>{name}</button>;
+  // eslint-disable-next-line react/button-has-type
+  return <button type={type}>{name}</button>;
 }
+
+Button.propTypes = {
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+
+};
 
 export default Button;

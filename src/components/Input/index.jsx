@@ -1,13 +1,19 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/prop-types */
 import React from 'react';
 import './index.scss';
+import PropTypes from 'prop-types';
 
 function Input({
-  type, placeholder, onChange, ...rest
+  type, placeholder, onChange, name,
 }) {
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return (<input type={type} placeholder={placeholder} onChange={onChange} {...rest} />);
+  return (<input type={type} placeholder={placeholder} onChange={onChange} name={name} />);
 }
+
+Input.propTypes = {
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+
+};
 
 export default Input;

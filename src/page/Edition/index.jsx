@@ -35,7 +35,7 @@ function Edition() {
       <Input
         type="text"
         name="nombre"
-        placeholder="name"
+        placeholder="nick"
         onChange={handleChange}
       />
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -60,6 +60,22 @@ function Edition() {
         type="text"
         name="picture"
         placeholder="Avatar"
+        onChange={handleChange}
+      />
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label htmlFor="NewPassword">Nueva contraseña</label>
+      <Input
+        type="password"
+        name="NewPassword"
+        placeholder="contransena"
+        onChange={handleChange}
+      />
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label htmlFor="ConfirmPassword">Confirme contraseña</label>
+      <Input
+        type="password"
+        name="ConfirmPassword"
+        placeholder="contransena"
         onChange={handleChange}
       />
       <Button type="submit" name="Guardar" />

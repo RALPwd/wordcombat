@@ -64,6 +64,7 @@ function Home() {
 
       <Button type="submit" name="Login" />
       <Link to={REGISTER_ROUTE}>Registrate</Link>
+      <Link to={REGISTER_ROUTE}>Olvidaste tu contraseña?</Link>
     </CardPresentation>
 
   );
