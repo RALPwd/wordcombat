@@ -22,7 +22,18 @@
     }
   ],
   "player": [
-
+    {
+      "id": 1,
+      "nick": "mellito",
+      "nombre": "dayan manrique",
+      "email": "mellito@gmail.com",
+      "password": "mellito567",
+      "birthday": "1992-03-29",
+      "picture": "./src/assets/img/logo word combat.png",
+      "partidasjugadas": 0,
+      "partidasganadas": 0,
+      "estado": 1
+    },
     {
       "nick": "dmellito1",
       "nombre": "dayan manrique",
