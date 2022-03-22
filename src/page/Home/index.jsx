@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import React, { useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,6 +11,7 @@ import CardPresentation from '../../components/CardPresentation';
 
 import { getLoginUser } from '../../services/player';
 
+// eslint-disable-next-line react/prop-types
 function Home() {
   const navigate = useNavigate();
   const [formInfo, setFormInfo] = useState([]);
@@ -32,8 +32,6 @@ function Home() {
 
     if (formInfo.password === data.password) {
       navigate(REGISTER_ROUTE);
-    } else {
-      alert('correo o contrasena invalido');
     }
   };
 
@@ -44,7 +42,6 @@ function Home() {
         Email
       </label>
       <Input
-        id="email"
         type="email"
         name="email"
         placeholder="email"
