@@ -25,8 +25,6 @@ function Register() {
       };
       await createPlayer(newPlayer);
       document.getElementById('register-form').reset();
-    } else {
-      alert('contrasena no son iguales');
     }
   };
 

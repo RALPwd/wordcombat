@@ -32,8 +32,6 @@ function Home() {
 
     if (formInfo.password === data.password) {
       navigate(REGISTER_ROUTE);
-    } else {
-      alert('correo o contrasena invalido');
     }
   };
 
