@@ -17,7 +17,6 @@ function Register() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // eslint-disable-next-line react/prop-types
 
     if (formInfo.password === confirmPassWord) {
       const newPlayer = {
