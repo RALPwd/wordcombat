@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import logo from '../../assets/img/logo word combat.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -19,7 +20,10 @@ function Register() {
     // eslint-disable-next-line react/prop-types
 
     if (formInfo.password === confirmPassWord) {
-      await createPlayer(formInfo);
+      const newPlayer = {
+        ...formInfo, picture: './src/assets/img/logo word combat.png', partidasjugadas: 0, partidasganadas: 0, estado: 1,
+      };
+      await createPlayer(newPlayer);
       document.getElementById('register-form').reset();
     } else {
       alert('contrasena no son iguales');
@@ -35,7 +39,29 @@ function Register() {
       </label>
       <Input
         type="text"
-        name="name"
+        name="nick"
+        placeholder="name"
+        onChange={handleChange}
+      />
+
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label htmlFor="name">
+        Nombre
+      </label>
+      <Input
+        type="text"
+        name="nombre"
+        placeholder="name"
+        onChange={handleChange}
+      />
+
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label htmlFor="name">
+        Fecha de nacimiento
+      </label>
+      <Input
+        type="date"
+        name="birthday"
         placeholder="name"
         onChange={handleChange}
       />
