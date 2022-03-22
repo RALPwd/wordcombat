@@ -1,3 +1,4 @@
+@import "../../index.scss";
 
 button {
   border: none;
@@ -8,7 +9,6 @@ button {
   border-radius: 0.5rem;
   display: inline;
   font-weight: bold;
-  margin-bottom: 1rem;
   &:hover {
     background-color: $hover-button;
   }
