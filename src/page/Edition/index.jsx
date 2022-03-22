@@ -27,7 +27,7 @@ function Edition() {
       <Input
         type="text"
         name="nick"
-        placeholder="name"
+        placeholder="nick"
         onChange={handleChange}
       />
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -35,7 +35,7 @@ function Edition() {
       <Input
         type="text"
         name="nombre"
-        placeholder="nick"
+        placeholder="name"
         onChange={handleChange}
       />
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -67,7 +67,7 @@ function Edition() {
       <Input
         type="password"
         name="NewPassword"
-        placeholder="contransena"
+        placeholder="contrasena"
         onChange={handleChange}
       />
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -75,7 +75,7 @@ function Edition() {
       <Input
         type="password"
         name="ConfirmPassword"
-        placeholder="contransena"
+        placeholder="contrasena"
         onChange={handleChange}
       />
       <Button type="submit" name="Guardar" />
