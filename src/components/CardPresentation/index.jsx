@@ -24,7 +24,7 @@ CardPresentation.propTypes = {
   logo: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 
 };
 

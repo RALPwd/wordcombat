@@ -45,6 +45,18 @@
       "partidasganadas": 0,
       "estado": 1,
       "id": 2
+    },
+    {
+      "nick": "angie",
+      "nombre": "angiecmar arias",
+      "birthday": "1995-04-16",
+      "email": "Laump180@hotmail.com",
+      "password": "angi321",
+      "picture": "./src/assets/img/logo word combat.png",
+      "partidasjugadas": 0,
+      "partidasganadas": 0,
+      "estado": 1,
+      "id": 3
     }
   ]
 }

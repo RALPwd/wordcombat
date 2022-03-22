@@ -5,7 +5,6 @@ export async function getLoginUser(email) {
     const response = await fetch(`${API_URL}/player`);
     const data = await response.json();
     const filterEmail = data.find((emailUser) => emailUser.email === email);
-    console.log(filterEmail);
     return filterEmail;
   } catch (error) {
     throw new Error(error);

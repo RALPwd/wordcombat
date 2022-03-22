@@ -6,7 +6,7 @@ import Button from '../../components/Button';
 
 import { createPlayer } from '../../services/player';
 import CardPresentation from '../../components/CardPresentation';
-// eslint-disable-next-line react/prop-types
+
 function Register() {
   const [formInfo, setFormInfo] = useState([]);
   const [confirmPassWord, setConfirmPassWord] = useState('');
