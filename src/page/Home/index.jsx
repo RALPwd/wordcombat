@@ -37,7 +37,7 @@ function Home() {
 
   return (
     <CardPresentation logo={logo} title="Login" handleSubmit={handleSubmit}>
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+
       <label htmlFor="email">
         Email
       </label>

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import ChatInput from '../chatTextInput';
-import { getAllMessages, createMessage } from '../services/messages';
+import { getAllMessages, createMessage } from '../../services/messages';
 import './index.scss';
 
 function ChatBox() {

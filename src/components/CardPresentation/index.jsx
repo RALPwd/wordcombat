@@ -20,7 +20,7 @@ function CardPresentation({
   );
 }
 
-CardPresentation.PropTypes = {
+CardPresentation.propTypes = {
   logo: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
