@@ -51,6 +51,12 @@
       "email": "ralpwd@gmail.com",
       "password": "contrasena",
       "id": 5
+    },
+    {
+      "name": "Corys90",
+      "email": "corys90@hotmail.com",
+      "password": "Qwerty.09",
+      "id": 6
     }
   ]
 }
