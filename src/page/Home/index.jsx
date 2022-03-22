@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 
-import { REGISTER_ROUTE } from '../../components/Constans/Routes';
+import { REGISTER_ROUTE, GAME_ROUTE } from '../../components/Constans/Routes';
 
 import logo from '../../assets/img/logo word combat.png';
 import Input from '../../components/Input';
@@ -32,7 +32,7 @@ function Home() {
     const data = await getEmail(formInfo.email);
 
     if (formInfo.password === data.password) {
-      navigate(REGISTER_ROUTE);
+      navigate(GAME_ROUTE);
     } else {
       alert('correo o contrasena invalido');
     }
