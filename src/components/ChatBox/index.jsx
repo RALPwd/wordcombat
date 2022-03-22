@@ -1,30 +1,69 @@
-import React, { useState } from 'react'
-import ChatInput from '../chatTextInput'
-import './index.scss'
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
+import ChatInput from '../chatTextInput';
+import { getAllMessages, createMessage } from '../services/messages';
+import './index.scss';
 
-const ChatBox = () => {
-  const [messageContainer, setMessageContainer] = useState([])
+function ChatBox() {
+  const [messageContainer, setMessageContainer] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [inputValue, setInputValue] = useState('');
+
+  const getMessages = async () => {
+    const data = await getAllMessages();
+    setMessageContainer(data);
+  };
+
+  useEffect(() => {
+    getMessages();
+  }, []);
+
+  const inputValueHandler = (e) => {
+    const input = e.target.value;
+    setInputValue(input);
+  };
 
   const sendMessageHandler = (e) => {
-    if (e.type === 'keydown') {
-      if (e.keyCode === 13) {
-        const input = e.target
-        setMessageContainer(messageContainer.concat(input.value))
-        input.value = ''
-      }
-    } else {
-      const input = e.target.previousElementSibling
-      setMessageContainer(messageContainer.concat(input.value))
-      input.value = ''
-    }
-  }
+    e.preventDefault();
+    const msg = inputValue;
+
+    const dataToSubmit = {
+      message: msg,
+      author: 'Yo',
+    };
+
+    const addMessage = async () => {
+      await createMessage(dataToSubmit);
+      await getMessages();
+      setInputValue('');
+    };
+    addMessage();
+  };
 
   return (
-    <div className='chatBox'>
-      {messageContainer.map((message, idx) => <p key={idx} className='chatBox__messageSent'> {message}</p>)}
-      <ChatInput name='chat-input' id='ingreso-texto' placeholder='Escribe tu mensaje' handleChange={sendMessageHandler} />
+    <div className="chatBox">
+      {messageContainer.map((message) => (
+        <p key={message.id} className="chatBox__messageSent">
+          {' '}
+          De:
+          {' '}
+          {message.author}
+          {' '}
+          <br />
+          {message.message}
+        </p>
+      ))}
+      <ChatInput
+        name="chat-input"
+        id="ingreso-texto"
+        placeholder="Escribe tu mensaje"
+        handleSubmit={sendMessageHandler}
+        handleChange={inputValueHandler}
+        inputValue={inputValue}
+      />
+
     </div>
-  )
+  );
 }
 
-export default ChatBox
+export default ChatBox;

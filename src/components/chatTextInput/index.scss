@@ -1,18 +1,37 @@
 .chatInput {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  margin: 0 auto;
+  bottom: 0;
+  form {
     width: 100%;
-    margin: 0 auto;
-    bottom: 0;
-    input{
+    input {
+      width: 100%;
+      height: 30px;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    button {
+      position: absolute;
+      width: 20px;
+      right: 10px;
+      bottom: 0;
+      img {
         width: 100%;
-        height: 30px;
+      }
     }
-    img{
-        width: 20px;
-        position: absolute;
-        right: 10px;
-    }
+  }
+}
+
+.chatButton {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  &:hover {
+    background-color: transparent;
+  }
 }

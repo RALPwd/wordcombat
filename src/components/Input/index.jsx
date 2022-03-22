@@ -1,13 +1,13 @@
-import React from "react";
-import "./index.scss";
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/prop-types */
+import React from 'react';
+import './index.scss';
 
-const Index = ({ label, type, placeholder, id }) => {
-  return (
-    <div className="input-container">
-      <label>{label}</label>
-      <input type={type} placeholder={placeholder} id={id} />
-    </div>
-  );
-};
+function Input({
+  type, placeholder, onChange, ...rest
+}) {
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return (<input type={type} placeholder={placeholder} onChange={onChange} {...rest} />);
+}
 
-export default Index;
+export default Input;
