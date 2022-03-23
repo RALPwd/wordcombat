@@ -9,7 +9,7 @@ main{
     flex-direction: column;
     align-items: center;
     min-height: 500px;
-    height: auto;
+    max-height: 95vh;
     width: 300px;
     justify-content: center;
     background-color: rgb(255, 255, 255);
@@ -27,6 +27,7 @@ main{
       flex-direction: column;
       align-items: center;
       justify-content: center ;
+      overflow-y: hidden;
 
       .title{
     text-transform: uppercase;
