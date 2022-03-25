@@ -1,7 +1,8 @@
 /* eslint-disable no-alert */
 import React, { useState } from 'react';
-
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { Update } from '../../Store/Actions';
 
 import { REGISTER_ROUTE, LOBBY_ROUTE } from '../../components/Constans/Routes';
 
@@ -14,6 +15,7 @@ import { getLoginUser } from '../../services/player';
 
 // eslint-disable-next-line react/prop-types
 function Home({ setLogingUser }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formInfo, setFormInfo] = useState([]);
 
@@ -30,8 +32,9 @@ function Home({ setLogingUser }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = await getEmail(formInfo.email);
-    setLogingUser(data);
+
     if (formInfo.password === data.password) {
+      dispatch(Update(data));
       setLogingUser(data);
       navigate(LOBBY_ROUTE);
     } else {
