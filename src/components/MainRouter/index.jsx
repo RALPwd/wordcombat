@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
-  HOME_ROUTE, REGISTER_ROUTE, EDIT_ROUTE, CHAT_ROUTE, GAME_ROUTE, LOBBY_ROUTE,
+  HOME_ROUTE, REGISTER_ROUTE, EDIT_ROUTE, CHAT_ROUTE, GAME_ROUTE, LOBBY_ROUTE, PAGENOTFOUND404,
 } from '../Constans/Routes';
 import Register from '../../page/Register';
 import Home from '../../page/Home';
@@ -9,6 +9,7 @@ import Edition from '../../page/Edition';
 import ChatBox from '../ChatBox';
 import Game from '../../page/Game';
 import Lobby from '../../page/Lobby';
+import NotFound404 from '../../page/NotFound404';
 
 function Mainrouter() {
   const [loginUser, setLoginUser] = useState({});
@@ -21,6 +22,7 @@ function Mainrouter() {
         <Route path={CHAT_ROUTE} element={<ChatBox />} />
         <Route path={GAME_ROUTE} element={<Game />} />
         <Route path={LOBBY_ROUTE} element={<Lobby user={loginUser} />} />
+        <Route path={PAGENOTFOUND404} element={<Lobby user={NotFound404} />} />
       </Routes>
     </BrowserRouter>
   );
