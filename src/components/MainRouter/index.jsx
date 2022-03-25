@@ -22,7 +22,7 @@ function Mainrouter() {
         <Route path={CHAT_ROUTE} element={<ChatBox />} />
         <Route path={GAME_ROUTE} element={<Game />} />
         <Route path={LOBBY_ROUTE} element={<Lobby user={loginUser} />} />
-        <Route path={PAGENOTFOUND404} element={<Lobby user={NotFound404} />} />
+        <Route path={PAGENOTFOUND404} element={<NotFound404 />} />
       </Routes>
     </BrowserRouter>
   );

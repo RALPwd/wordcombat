@@ -79,6 +79,18 @@
       "partidasganadas": 0,
       "estado": 1,
       "id": 4
+    },
+    {
+      "nick": "Corys90",
+      "nombre": "Cristian A.",
+      "birthday": "1976-07-31",
+      "email": "corys90@hotmail.com",
+      "password": "Corys90",
+      "picture": "https://i.imgur.com/I2aG4PJ.png",
+      "partidasjugadas": 0,
+      "partidasganadas": 0,
+      "estado": 1,
+      "id": 5
     }
   ]
 }
