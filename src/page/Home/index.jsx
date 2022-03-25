@@ -30,7 +30,7 @@ function Home({ setLogingUser }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = await getEmail(formInfo.email);
-    setLogingUser(data);
+
     if (formInfo.password === data.password) {
       setLogingUser(data);
       navigate(LOBBY_ROUTE);
