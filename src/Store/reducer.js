@@ -13,13 +13,14 @@ const initialState = {
   },
 };
 
-function Reducer(action, state = initialState) {
+// eslint-disable-next-line default-param-last
+function Reducer(state = initialState, action) {
   switch (action.type) {
     case 'SELECT': {
-      return { ...state, cont: state.cont + action.val };
+      return { ...state };
     }
     case 'UPDATE': {
-      return { ...state, cont: state.cont - action.val };
+      return { ...state, player: action.val };
     }
     default:
       return state;
