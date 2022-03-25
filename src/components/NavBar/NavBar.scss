@@ -1,0 +1,28 @@
+  @import '../../index.scss';
+
+  .nav-Container{
+    height: 80px;
+    padding-inline: 1rem ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .nav-container__logo{
+      height: 3rem;
+
+      img{
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+
+    ul{
+        list-style: none;
+       li a {
+        text-transform: capitalize;
+        text-decoration: none;
+       }
+
+    }
+  }

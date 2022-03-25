@@ -22,20 +22,18 @@ function Edition() {
       handleSubmit={handlerSubmitForm}
     >
       <img src={formInfo.picture} alt="Avatar" width="50px" height="50px" />
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="name">Nick</label>
+
       <Input
         type="text"
         name="nick"
-        placeholder="nick"
+        placeholder="Nick"
         onChange={handleChange}
       />
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="name">Nombre</label>
+
       <Input
         type="text"
         name="nombre"
-        placeholder="name"
+        placeholder="Nombre"
         onChange={handleChange}
       />
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -46,36 +44,32 @@ function Edition() {
         placeholder="name"
         onChange={handleChange}
       />
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="email">Email</label>
+
       <Input
         type="email"
         name="email"
-        placeholder="email"
+        placeholder="Email"
         onChange={handleChange}
       />
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="email">Avatar</label>
+
       <Input
         type="text"
         name="picture"
         placeholder="Avatar"
         onChange={handleChange}
       />
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="NewPassword">Nueva contraseña</label>
+
       <Input
         type="password"
-        name="NewPassword"
-        placeholder="contrasena"
+        name="password"
+        placeholder="Nueva Contrasena"
         onChange={handleChange}
       />
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="ConfirmPassword">Confirme contraseña</label>
+
       <Input
         type="password"
         name="ConfirmPassword"
-        placeholder="contrasena"
+        placeholder="Confirmfar Contrasena"
         onChange={handleChange}
       />
       <Button type="submit" name="Guardar" />
