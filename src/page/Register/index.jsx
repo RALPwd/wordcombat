@@ -8,6 +8,8 @@ import Button from '../../components/Button';
 import { createPlayer } from '../../services/player';
 import CardPresentation from '../../components/CardPresentation';
 
+import { LOGO } from '../../components/Constans/Routes';
+
 function Register() {
   const [formInfo, setFormInfo] = useState([]);
   const [confirmPassWord, setConfirmPassWord] = useState('');
@@ -21,7 +23,7 @@ function Register() {
 
     if (formInfo.password === confirmPassWord) {
       const newPlayer = {
-        ...formInfo, picture: './src/assets/img/logo word combat.png', partidasjugadas: 0, partidasganadas: 0, estado: 1,
+        ...formInfo, picture: LOGO, partidasjugadas: 0, partidasganadas: 0, estado: 1,
       };
       await createPlayer(newPlayer);
       document.getElementById('register-form').reset();
@@ -31,25 +33,17 @@ function Register() {
   return (
     <CardPresentation logo={logo} title="Register" handleSubmit={handleSubmit}>
 
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="name">
-        Nick
-      </label>
       <Input
         type="text"
         name="nick"
-        placeholder="name"
+        placeholder="Nick"
         onChange={handleChange}
       />
 
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="name">
-        Nombre
-      </label>
       <Input
         type="text"
         name="nombre"
-        placeholder="name"
+        placeholder="Nombre"
         onChange={handleChange}
       />
 
@@ -60,40 +54,27 @@ function Register() {
       <Input
         type="date"
         name="birthday"
-        placeholder="name"
         onChange={handleChange}
       />
 
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="email">
-        Email
-      </label>
       <Input
         type="email"
         name="email"
-        placeholder="email"
+        placeholder="Email"
         onChange={handleChange}
       />
 
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="password">
-        contraseña
-      </label>
       <Input
         type="password"
         name="password"
-        placeholder="contraseña"
+        placeholder="Contraseña"
         onChange={handleChange}
       />
 
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="Confirpassword">
-        Confirmar contraseña
-      </label>
       <Input
         type="password"
         name="password"
-        placeholder="contrasena"
+        placeholder="Confirmar Contrasena"
         onChange={(e) => setConfirmPassWord(e.target.value)}
       />
 

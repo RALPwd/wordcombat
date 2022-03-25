@@ -1,25 +1,51 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function PlayerProfile({ profileImage, partidasJugadas, Partidasganadas }) {
+import './playerProfile.scss';
+
+function PlayerProfile({
+  nickName, partidasJugadas, Partidasganadas, profileImg,
+}) {
   return (
-     <div class="lobby-container__game">
-        <div class="lobby-container__player-profile">
-          <figure class="lobby-container__player-profile__avatar">
-            <img " src=" ./img/mario.svg" alt="avatar" />
-          </figure>
+    <div className="lobby-container__game">
+      <div className="lobby-container__player-profile">
+        <figure className="lobby-container__player-profile__avatar">
+          <img src={profileImg} alt="avatar" />
+        </figure>
 
-          <section class="lobby-container__player-profile__information">
-            <h3>Mellito</h3>
-            <article>
-              <p>partidas jugadas: 120</p>
-              <p>partidas ganadas: 60</p>
-              <p>% de victoria: 50%</p>
-            </article>
-          </section>
-          <i class="fa-solid fa-question"></i>
-        </div>
+        <section className="lobby-container__player-profile__information">
+          <h3>{nickName}</h3>
+          <article>
+            <p>
+              partidas jugadas:
+              {' '}
+              {partidasJugadas}
+            </p>
+            <p>
+              partidas ganadas:
+              {' '}
+              {Partidasganadas}
+
+            </p>
+            <p>
+              % de victorias:
+              {' '}
+              {(Partidasganadas * 100) / partidasJugadas}
+              %
+            </p>
+          </article>
+        </section>
+        <i>?</i>
       </div>
+    </div>
   );
 }
+
+PlayerProfile.propTypes = {
+  nickName: PropTypes.string.isRequired,
+  partidasJugadas: PropTypes.number.isRequired,
+  profileImg: PropTypes.string.isRequired,
+  Partidasganadas: PropTypes.number.isRequired,
+};
 
 export default PlayerProfile;

@@ -1,0 +1,51 @@
+    @import "../../index.scss";
+
+  .lobby-container__player-profile{
+    margin: 0 auto;
+    width: 98%;
+    display: grid;
+    position: relative;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1rem;
+    background-color: $white-80;
+    padding: 1rem 0.5rem;
+    &__avatar{
+      display: grid;
+      place-content: center;
+      img{
+        max-width: 12rem;
+        max-height: 10rem;
+
+      }
+    }
+    &__information{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      h3{
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
+      p{
+        font-size: 1.1rem;
+        color: $black-100;
+        padding-bottom: 0.5rem;
+      }
+      article{
+        color: $gray-80;
+        text-transform: capitalize;
+      }
+    }
+    i{
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      border-radius: 50%;
+      width: 27px;
+      height: 27px;
+      text-align: center;
+      padding: 0.3rem;
+      border: 1px solid $black-100;
+    }
+  }

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
 
-import { REGISTER_ROUTE, GAME_ROUTE } from '../../components/Constans/Routes';
+import { REGISTER_ROUTE, LOBBY_ROUTE } from '../../components/Constans/Routes';
 
 import logo from '../../assets/img/logo word combat.png';
 import Input from '../../components/Input';
@@ -13,7 +13,7 @@ import CardPresentation from '../../components/CardPresentation';
 import { getLoginUser } from '../../services/player';
 
 // eslint-disable-next-line react/prop-types
-function Home() {
+function Home({ setLogingUser }) {
   const navigate = useNavigate();
   const [formInfo, setFormInfo] = useState([]);
 
@@ -30,9 +30,10 @@ function Home() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = await getEmail(formInfo.email);
-
+    setLogingUser(data);
     if (formInfo.password === data.password) {
-      navigate(GAME_ROUTE);
+      setLogingUser(data);
+      navigate(LOBBY_ROUTE);
     } else {
       alert('correo o contrasena invalido');
     }
@@ -40,21 +41,14 @@ function Home() {
 
   return (
     <CardPresentation logo={logo} title="Login" handleSubmit={handleSubmit}>
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="email">
-        Email
-      </label>
+
       <Input
         type="email"
         name="email"
-        placeholder="email"
+        placeholder="Email"
         onChange={handleChange}
       />
 
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-      <label htmlFor="password">
-        contraseña
-      </label>
       <Input
         type="password"
         name="password"

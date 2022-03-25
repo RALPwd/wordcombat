@@ -24,6 +24,11 @@
       "message": "Hola",
       "author": "Yo",
       "id": 5
+    },
+    {
+      "message": "hola",
+      "author": "Yo",
+      "id": 6
     }
   ],
   "player": [
@@ -34,7 +39,7 @@
       "email": "mellito@gmail.com",
       "password": "mellito567",
       "birthday": "1992-03-29",
-      "picture": "./src/assets/img/logo word combat.png",
+      "picture": "https://i.imgur.com/I2aG4PJ.png",
       "partidasjugadas": 0,
       "partidasganadas": 0,
       "estado": 1
@@ -45,7 +50,7 @@
       "birthday": "1992-03-29",
       "email": "dayanalexismanrique@hotmail.com",
       "password": "dm321",
-      "picture": "./src/assets/img/logo word combat.png",
+      "picture": "https://i.imgur.com/I2aG4PJ.png",
       "partidasjugadas": 0,
       "partidasganadas": 0,
       "estado": 1,
@@ -57,11 +62,23 @@
       "birthday": "1995-04-16",
       "email": "Laump180@hotmail.com",
       "password": "angi321",
-      "picture": "./src/assets/img/logo word combat.png",
+      "picture": "https://i.imgur.com/I2aG4PJ.png",
       "partidasjugadas": 0,
       "partidasganadas": 0,
       "estado": 1,
       "id": 3
+    },
+    {
+      "nick": "mellobk",
+      "nombre": "brayan manrique",
+      "birthday": "1992-03-29",
+      "email": "brayanalexandermanriquebonilla@hotmail.com",
+      "password": "bk123",
+      "picture": "https://i.imgur.com/I2aG4PJ.png",
+      "partidasjugadas": 0,
+      "partidasganadas": 0,
+      "estado": 1,
+      "id": 4
     }
   ]
 }
