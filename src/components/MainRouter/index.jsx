@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
   HOME_ROUTE, REGISTER_ROUTE, EDIT_ROUTE, CHAT_ROUTE, GAME_ROUTE, LOBBY_ROUTE, PAGENOTFOUND404,
+  HELP,
 } from '../Constans/Routes';
 import Register from '../../page/Register';
 import Home from '../../page/Home';
@@ -10,6 +11,7 @@ import ChatBox from '../ChatBox';
 import Game from '../../page/Game';
 import Lobby from '../../page/Lobby';
 import NotFound404 from '../../page/NotFound404';
+import Help from '../../page/Help';
 
 function Mainrouter() {
   const [loginUser, setLoginUser] = useState({});
@@ -23,6 +25,7 @@ function Mainrouter() {
         <Route path={GAME_ROUTE} element={<Game />} />
         <Route path={LOBBY_ROUTE} element={<Lobby user={loginUser} />} />
         <Route path={PAGENOTFOUND404} element={<NotFound404 />} />
+        <Route path={HELP} element={<Help />} />
       </Routes>
     </BrowserRouter>
   );

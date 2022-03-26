@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {
-  EDIT_ROUTE, HOME_ROUTE, LOGO, PAGENOTFOUND404,
+  EDIT_ROUTE, HOME_ROUTE, LOGO, HELP,
 } from '../Constans/Routes';
 
 import './NavBar.scss';
@@ -20,8 +20,8 @@ function NavBar() {
     },
     {
       id: 2,
-      name: '404',
-      route: PAGENOTFOUND404,
+      name: 'Help',
+      route: HELP,
     },
   ];
 
