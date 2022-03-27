@@ -53,7 +53,7 @@ export default function Game() {
       do {
         [word] = randomWords({ exactly: 1, maxLength: 5 });
       } while ([...word].length < 5);
-      setWordOfTheDay(word);
+      setWordOfTheDay(word.toUpperCase());
     };
 
     generateWord();
