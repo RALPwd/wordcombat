@@ -8,7 +8,7 @@ function Help() {
     <div className="HelpContainer">
       <div className="divImg"><img src={logo} alt="" width="50%" /></div>
       <br />
-      <p><h1>¿Qué es WordCombat?</h1></p>
+      <h1>¿Qué es WordCombat?</h1>
       <br />
       <p>
         Es un juego apto para toda persona mayor de 7 años de edad, en el que se enfrenta a dos
@@ -17,7 +17,7 @@ function Help() {
         El retador es quien inicia el juego y se van turnando con el otro hasta agotar sus turnos.
       </p>
       <br />
-      <p><h1>¿Cómo se juega?</h1></p>
+      <h1>¿Cómo se juega?</h1>
       <br />
       <p>
         <h3>Primero</h3>

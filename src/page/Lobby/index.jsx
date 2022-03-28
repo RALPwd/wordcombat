@@ -1,6 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import PropTypes from 'prop-types';
 import NavBar from '../../components/NavBar';
 import PlayerProfile from '../../components/PlayerProfile';
 import Button from '../../components/Button';
@@ -8,19 +8,17 @@ import ChatBox from '../../components/ChatBox';
 
 import './Lobby.scss';
 
-function Lobby({
-  user: {
-    picture, nombre, partidasjugadas, partidasganadas,
-  },
-}) {
+function Lobby() {
+  const data = useSelector((player) => player.player);
+
   return (
     <div className="lobby-container">
       <NavBar />
       <PlayerProfile
-        profileImg={picture}
-        nickName={nombre}
-        partidasJugadas={partidasjugadas}
-        Partidasganadas={partidasganadas}
+        profileImg={data.picture}
+        nickName={data.nombre}
+        partidasJugadas={data.partidasjugadas}
+        Partidasganadas={data.partidasganadas}
       />
 
       <div className="lobby-container__game-option">
@@ -32,10 +30,5 @@ function Lobby({
     </div>
   );
 }
-
-Lobby.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  user: PropTypes.object.isRequired,
-};
 
 export default Lobby;
