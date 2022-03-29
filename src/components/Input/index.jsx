@@ -3,9 +3,17 @@ import './index.scss';
 import PropTypes from 'prop-types';
 
 function Input({
-  type, placeholder, onChange, name,
+  type, placeholder, onChange, name, value,
 }) {
-  return (<input type={type} placeholder={placeholder} onChange={onChange} name={name} />);
+  return (
+    <input
+      type={type}
+      placeholder={placeholder}
+      onChange={onChange}
+      name={name}
+      value={value}
+    />
+  );
 }
 
 Input.propTypes = {
@@ -13,7 +21,10 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-
+  value: PropTypes.string,
+};
+Input.defaultProps = {
+  value: '',
 };
 
 export default Input;

@@ -14,7 +14,7 @@ import CardPresentation from '../../components/CardPresentation';
 import { getLoginUser } from '../../services/player';
 
 // eslint-disable-next-line react/prop-types
-function Home({ setLogingUser }) {
+function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formInfo, setFormInfo] = useState([]);
@@ -35,7 +35,6 @@ function Home({ setLogingUser }) {
 
     if (formInfo.password === data.password) {
       dispatch(Update(data));
-      setLogingUser(data);
       navigate(LOBBY_ROUTE);
     } else {
       alert('correo o contrasena invalido');
@@ -49,6 +48,7 @@ function Home({ setLogingUser }) {
         type="email"
         name="email"
         placeholder="Email"
+        value={formInfo.email}
         onChange={handleChange}
       />
 
@@ -56,6 +56,7 @@ function Home({ setLogingUser }) {
         type="password"
         name="password"
         placeholder="contraseña"
+        value={formInfo.password}
         onChange={handleChange}
       />
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { EDIT_ROUTE, HOME_ROUTE, LOGO } from '../Constans/Routes';
+import {
+  EDIT_ROUTE, HOME_ROUTE, LOGO, HELP,
+} from '../Constans/Routes';
 
 import './NavBar.scss';
 
@@ -15,6 +17,11 @@ function NavBar() {
       id: 1,
       name: 'salir',
       route: HOME_ROUTE,
+    },
+    {
+      id: 2,
+      name: 'Help',
+      route: HELP,
     },
   ];
 
