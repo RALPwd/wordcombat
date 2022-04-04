@@ -19,8 +19,8 @@ function Home() {
   const navigate = useNavigate();
   const [formInfo, setFormInfo] = useState([]);
 
-  const getEmail = async (email) => {
-    const data = await getLoginUser(email);
+  const getEmail = async (form) => {
+    const data = await getLoginUser(form);
     return data;
   };
 
@@ -31,9 +31,9 @@ function Home() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = await getEmail(formInfo.email);
+    const data = await getEmail(formInfo);
 
-    if (formInfo.password === data.password) {
+    if (data) {
       dispatch(Update(data));
       navigate(LOBBY_ROUTE);
     } else {

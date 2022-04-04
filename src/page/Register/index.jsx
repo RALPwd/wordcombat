@@ -1,5 +1,7 @@
 /* eslint-disable no-alert */
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { HOME_ROUTE } from '../../components/Constans/Routes';
 
 import logo from '../../assets/img/logo word combat.png';
 import Input from '../../components/Input';
@@ -8,9 +10,8 @@ import Button from '../../components/Button';
 import { createPlayer } from '../../services/player';
 import CardPresentation from '../../components/CardPresentation';
 
-import { LOGO } from '../../components/Constans/Routes';
-
 function Register() {
+  const navigate = useNavigate();
   const [formInfo, setFormInfo] = useState([]);
   const [confirmPassWord, setConfirmPassWord] = useState('');
 
@@ -23,11 +24,11 @@ function Register() {
 
     if (formInfo.password === confirmPassWord) {
       const newPlayer = {
-        ...formInfo, picture: LOGO, partidasjugadas: 0, partidasganadas: 0, estado: 1,
+        ...formInfo,
       };
       await createPlayer(newPlayer);
-      document.getElementById('register-form').reset();
-    }
+      navigate(HOME_ROUTE);
+    } else { console.log('password not equal'); }
   };
 
   return (
@@ -38,13 +39,15 @@ function Register() {
         name="nick"
         placeholder="Nick"
         onChange={handleChange}
+        value={formInfo.nick}
       />
 
       <Input
         type="text"
-        name="nombre"
+        name="name"
         placeholder="Nombre"
         onChange={handleChange}
+        value={formInfo.name}
       />
 
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -55,6 +58,7 @@ function Register() {
         type="date"
         name="birthday"
         onChange={handleChange}
+        value={formInfo.birthday}
       />
 
       <Input
@@ -62,6 +66,7 @@ function Register() {
         name="email"
         placeholder="Email"
         onChange={handleChange}
+        value={formInfo.email}
       />
 
       <Input
@@ -69,6 +74,7 @@ function Register() {
         name="password"
         placeholder="Contraseña"
         onChange={handleChange}
+        value={formInfo.password}
       />
 
       <Input
@@ -76,6 +82,7 @@ function Register() {
         name="password"
         placeholder="Confirmar Contrasena"
         onChange={(e) => setConfirmPassWord(e.target.value)}
+        value={confirmPassWord}
       />
 
       <Button type="submit" name="REGISTRAR" />
