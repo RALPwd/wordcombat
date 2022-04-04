@@ -3,10 +3,11 @@ import './index.scss';
 import PropTypes from 'prop-types';
 
 function Button({
-  name, type,
+  // eslint-disable-next-line react/prop-types
+  name, type, onClick,
 }) {
   // eslint-disable-next-line react/button-has-type
-  return <button type={type}>{name}</button>;
+  return <button type={type} onClick={onClick}>{name}</button>;
 }
 
 Button.propTypes = {

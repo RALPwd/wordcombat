@@ -16,9 +16,9 @@ function Lobby() {
       <NavBar />
       <PlayerProfile
         profileImg={data.picture}
-        nickName={data.nombre}
-        partidasJugadas={data.partidasjugadas}
-        Partidasganadas={data.partidasganadas}
+        nickName={data.nick}
+        partidasJugadas={data.gamePlayed}
+        Partidasganadas={data.gameWon}
       />
 
       <div className="lobby-container__game-option">
