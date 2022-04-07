@@ -10,6 +10,7 @@ button {
   display: inline;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
   &:hover {
     background-color: $hover-button;
   }
