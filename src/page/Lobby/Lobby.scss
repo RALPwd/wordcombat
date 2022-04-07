@@ -47,12 +47,17 @@
      &__game{
        grid-area: profile;
        height: 100%;
+
     }
 
     &__game-option{
      grid-area: game;
      height: 100%;
-
+        >button{
+         height: 4rem;
+         width: 20rem;
+         font-size: 1rem;
+       }
     }
     .chatBox{
       grid-area: chat;

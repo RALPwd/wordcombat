@@ -22,9 +22,9 @@ function Lobby() {
       />
 
       <div className="lobby-container__game-option">
-        <Button name="crear partida aleatoria" type="button" />
-        <Button name="crear partida aleatoria" type="button" />
-        <Button name="crear partida aleatoria" type="button" />
+        <Button name="jugar solo" type="button" />
+        <Button name="jugar contra un amigo" type="button" />
+        <Button name="partida aleatoria" type="button" />
       </div>
       <ChatBox />
     </div>
