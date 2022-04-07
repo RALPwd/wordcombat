@@ -44,7 +44,7 @@ function Edition() {
       title="Perfíl del Jugador"
       handleSubmit={handlerSubmitForm}
     >
-      <img src={logo} alt="" width="50px" height="30px" />
+      <img src={formInfo.picture} alt="" width="100px" height="100px" />
 
       <Input
         type="text"

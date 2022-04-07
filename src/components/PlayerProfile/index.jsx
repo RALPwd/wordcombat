@@ -14,7 +14,7 @@ function PlayerProfile({
         </figure>
 
         <section className="lobby-container__player-profile__information">
-          <h3>{nickName}</h3>
+          <h2>{nickName}</h2>
           <article>
             <p>
               partidas jugadas:
