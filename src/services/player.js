@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:65535/api';
+const API_URL = 'http://localhost:8080/api';
 
 export async function getLoginUser(form) {
   const payload = {
@@ -46,5 +46,13 @@ export async function createPlayer(player) {
     return 'player created';
   } catch (error) {
     throw new Error(error);
+  }
+}
+
+export async function ActivatePlayer(token) {
+  try {
+    await fetch(`${API_URL}/auth/local/${token}`);
+  } catch (error) {
+    console.log(error);
   }
 }
