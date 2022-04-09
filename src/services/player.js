@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080/api';
+const API_URL = 'http://localhost:8080';
 
 export async function getLoginUser(form) {
   const payload = {
@@ -10,7 +10,7 @@ export async function getLoginUser(form) {
   };
 
   try {
-    const response = await fetch(`${API_URL}/players/email`, payload);
+    const response = await fetch(`${API_URL}/api/players/email`, payload);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -20,7 +20,7 @@ export async function getLoginUser(form) {
 
 export async function saveEditProfile(player) {
   try {
-    const response = await fetch(`${API_URL}/players`, {
+    const response = await fetch(`${API_URL}/api/players`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(player),
@@ -42,7 +42,7 @@ export async function createPlayer(player) {
   };
 
   try {
-    await fetch(`${API_URL}/players`, payload);
+    await fetch(`${API_URL}/api/players`, payload);
     return 'player created';
   } catch (error) {
     throw new Error(error);
@@ -51,7 +51,7 @@ export async function createPlayer(player) {
 
 export async function ActivatePlayer(token) {
   try {
-    await fetch(`${API_URL}/auth/local/${token}`);
+    await fetch(`${API_URL}/auth/local/verify-account/${token}`);
   } catch (error) {
     console.log(error);
   }
