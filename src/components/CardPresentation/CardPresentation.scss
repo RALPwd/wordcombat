@@ -39,7 +39,18 @@ main{
         text-transform: uppercase;
         font-weight: bold;
       }
-
+     > h4 {
+      text-transform: capitalize;
+      margin-top: 10px;
+      text-align: center;
+      padding: 15px;
+    }
+     .show{
+        display:block;
+      }
+      .hide{
+        display:none;
+        }
     }
   }
 

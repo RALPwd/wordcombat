@@ -19,6 +19,19 @@ function Home() {
   const navigate = useNavigate();
   const [formInfo, setFormInfo] = useState([]);
 
+  const [message, setMessage] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+
+  const mesasgeValidation = (mess, visible) => {
+    setMessage(mess);
+    setIsVisible(visible);
+
+    setTimeout(() => {
+      setIsVisible(false);
+    }, 2000);
+    clearInterval();
+  };
+
   const getEmail = async (form) => {
     const data = await getLoginUser(form);
     return data;
@@ -32,17 +45,18 @@ function Home() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = await getEmail(formInfo);
-
-    if (data) {
+    if (!formInfo.email || !formInfo.password) {
+      mesasgeValidation('ninguno de los campos puede estar vacio', true);
+    } else if (data.status === 401) {
+      mesasgeValidation(data.message, true);
+    } else {
       dispatch(Update(data));
       navigate(LOBBY_ROUTE);
-    } else {
-      alert('correo o contrasena invalido');
     }
   };
 
   return (
-    <CardPresentation logo={logo} title="Login" handleSubmit={handleSubmit}>
+    <CardPresentation logo={logo} title="Login" handleSubmit={handleSubmit} message={message} isVisible={isVisible}>
 
       <Input
         type="email"

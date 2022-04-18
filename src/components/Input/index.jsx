@@ -19,12 +19,13 @@ function Input({
 Input.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
 };
 Input.defaultProps = {
   value: '',
+  placeholder: '',
 };
 
 export default Input;

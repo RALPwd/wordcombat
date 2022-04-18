@@ -10,9 +10,15 @@ export async function getLoginUser(form) {
   };
 
   try {
-    const response = await fetch(`${API_URL}/api/players/email`, payload);
-    const data = await response.json();
-    return data;
+    const response = await fetch(`${API_URL}/auth/local/login`, payload);
+    const tokenSingup = await response.json();
+    if (tokenSingup.token) {
+      const { token, player } = tokenSingup;
+      localStorage.setItem('token', token);
+      return player;
+    }
+
+    return tokenSingup;
   } catch (error) {
     throw new Error(error);
   }
@@ -42,8 +48,9 @@ export async function createPlayer(player) {
   };
 
   try {
-    await fetch(`${API_URL}/api/players`, payload);
-    return 'player created';
+    const reps = await fetch(`${API_URL}/api/players`, payload);
+    const data = await reps.json();
+    return data;
   } catch (error) {
     throw new Error(error);
   }
