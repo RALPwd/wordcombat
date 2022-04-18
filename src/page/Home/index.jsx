@@ -45,7 +45,6 @@ function Home() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = await getEmail(formInfo);
-    console.log(data);
     if (!formInfo.email || !formInfo.password) {
       mesasgeValidation('ninguno de los campos puede estar vacio', true);
     } else if (data.status === 401) {

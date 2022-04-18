@@ -12,9 +12,13 @@ export async function getLoginUser(form) {
   try {
     const response = await fetch(`${API_URL}/auth/local/login`, payload);
     const tokenSingup = await response.json();
-    const { token, player } = tokenSingup;
-    localStorage.setItem('token', token);
-    return player;
+    if (tokenSingup.token) {
+      const { token, player } = tokenSingup;
+      localStorage.setItem('token', token);
+      return player;
+    }
+
+    return tokenSingup;
   } catch (error) {
     throw new Error(error);
   }
