@@ -17,6 +17,10 @@ function NavBar() {
       id: 1,
       name: 'salir',
       route: HOME_ROUTE,
+      logout: () => {
+        localStorage.removeItem('token');
+      },
+
     },
     {
       id: 2,
@@ -34,7 +38,7 @@ function NavBar() {
       <ul>
         {aLink.map((link) => (
           <li key={link.id}>
-            <NavLink to={link.route}>{link.name}</NavLink>
+            <NavLink to={link.route} onClick={link.logout}>{link.name}</NavLink>
           </li>
         ))}
       </ul>

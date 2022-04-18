@@ -14,6 +14,18 @@ function Register() {
   const navigate = useNavigate();
   const [formInfo, setFormInfo] = useState([]);
   const [confirmPassWord, setConfirmPassWord] = useState('');
+  const [message, setMessage] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+
+  const mesasgeValidation = (mess, visible) => {
+    setMessage(mess);
+    setIsVisible(visible);
+
+    setTimeout(() => {
+      setIsVisible(false);
+    }, 2000);
+    clearInterval();
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -22,17 +34,22 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (formInfo.password === confirmPassWord) {
+    if (!formInfo.nick || !formInfo.name || !formInfo.email || !formInfo.birthday
+      || !formInfo.password) {
+      mesasgeValidation('ninguno de los campos puede estar vacio', true);
+    } else if (formInfo.password === confirmPassWord) {
       const newPlayer = {
         ...formInfo,
       };
-      await createPlayer(newPlayer);
-      navigate(HOME_ROUTE);
-    } else { console.log('password not equal'); }
+      const respon = await createPlayer(newPlayer);
+      if (respon.status === 400) {
+        mesasgeValidation(respon.message, true);
+      } else { navigate(HOME_ROUTE); }
+    } else { mesasgeValidation('password are not equal', true); }
   };
 
   return (
-    <CardPresentation logo={logo} title="Register" handleSubmit={handleSubmit}>
+    <CardPresentation logo={logo} title="Register" handleSubmit={handleSubmit} message={message} isVisible={isVisible}>
 
       <Input
         type="text"
