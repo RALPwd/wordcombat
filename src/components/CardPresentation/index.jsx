@@ -11,20 +11,18 @@ function CardPresentation({
 
         <img src={logo} alt="logo" className="register-card__logo" />
         <form onSubmit={handleSubmit} className="register-card__form" id="register-form">
-          <h1 className="title">{title}</h1>
+          <h2 className="title">{title}</h2>
           {children}
           <h4 className={isVisible ? 'show' : 'hide'}>
             {message}
           </h4>
-
         </form>
-
       </div>
     </main>
   );
 }
 CardPresentation.defaultProps = {
-  message: 'aquiva el mensaje',
+  message: '',
   isVisible: false,
 };
 

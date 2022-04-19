@@ -20,14 +20,10 @@ function Register() {
   const mesasgeValidation = (mess, visible) => {
     setMessage(mess);
     setIsVisible(visible);
-
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 2000);
-    clearInterval();
   };
 
   const handleChange = (event) => {
+    setIsVisible(false);
     const { name, value } = event.target;
     setFormInfo({ ...formInfo, [name]: value });
   };
@@ -36,7 +32,7 @@ function Register() {
 
     if (!formInfo.nick || !formInfo.name || !formInfo.email || !formInfo.birthday
       || !formInfo.password) {
-      mesasgeValidation('ninguno de los campos puede estar vacio', true);
+      mesasgeValidation('Ninguno de los campos puede estar vacio', true);
     } else if (formInfo.password === confirmPassWord) {
       const newPlayer = {
         ...formInfo,
@@ -45,7 +41,7 @@ function Register() {
       if (respon.status === 400) {
         mesasgeValidation(respon.message, true);
       } else { navigate(HOME_ROUTE); }
-    } else { mesasgeValidation('password are not equal', true); }
+    } else { mesasgeValidation('Las contraseñas no coinciden', true); }
   };
 
   return (

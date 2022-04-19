@@ -30,7 +30,9 @@ function PlayerProfile({
             <p>
               % de victorias:
               {' '}
-              {Math.round((Partidasganadas * 100) / partidasJugadas)}
+              { partidasJugadas === 0
+                ? 0
+                : Math.round((Partidasganadas * 100) / partidasJugadas)}
               %
             </p>
           </article>
