@@ -25,11 +25,6 @@ function Home() {
   const mesasgeValidation = (mess, visible) => {
     setMessage(mess);
     setIsVisible(visible);
-
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 2000);
-    clearInterval();
   };
 
   const getEmail = async (form) => {
@@ -38,6 +33,7 @@ function Home() {
   };
 
   const handleChange = (event) => {
+    setIsVisible(false);
     const { name, value } = event.target;
     setFormInfo({ ...formInfo, [name]: value });
   };
@@ -46,7 +42,7 @@ function Home() {
     event.preventDefault();
     const data = await getEmail(formInfo);
     if (!formInfo.email || !formInfo.password) {
-      mesasgeValidation('ninguno de los campos puede estar vacio', true);
+      mesasgeValidation('Ninguno de los campos puede estar vacio', true);
     } else if (data.status === 401) {
       mesasgeValidation(data.message, true);
     } else {
@@ -56,7 +52,7 @@ function Home() {
   };
 
   return (
-    <CardPresentation logo={logo} title="Login" handleSubmit={handleSubmit} message={message} isVisible={isVisible}>
+    <CardPresentation logo={logo} title="Inicio de sesión" handleSubmit={handleSubmit} message={message} isVisible={isVisible}>
 
       <Input
         type="email"
