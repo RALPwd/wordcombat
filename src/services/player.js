@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080';
+const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 export async function getLoginUser(form) {
   const payload = {
