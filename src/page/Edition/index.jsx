@@ -1,39 +1,44 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import { saveEditProfile } from '../../services/player';
 
 import logo from '../../assets/img/logo word combat.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import CardPresentation from '../../components/CardPresentation';
-import { LOBBY_ROUTE } from '../../components/Constans/Routes';
 import { Update } from '../../Store/Actions';
 
 function Edition() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const data = useSelector((perfil) => perfil.player);
   const [formInfo, setFormInfo] = useState(data);
+  const [message, setMessage] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+
+  const messageValidation = (mess, visible) => {
+    setMessage(mess);
+    setIsVisible(visible);
+  };
 
   function handleChange(event) {
     const { name, value } = event.target;
     setFormInfo({ ...formInfo, [name]: value });
+    setIsVisible(false);
   }
 
   const handlerSubmitForm = async (event) => {
     event.preventDefault();
-    if ((formInfo.email.trim() === '') || (formInfo.name.trim() === '') || (formInfo.nick.trim() === '')) {
-      alert('Es obligatorio diligenciar su Nick, Nombre y Correo electrónico para guardar el perfíl');
+    if ((formInfo.name.trim() === '') || (formInfo.nick.trim() === '')) {
+      messageValidation('Es obligatorio diligenciar su Nick y Nombre para guardar el perfíl', true);
     } else {
       const resp = await saveEditProfile(formInfo);
-      if (resp.status === 200) {
-        alert('Perfíl guardado satisfactoriamente!!!');
+      if (resp.status === 202) {
+        messageValidation(resp.message, true);
         dispatch(Update(formInfo));
-        navigate(LOBBY_ROUTE);
       } else {
-        alert('Se presentó un problema al guardar el perfil. consulte al administrador del sistema');
+        messageValidation('Se presentó un problema al guardar el perfil. consulte al administrador del sistema', true);
       }
     }
   };
@@ -43,8 +48,10 @@ function Edition() {
       logo={logo}
       title="Perfíl del Jugador"
       handleSubmit={handlerSubmitForm}
+      message={message}
+      isVisible={isVisible}
     >
-      <img src={formInfo.picture} alt="" width="100px" height="100px" />
+      {/* <img src={formInfo.picture} alt="" width="100px" height="100px" /> */}
 
       <Input
         type="text"
@@ -67,24 +74,18 @@ function Edition() {
         type="date"
         name="birthday"
         placeholder="name"
-        value={formInfo.birthday}
+        value={moment(formInfo.birthday).format('YYYY-MM-DD')}
         onChange={handleChange}
       />
 
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label htmlFor="picture">Imagen de perfil</label>
       <Input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={formInfo.email}
-        onChange={handleChange}
-      />
-
-      <Input
-        type="text"
+        type="file"
         name="picture"
-        placeholder="Avatar"
-        value={formInfo.picture}
+        placeholder="picture"
         onChange={handleChange}
+        id="picture"
       />
 
       <Button type="submit" name="Guardar" />
