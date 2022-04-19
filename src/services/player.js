@@ -27,10 +27,11 @@ export async function saveEditProfile(player) {
   try {
     const response = await fetch(`${API_URL}/api/players`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
       body: JSON.stringify(player),
     });
-    const data = await (response);
+    const data = await (response.json());
+    console.log(data);
     return data;
   } catch (error) {
     throw new Error(error);
