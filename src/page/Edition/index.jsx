@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { saveEditProfile } from '../../services/player';
+import { saveEditProfile, saveAvatar } from '../../services/player';
 
 import logo from '../../assets/img/logo word combat.png';
 import Input from '../../components/Input';
@@ -16,6 +16,8 @@ function Edition() {
   const [formInfo, setFormInfo] = useState(data);
   const [message, setMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
+  const [avatar, setAvatar] = useState(null);
+  const [image, setImage] = useState(null);
 
   const messageValidation = (mess, visible) => {
     setMessage(mess);
@@ -28,12 +30,25 @@ function Edition() {
     setIsVisible(false);
   }
 
+  const handleShowImage = (e) => {
+    const file = e.target.files[0];
+    setAvatar(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setImage(reader.result);
+    };
+  };
+
   const handlerSubmitForm = async (event) => {
     event.preventDefault();
     if ((formInfo.name.trim() === '') || (formInfo.nick.trim() === '')) {
       messageValidation('Es obligatorio diligenciar su Nick y Nombre para guardar el perfíl', true);
     } else {
       const resp = await saveEditProfile(formInfo);
+      const formData = new FormData();
+      formData.append('file', avatar);
+      await saveAvatar(formData);
       if (resp.status === 202) {
         messageValidation(resp.message, true);
         dispatch(Update(formInfo));
@@ -51,7 +66,7 @@ function Edition() {
       message={message}
       isVisible={isVisible}
     >
-      {/* <img src={formInfo.picture} alt="" width="100px" height="100px" /> */}
+      <img src={image || formInfo.picture} alt="" width="100px" height="100px" />
 
       <Input
         type="text"
@@ -80,13 +95,7 @@ function Edition() {
 
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label htmlFor="picture">Imagen de perfil</label>
-      <Input
-        type="file"
-        name="picture"
-        placeholder="picture"
-        onChange={handleChange}
-        id="picture"
-      />
+      <input type="file" name="avatar" id="avatar" onChange={handleShowImage} accept="image/*" />
 
       <Button type="submit" name="Guardar" />
       <Button type="button" name="Cambiar Contrasena" />
