@@ -38,6 +38,20 @@ export async function saveEditProfile(player) {
   }
 }
 
+export async function saveAvatar(formData) {
+  try {
+    const response = await fetch(`${API_URL}/api/players/upload`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      body: formData,
+    });
+    const data = await (response.json());
+    console.log({ 'avatar upload': data });
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function createPlayer(player) {
   const payload = {
     method: 'POST',
