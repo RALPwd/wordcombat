@@ -2,10 +2,13 @@
 /* eslint-disable max-len */
 import React from 'react';
 import Proptypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import Letter from './Letter';
 import styles from './word.module.scss';
 
 export default function WordCompleted({ word, solution }) {
+  const letterAmount = useSelector((state) => state.gameLetters);
+
   function checkLetter(letter, pos) {
     if (solution.includes(letter)) {
       if (solution[pos] === letter) {
@@ -18,7 +21,7 @@ export default function WordCompleted({ word, solution }) {
 
   return (
     <div className={styles.row}>
-      {Array.from(Array(5)).map((_, i) => <Letter key={i} value={word[i]} status={checkLetter(word[i], i)} />)}
+      {Array.from(Array(letterAmount)).map((_, i) => <Letter key={i} value={word[i]} status={checkLetter(word[i], i)} />)}
     </div>
   );
 }

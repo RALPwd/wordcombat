@@ -11,6 +11,7 @@ const initialState = {
     estado: 0,
     id: 0,
   },
+  gameLetters: 5,
 };
 
 // eslint-disable-next-line default-param-last
@@ -21,6 +22,9 @@ function Reducer(state = initialState, action) {
     }
     case 'UPDATE': {
       return { ...state, player: action.val };
+    }
+    case 'LETTERS': {
+      return { ...state, gameLetters: action.val };
     }
     default:
       return state;

@@ -1,5 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
+import { Letters } from '../../Store/Actions';
+import { GAME_ROUTE } from '../../components/Constans/Routes';
 
 import NavBar from '../../components/NavBar';
 import PlayerProfile from '../../components/PlayerProfile';
@@ -9,7 +13,43 @@ import ChatBox from '../../components/ChatBox';
 import './Lobby.scss';
 
 function Lobby() {
+  Modal.setAppElement('#root');
   const data = useSelector((player) => player.player);
+  const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [gameLetters, setGameLetters] = React.useState(5);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '50%',
+      height: '50%',
+    },
+  };
+
+  const handlerOpenModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const handlerCloseModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleSetValue = (e) => {
+    setGameLetters(e.target.value);
+  };
+
+  const handleCreateGame = (e) => {
+    e.preventDefault();
+    dispatch(Letters(parseInt(gameLetters, 10)));
+    navigate(GAME_ROUTE);
+  };
 
   return (
     <div className="lobby-container">
@@ -22,11 +62,32 @@ function Lobby() {
       />
 
       <div className="lobby-container__game-option">
-        <Button name="jugar solo" type="button" />
+        <Button name="jugar solo" type="button" onClick={handlerOpenModal} />
         <Button name="jugar contra un amigo" type="button" />
         <Button name="partida aleatoria" type="button" />
       </div>
       <ChatBox />
+
+      <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
+        <form onSubmit={handleCreateGame}>
+          <h2>Selecciona la cantidad de letras para tu palabra</h2>
+          <div>
+            <label htmlFor="4letters">
+              <input type="radio" name="lettercount" id="4letters" value="4" onChange={handleSetValue} />
+              4 letras
+            </label>
+            <label htmlFor="5letters">
+              <input type="radio" name="lettercount" id="5letters" value="5" onChange={handleSetValue} />
+              5 letras
+            </label>
+            <label htmlFor="6letters">
+              <input type="radio" name="lettercount" id="6letters" value="6" onChange={handleSetValue} />
+              6 letras
+            </label>
+          </div>
+          <button type="submit">Empezar nuevo juego</button>
+        </form>
+      </Modal>
     </div>
   );
 }
