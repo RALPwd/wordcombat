@@ -11,12 +11,6 @@ export async function getLoginUser(form) {
   try {
     const response = await fetch(`${API_URL}/auth/local/login`, payload);
     const tokenSingup = await response.json();
-    if (tokenSingup.token) {
-      const { token, player } = tokenSingup;
-      localStorage.setItem('token', token);
-      return player;
-    }
-
     return tokenSingup;
   } catch (error) {
     throw new Error(error);
@@ -31,7 +25,19 @@ export async function saveEditProfile(player) {
       body: JSON.stringify(player),
     });
     const data = await (response.json());
-    console.log(data);
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function sessionPlayer() {
+  try {
+    const response = await fetch(`${API_URL}/api/players/session`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
+    });
+    const data = await (response.json());
     return data;
   } catch (error) {
     throw new Error(error);

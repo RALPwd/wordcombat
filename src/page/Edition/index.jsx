@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { saveEditProfile, saveAvatar } from '../../services/player';
+
+import { saveEditProfile, saveAvatar, sessionPlayer } from '../../services/player';
 
 import logo from '../../assets/img/logo word combat.png';
 import Input from '../../components/Input';
@@ -14,10 +15,23 @@ function Edition() {
   const dispatch = useDispatch();
   const data = useSelector((perfil) => perfil.player);
   const [formInfo, setFormInfo] = useState(data);
+
   const [message, setMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [image, setImage] = useState(null);
+
+  const session = async () => {
+    const player = await sessionPlayer();
+    const { _doc } = player;
+
+    dispatch(Update(_doc));
+    setFormInfo(_doc);
+  };
+
+  useEffect(() => {
+    session();
+  }, []);
 
   const messageValidation = (mess, visible) => {
     setMessage(mess);
@@ -47,12 +61,15 @@ function Edition() {
       messageValidation('Es obligatorio diligenciar su Nick y Nombre para guardar el perfíl', true);
     } else {
       const resp = await saveEditProfile(formInfo);
-      const formData = new FormData();
-      formData.append('file', avatar);
-      await saveAvatar(formData);
+
+      if (avatar) {
+        const formData = new FormData();
+        formData.append('file', avatar);
+        await saveAvatar(formData);
+      }
+
       if (resp.status === 202) {
         messageValidation(resp.message, true);
-        dispatch(Update(formInfo));
       } else {
         messageValidation('Se presentó un problema al guardar el perfil. consulte al administrador del sistema', true);
       }
