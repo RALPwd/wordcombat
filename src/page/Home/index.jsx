@@ -1,8 +1,6 @@
 /* eslint-disable no-alert */
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { Update } from '../../Store/Actions';
 
 import { REGISTER_ROUTE, LOBBY_ROUTE } from '../../components/Constans/Routes';
 
@@ -15,7 +13,6 @@ import { getLoginUser } from '../../services/player';
 
 // eslint-disable-next-line react/prop-types
 function Home() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formInfo, setFormInfo] = useState([]);
 
@@ -46,7 +43,8 @@ function Home() {
     } else if (data.status === 401) {
       mesasgeValidation(data.message, true);
     } else {
-      dispatch(Update(data));
+      console.log(data);
+      localStorage.setItem('token', data.token);
       navigate(LOBBY_ROUTE);
     }
   };

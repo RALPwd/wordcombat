@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import { Letters } from '../../Store/Actions';
+import { Letters, Update } from '../../Store/Actions';
 import { GAME_ROUTE } from '../../components/Constans/Routes';
-
+import { sessionPlayer } from '../../services/player';
 import NavBar from '../../components/NavBar';
 import PlayerProfile from '../../components/PlayerProfile';
 import Button from '../../components/Button';
@@ -14,11 +14,21 @@ import './Lobby.scss';
 
 function Lobby() {
   Modal.setAppElement('#root');
-  const data = useSelector((player) => player.player);
+  const data = useSelector((state) => state.player);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [gameLetters, setGameLetters] = React.useState(5);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const session = async () => {
+    const player = await sessionPlayer();
+    const { _doc } = player;
+    dispatch(Update(_doc));
+  };
+
+  useEffect(() => {
+    session();
+  }, []);
 
   const customStyles = {
     content: {

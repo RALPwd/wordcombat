@@ -1,14 +1,13 @@
 const initialState = {
   player: {
     nick: '',
-    nombre: '',
+    name: '',
     birthday: '',
     email: '',
-    password: '',
     picture: '',
-    partidasjugadas: 0,
-    partidasganadas: 0,
-    estado: 0,
+    gamePlayed: 0,
+    gameWon: 0,
+    state: 0,
     id: 0,
   },
   gameLetters: 5,
