@@ -2,6 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import randomWords from 'random-words-es';
 import WordEmpty from '../../components/GameComponent/WordEmpty';
 import WordCompleted from '../../components/GameComponent/WordCompleted';
@@ -46,13 +47,14 @@ export default function Game() {
   const [currentWord, setCurrentWord] = useState('');
   const [completedWords, setCompletedWords] = useState([]);
   const [gameStatus, setGameStatus] = useState('playing');
+  const letterAmount = useSelector((state) => state.gameLetters);
 
   useEffect(() => {
     const generateWord = () => {
       let word;
       do {
-        [word] = randomWords({ exactly: 1, maxLength: 5 });
-      } while ([...word].length < 5);
+        [word] = randomWords({ exactly: 1, maxLength: letterAmount });
+      } while ([...word].length < letterAmount);
       setWordOfTheDay(word.toUpperCase());
     };
 
@@ -99,12 +101,12 @@ export default function Game() {
       onDelete();
     }
 
-    if (key === 'ENTER' && currentWord.length === 5 && turn <= 6) {
+    if (key === 'ENTER' && currentWord.length === letterAmount && turn <= 6) {
       onEnter();
       return;
     }
 
-    if (currentWord.length >= 5) return;
+    if (currentWord.length >= letterAmount) return;
 
     if (keys.includes(key)) {
       onInput(key);
