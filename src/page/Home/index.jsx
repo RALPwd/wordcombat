@@ -43,7 +43,6 @@ function Home() {
     } else if (data.status === 401) {
       mesasgeValidation(data.message, true);
     } else {
-      console.log(data);
       localStorage.setItem('token', data.token);
       navigate(LOBBY_ROUTE);
     }
