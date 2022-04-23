@@ -31,6 +31,20 @@ export async function saveEditProfile(player) {
   }
 }
 
+export async function saveEditPassword(form) {
+  try {
+    const response = await fetch(`${API_URL}/api/players/changepassword`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
+      body: JSON.stringify(form),
+    });
+    const data = await (response.json());
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function sessionPlayer() {
   try {
     const response = await fetch(`${API_URL}/api/players/session`, {
