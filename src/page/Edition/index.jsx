@@ -62,7 +62,6 @@ function Edition() {
   }
 
   const handleShowImage = (e) => {
-    console.log(e.target.files);
     const file = e.target.files[0];
     setAvatar(file);
     const reader = new FileReader();

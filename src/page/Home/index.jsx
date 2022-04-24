@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { REGISTER_ROUTE, LOBBY_ROUTE, RECOVERY_ROUTE } from '../../components/Constans/Routes';
 
-import logo from '../../assets/img/logo word combat.png';
+import logo from '../../assets/img/WORD_COMBAT_LOGO_WHITE.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import CardPresentation from '../../components/CardPresentation';
