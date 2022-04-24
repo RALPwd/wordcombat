@@ -8,7 +8,6 @@ function CardPresentation({
   return (
     <main>
       <div className="register-card">
-
         <img src={logo} alt="logo" className="register-card__logo" />
         <form onSubmit={handleSubmit} className="register-card__form" id="register-form">
           <h2 className="title">{title}</h2>

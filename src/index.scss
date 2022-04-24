@@ -30,3 +30,8 @@ $bold: bold;
 $medium: 500;
 $normal: 400;
 $light: 200;
+
+a{ color: $black-100;
+    text-transform: capitalize;
+    text-decoration: none;
+  }
