@@ -8,5 +8,6 @@ export const PAGENOTFOUND404 = '/pagenotfound';
 export const HELP = '/help';
 export const ACTIVATE_USER = '/activate/:token';
 export const DONATION_ROUTE = '/donation';
+export const RECOVERY_ROUTE = '/recovery';
 
 export const LOGO = 'https://i.imgur.com/I2aG4PJ.png';
