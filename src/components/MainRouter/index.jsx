@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
   HOME_ROUTE, REGISTER_ROUTE, EDIT_ROUTE, CHAT_ROUTE, GAME_ROUTE, LOBBY_ROUTE, PAGENOTFOUND404,
-  HELP, ACTIVATE_USER,
+  HELP, ACTIVATE_USER, DONATION_ROUTE,
 } from '../Constans/Routes';
 import Register from '../../page/Register';
 import Home from '../../page/Home';
@@ -13,6 +13,7 @@ import Lobby from '../../page/Lobby';
 import NotFound404 from '../../page/NotFound404';
 import Help from '../../page/Help';
 import RegisterValidation from '../../page/RegisterValidation';
+import Donation from '../../page/Donation';
 
 function Mainrouter() {
   return (
@@ -27,6 +28,7 @@ function Mainrouter() {
         <Route path={PAGENOTFOUND404} element={<NotFound404 />} />
         <Route path={HELP} element={<Help />} />
         <Route path={ACTIVATE_USER} element={<RegisterValidation />} />
+        <Route path={DONATION_ROUTE} element={<Donation />} />
       </Routes>
     </BrowserRouter>
   );

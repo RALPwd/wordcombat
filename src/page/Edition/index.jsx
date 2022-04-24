@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import Modal from 'react-modal';
+import { Link } from 'react-router-dom';
 import {
   saveEditProfile, saveAvatar, sessionPlayer, saveEditPassword,
 } from '../../services/player';
@@ -12,6 +13,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import CardPresentation from '../../components/CardPresentation';
 import { Update } from '../../Store/Actions';
+import { LOBBY_ROUTE } from '../../components/Constans/Routes';
 
 function Edition() {
   const dispatch = useDispatch();
@@ -135,6 +137,14 @@ function Edition() {
         message={message}
         isVisible={isVisible}
       >
+        <Link
+          to={LOBBY_ROUTE}
+          style={{
+            position: 'absolute', top: '0', right: 0, padding: '10px 20px 10px 0', fontSize: '18px',
+          }}
+        >
+          Volver al lobby
+        </Link>
         <img src={image || formInfo.picture} alt="" width="100px" height="100px" />
 
         <Input
