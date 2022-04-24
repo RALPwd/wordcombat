@@ -3,7 +3,8 @@ main{
   height: 100vh;
   display: grid;
   place-content: center;
-  background-color: rgb(226, 226, 226);
+  background-color: transparent;
+  background-image: url('https://res.cloudinary.com/team5-top20/image/upload/v1650827546/wordcombatbg_znd2jt.jpg');
 
   .register-card{
      position: relative;
@@ -74,6 +75,12 @@ main{
   }
 }
 
+}
+
+@media (min-width: 768px){
+  main{
+    background-image: none;
+  }
 }
 
 
