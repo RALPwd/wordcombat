@@ -52,6 +52,14 @@ function Donation() {
             title="Formulario de donación"
             handleSubmit={handlerSubmitForm}
           >
+            <Link
+              to={LOBBY_ROUTE}
+              style={{
+                position: 'absolute', top: '0', right: 0, padding: '10px 20px 10px 0', fontSize: '18px',
+              }}
+            >
+              Volver al lobby
+            </Link>
             <div>
               {
                 !nextPage ? (
