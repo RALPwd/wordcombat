@@ -10,4 +10,4 @@ export const ACTIVATE_USER = '/activate/:token';
 export const DONATION_ROUTE = '/donation';
 export const RECOVERY_ROUTE = '/recovery';
 
-export const LOGO = 'https://i.imgur.com/I2aG4PJ.png';
+export const LOGO = 'https://res.cloudinary.com/team5-top20/image/upload/v1650832778/WORD_COMBAT_LOGO_WHITE_t2syjh.png';

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HOME_ROUTE } from '../../components/Constans/Routes';
 
-import logo from '../../assets/img/logo word combat.png';
+import logo from '../../assets/img/WORD_COMBAT_LOGO_WHITE.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 

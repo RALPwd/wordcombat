@@ -67,6 +67,7 @@ function Lobby() {
       <PlayerProfile
         profileImg={data.picture}
         nickName={data.nick}
+        name={data.name}
         partidasJugadas={data.gamePlayed}
         Partidasganadas={data.gameWon}
       />

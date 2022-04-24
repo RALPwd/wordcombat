@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './playerProfile.scss';
 
 function PlayerProfile({
-  nickName, partidasJugadas, Partidasganadas, profileImg,
+  nickName, name, partidasJugadas, Partidasganadas, profileImg,
 }) {
   return (
     <div className="lobby-container__game">
@@ -14,7 +14,10 @@ function PlayerProfile({
         </figure>
 
         <section className="lobby-container__player-profile__information">
-          <h2>{nickName}</h2>
+          <div>
+            <h2>{nickName}</h2>
+            <h4>{name}</h4>
+          </div>
           <article>
             <p>
               partidas jugadas:
@@ -45,6 +48,7 @@ function PlayerProfile({
 
 PlayerProfile.propTypes = {
   nickName: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   partidasJugadas: PropTypes.number.isRequired,
   profileImg: PropTypes.string.isRequired,
   Partidasganadas: PropTypes.number.isRequired,

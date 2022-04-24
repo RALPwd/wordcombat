@@ -2,8 +2,8 @@
 
 button {
   border: none;
-  color: $white-100;
-  background-color: $black-100;
+  color: white;
+  background-color: #1DA7DD;
   padding: 0.5rem;
   width: auto;
   border-radius: 0.5rem;
@@ -11,7 +11,9 @@ button {
   font-weight: bold;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
+  font-family: 'Source Code Pro', monospace;
   &:hover {
-    background-color: $hover-button;
+    background-color: #f9b122;
+    color: black;
   }
 }

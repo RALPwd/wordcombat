@@ -21,7 +21,12 @@
         list-style: none;
        li a {
         text-transform: capitalize;
-        text-decoration: none;
+        text-decoration: underline;
+        font-family: 'Source Code Pro', monospace;
+        color: white;
+        &:hover{
+          color: #f9b122;
+        }
        }
 
     }

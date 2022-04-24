@@ -8,8 +8,11 @@
     position: relative;
     grid-template-columns: 1.5fr 1fr;
     gap: 1rem;
-    background-color: $white-80;
+    background-color: rgba($color: #fff, $alpha: 0.2);
     padding: 1rem 0.5rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-family: 'Source Code Pro', monospace;
     &__avatar{
       display: grid;
       place-content: center;
@@ -31,9 +34,10 @@
       }
       p{
         font-size: 1.1rem;
-        color: $black-100;
+        color: white;
         padding-bottom: 0.5rem;
         text-transform: capitalize;
+        font-family: 'Source Code Pro', monospace;
       }
       article{
         color: $gray-80;
