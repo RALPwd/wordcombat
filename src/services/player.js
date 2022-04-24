@@ -17,6 +17,24 @@ export async function getLoginUser(form) {
   }
 }
 
+export async function passworRecovery(form) {
+  const payload = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(form),
+  };
+
+  try {
+    const response = await fetch(`${API_URL}/api/players/recoverypassword`, payload);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function saveEditProfile(player) {
   try {
     const response = await fetch(`${API_URL}/api/players`, {
@@ -95,22 +113,5 @@ export async function ActivatePlayer(token) {
     await fetch(`${API_URL}/auth/local/verify-account/${token}`);
   } catch (error) {
     console.log(error);
-  }
-}
-export async function sendDonation(donation) {
-  const payload = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-    body: JSON.stringify(donation),
-  };
-
-  try {
-    const reps = await fetch(`${API_URL}/api/donations`, payload);
-    const data = await reps.json();
-    return data;
-  } catch (error) {
-    throw new Error(error);
   }
 }

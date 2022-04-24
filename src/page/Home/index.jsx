@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { REGISTER_ROUTE, LOBBY_ROUTE } from '../../components/Constans/Routes';
+import { REGISTER_ROUTE, LOBBY_ROUTE, RECOVERY_ROUTE } from '../../components/Constans/Routes';
 
 import logo from '../../assets/img/logo word combat.png';
 import Input from '../../components/Input';
@@ -69,7 +69,7 @@ function Home() {
 
       <Button type="submit" name="Login" />
       <Link to={REGISTER_ROUTE} style={{ paddingBottom: '10px' }}>Registrate</Link>
-      <Link to={REGISTER_ROUTE}>Olvidaste tu contraseña?</Link>
+      <Link to={RECOVERY_ROUTE}>Olvidaste tu contraseña?</Link>
     </CardPresentation>
 
   );
