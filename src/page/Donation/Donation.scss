@@ -1,0 +1,15 @@
+.donationform{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1%;
+  input, select, button, textarea{
+    width: 80%;
+    margin: 2% auto;
+    text-align: center;
+  }
+  h2{
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+  }
+}

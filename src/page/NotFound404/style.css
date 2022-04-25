@@ -1,0 +1,13 @@
+.container{
+  display: grid;
+}
+
+.logo{
+  width: 50%;
+  border: 2px solid black;
+}
+
+.nf404{
+  width: 50%;
+  font-size: 48px;
+}

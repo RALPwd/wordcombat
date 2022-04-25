@@ -1,0 +1,11 @@
+@import './sass/variables';
+@import './sass/reset';
+@import './sass/home';
+@import './sass/register';
+@import './sass/lobby';
+@import './sass/gamescreen';
+
+
+*{
+  font-family: $primary-font;
+}

@@ -1,0 +1,98 @@
+.index-container {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-content: center;
+  background-color: $white-80;
+  &__login{
+    height: 30rem;
+    width: 20rem;
+    background-color: $form-color;
+    box-shadow: 0px 3px 17px 5px rgba(0, 0, 0, 0.34);
+  };
+  &__logo{
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  };
+  &__logo-background{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 10rem;
+    width: 10rem;
+    background-color: $black-100;
+    color: $white-100;
+    border-radius: 50%;
+    p{
+      font-size: 6rem;
+      padding-bottom: 2rem;
+    }
+    span{
+      position: absolute;
+      bottom: 2rem;
+    };
+  };
+  &__form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    label{
+      padding-bottom: 0.3rem;
+      text-transform: uppercase;
+      font-weight: $bold;
+    }
+    input{
+      margin-bottom: 1rem;
+      width: 10rem;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid $black-100;
+      text-align: center;
+    }
+    button{
+      border: none;
+      color: $white-100;
+      background-color: $black-100;
+      padding: 0.5rem;
+      width: 5rem;
+      border-radius: 0.5rem;
+      display: inline;
+      font-weight: bold;
+      &:hover{
+        background-color: $hover-button;
+      }
+    }
+    a{
+      margin-top: 1rem;
+      text-decoration: none;
+      color: rgb(0, 0, 0);
+      font-weight: $bold;
+      text-transform: capitalize;
+      &:hover{
+        color: $hover-button;
+      }
+    }
+  }
+}
+
+.textanimation {
+  animation: textanimation 20s ease-out infinite;
+}
+@keyframes textanimation {
+  0% {
+    color: $white-100;
+  }
+  25% {
+    color: $orange;
+  }
+  75% {
+    color: $green;
+  }
+  100% {
+    color: $white-100;
+  }
+}

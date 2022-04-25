@@ -1,0 +1,9 @@
+.chatBox {
+    border: 1px solid black;
+    width: 100%;
+    height: auto;
+    position: relative;
+    &__messageSent{
+        margin-left: 10px;
+    }
+}

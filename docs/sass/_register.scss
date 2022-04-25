@@ -1,0 +1,144 @@
+@import url(./desingSystem.css);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--ff--poppins);
+}
+
+.register-container {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-content: center;
+  background-color: var(--mainbackgroundcolor);
+  &__information{
+    display: flex;
+    height: 80vh;
+    width: 70vw;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--formbackgroundcolor);
+    box-shadow: 0px 3px 17px 5px rgba(0, 0, 0, 0.34);
+  }
+  &__logo{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__background{
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 400px;
+      width: 400px;
+      background-color: black;
+      color: var(--clr--white);
+      border-radius: 50%;
+      p{
+        font-size: 25rem;
+        padding-bottom: 3rem;
+      }
+      span{
+        font-size: 2rem;
+        position: absolute;
+        bottom: 3rem;
+      }
+    }
+  }
+  &__form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    h1{
+      padding-bottom: 5rem;
+      font-size: 2rem;
+    }
+    label{
+      padding-bottom: 0.3rem;
+      text-transform: uppercase;
+      font-weight: $bold;
+    }
+    input{
+      margin-bottom: 1rem;
+      width: 15rem;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid $black-100;
+      text-align: center;
+    }
+    button{
+      border: none;
+      color: $white-100;
+      background-color: $black-100;
+      padding: 0.5rem;
+      width: 6rem;
+      border-radius: 0.5rem;
+      display: inline;
+      font-weight: bold;
+      &:hover{
+        background-color: $hover-button;
+      }
+    }
+    a{
+      margin-top: 1rem;
+      text-decoration: none;
+      color: rgb(0, 0, 0);
+      font-weight: $bold;
+      text-transform: capitalize;
+      &:hover{
+        color: $hover-button;
+      }
+    }
+  }
+}
+
+
+.textanimation {
+  animation: textanimation 20s ease-out infinite;
+}
+@keyframes textanimation {
+  0% {
+    color: var(--clr--white);
+  }
+  25% {
+    color: var(--clr--organge);
+  }
+  75% {
+    color: var(--clr--green);
+  }
+  100% {
+    color: var(--clr--white);
+  }
+}
+
+@media (max-width: 780px) {
+  .register-container {
+    &__information{
+      width: 80vw;
+    }
+    &__logo{
+      display: none;
+    }
+  }
+
+  .register-container__form{
+    label {
+      text-align: center;
+    }
+  }
+}
+
+@media (min-device-width: 790px) and (max-width: 1380px) {
+  .register-container__logo__background{
+    p{
+      font-size: 25em;
+      padding-bottom: 3rem;
+    }
+  }
+}

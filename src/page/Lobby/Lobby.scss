@@ -1,0 +1,110 @@
+@import '../../index.scss';
+
+.lobby-container {
+  background-color: #4B4168;
+  height: 100vh;
+   &__game-option{
+    height: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+   }
+ .container-information{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  flex-direction: column;
+
+  .donations{
+    text-align: center;
+    color: white;
+    font-family: 'Source Code Pro', monospace;
+    height: 40vh;
+    overflow-y: scroll;
+    ul{
+     list-style-type: none;
+    }
+    &__container{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    &__title{
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    &__donationcard{
+      color: white;
+      width: 100%;
+      font-family: "Source Code Pro", monospace;
+      background-color: #ffffff36;
+      margin-bottom: 5px;
+      font-size: 1.2rem;
+      padding: 5px;
+    }
+  }
+ }
+}
+
+
+@media (min-width: 768px) {
+  body {
+    display: grid;
+    place-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: $main-background-color;
+    background-image: url('https://res.cloudinary.com/team5-top20/image/upload/v1650827546/wordcombatbg_znd2jt.jpg');
+  }
+  .lobby-container {
+    .container-information{
+      flex-direction: row;
+      .donations{
+        width: 25vw;
+      }
+    }
+    background-color: #4B4168;
+    width: 80vw;
+    height: 80vh;
+    box-shadow: 0px 3px 17px 5px rgba(0, 0, 0, 0.34);
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-rows: 5rem 2fr 3fr;
+    grid-template-areas: "nav nav nav"
+                          "profile chat chat"
+                          "game  chat chat";
+    padding: 0.5rem;
+
+    .nav-Container{
+     grid-area: nav;
+      ul{
+        display: flex;
+
+        li{
+          margin-inline:1rem ;
+        }
+      }
+    }
+     &__game{
+       grid-area: profile;
+       height: 100%;
+
+    }
+
+    &__game-option{
+     grid-area: game;
+     height: 100%;
+        >button{
+         width: 20rem;
+         font-size: 1rem;
+       }
+    }
+    .chatBox{
+      grid-area: chat;
+
+    }
+  }
+}

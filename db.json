@@ -1,0 +1,96 @@
+{
+  "messages": [
+    {
+      "id": 1,
+      "message": "Bienvenido al chat de WordCombat",
+      "author": "Wordcombat"
+    },
+    {
+      "message": "Hola",
+      "author": "Yo",
+      "id": 2
+    },
+    {
+      "message": "Cómo estás?",
+      "author": "Yo",
+      "id": 3
+    },
+    {
+      "message": "Mis mensajes aun existen :D",
+      "author": "Yo",
+      "id": 4
+    },
+    {
+      "message": "Hola",
+      "author": "Yo",
+      "id": 5
+    },
+    {
+      "message": "hola",
+      "author": "Yo",
+      "id": 6
+    }
+  ],
+  "player": [
+    {
+      "id": 1,
+      "nick": "mellito",
+      "nombre": "dayan manrique",
+      "email": "mellito@gmail.com",
+      "password": "mellito567",
+      "birthday": "1992-03-29",
+      "picture": "https://i.imgur.com/I2aG4PJ.png",
+      "partidasjugadas": 0,
+      "partidasganadas": 0,
+      "estado": 1
+    },
+    {
+      "nick": "dmellito1",
+      "nombre": "dayan manrique",
+      "birthday": "1992-03-29",
+      "email": "dayanalexismanrique@hotmail.com",
+      "password": "dm321",
+      "picture": "https://i.imgur.com/I2aG4PJ.png",
+      "partidasjugadas": 0,
+      "partidasganadas": 0,
+      "estado": 1,
+      "id": 2
+    },
+    {
+      "nick": "angie",
+      "nombre": "angiecmar arias",
+      "birthday": "1995-04-16",
+      "email": "Laump180@hotmail.com",
+      "password": "angi321",
+      "picture": "https://i.imgur.com/I2aG4PJ.png",
+      "partidasjugadas": 0,
+      "partidasganadas": 0,
+      "estado": 1,
+      "id": 3
+    },
+    {
+      "nick": "mellobk",
+      "nombre": "brayan manrique",
+      "birthday": "1992-03-29",
+      "email": "brayanalexandermanriquebonilla@hotmail.com",
+      "password": "bk123",
+      "picture": "https://i.imgur.com/I2aG4PJ.png",
+      "partidasjugadas": 0,
+      "partidasganadas": 0,
+      "estado": 1,
+      "id": 4
+    },
+    {
+      "nick": "Corys90",
+      "nombre": "Cristian A.",
+      "birthday": "1976-07-31",
+      "email": "corys90@hotmail.com",
+      "password": "corys90",
+      "picture": "https://i.imgur.com/I2aG4PJ.png",
+      "partidasjugadas": 0,
+      "partidasganadas": 0,
+      "estado": 1,
+      "id": 5
+    }
+  ]
+}
