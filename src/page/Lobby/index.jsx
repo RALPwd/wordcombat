@@ -29,13 +29,14 @@ function Lobby() {
 
   const getDonation = async () => {
     const dono = await getAllDonation();
+    console.log(dono);
+    console.log(dono.reverse());
     setDonations(dono);
   };
 
   useEffect(() => {
     getDonation();
     session();
-    console.log(donations);
   }, []);
 
   const customStyles = {
@@ -87,12 +88,12 @@ function Lobby() {
 
         </div>
 
-        <div className="information__donations">
-          <h2>Donaciones</h2>
-          <ul>
-            {donations.map((donation) => (
-              <li>
-                gracias
+        <div className="donations">
+          <h2 className="donations__title">Donaciones</h2>
+          <ul className="donations__container">
+            {donations.reverse().slice(0, 5).map((donation) => (
+              <li className="donations__donationcard">
+                Gracias
                 <strong>
                   {' '}
                   {donation.player.nick}
@@ -102,7 +103,7 @@ function Lobby() {
                 por donar
                 {' '}
                 <strong>{donation.amount}</strong>
-
+                <br />
                 {' '}
                 Mensaje:
                 {' '}
