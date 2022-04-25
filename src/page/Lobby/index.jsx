@@ -9,13 +9,14 @@ import NavBar from '../../components/NavBar';
 import PlayerProfile from '../../components/PlayerProfile';
 import Button from '../../components/Button';
 import ChatBox from '../../components/ChatBox';
-
+import { getAllDonation } from '../../services/donation';
 import './Lobby.scss';
 
 function Lobby() {
   Modal.setAppElement('#root');
   const data = useSelector((state) => state.player);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [donations, setDonations] = React.useState([]);
   const [gameLetters, setGameLetters] = React.useState(5);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,8 +27,15 @@ function Lobby() {
     dispatch(Update(_doc));
   };
 
+  const getDonation = async () => {
+    const dono = await getAllDonation();
+    setDonations(dono);
+  };
+
   useEffect(() => {
+    getDonation();
     session();
+    console.log(donations);
   }, []);
 
   const customStyles = {
@@ -70,12 +78,41 @@ function Lobby() {
         partidasJugadas={data.gamePlayed}
         Partidasganadas={data.gameWon}
       />
+      <div className="container-information">
+        <div className="lobby-container__game-option">
+          <Button name="jugar solo" type="button" onClick={handlerOpenModal} />
+          <Button name="jugar contra un amigo" type="button" />
+          <Button name="partida aleatoria" type="button" />
 
-      <div className="lobby-container__game-option">
-        <Button name="jugar solo" type="button" onClick={handlerOpenModal} />
-        <Button name="jugar contra un amigo" type="button" />
-        <Button name="partida aleatoria" type="button" />
+        </div>
+
+        <div className="information__donations">
+          <h2>Donaciones</h2>
+          <ul>
+            {donations.map((donation) => (
+              <li>
+                gracias
+                <strong>
+                  {' '}
+                  {donation.player.nick}
+                </strong>
+
+                {' '}
+                por donar
+                {' '}
+                <strong>{donation.amount}</strong>
+
+                {' '}
+                Mensaje:
+                {' '}
+                <strong>{donation.message}</strong>
+
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
+
       <ChatBox />
 
       <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
@@ -95,6 +132,7 @@ function Lobby() {
               6 letras
             </label>
           </div>
+
           <button type="submit">Empezar nuevo juego</button>
         </form>
       </Modal>

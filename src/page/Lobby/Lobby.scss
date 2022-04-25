@@ -10,7 +10,20 @@
     justify-content: space-around;
     align-items: center;
    }
+ .container-information{
+   display: flex;
+   align-items: center;
+  justify-content: center;
+  gap:10px;
 
+  .information__donations{
+    overflow: scroll;
+    text-align: center;
+    ul{
+     list-style-type: none;
+    }
+  }
+ }
 }
 
 
