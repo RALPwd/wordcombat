@@ -5,7 +5,7 @@ import { Grid } from 'react-loader-spinner';
 import CardPresentation from '../../components/CardPresentation';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import sendDonation from '../../services/donation';
+import { sendDonation } from '../../services/donation';
 import { LOBBY_ROUTE } from '../../components/Constans/Routes';
 import './Donation.scss';
 
