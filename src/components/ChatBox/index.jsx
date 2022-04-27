@@ -8,7 +8,7 @@ import './index.scss';
 
 function ChatBox() {
   const socket = io('http://localhost:3001/');
-  const nombre = useSelector((state) => state.player.nick);
+  const playerName = useSelector((state) => state.player.nick);
 
   const [messageContainer, setMessageContainer] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -21,8 +21,16 @@ function ChatBox() {
 
   useEffect(() => {
     // getMessages();
-    socket.emit('conectado', `${nombre} esta conectado`);
+    socket.emit('conectado', playerName);
   }, []);
+
+  useEffect(() => {
+    socket.on('mensajes', (info) => {
+      setMessageContainer([...messageContainer, info]);
+    });
+
+    return () => { socket.off(); };
+  }, [messageContainer]);
 
   const inputValueHandler = (e) => {
     const input = e.target.value;
@@ -35,14 +43,13 @@ function ChatBox() {
 
     const dataToSubmit = {
       message: msg,
-      author: nombre,
+      author: playerName,
     };
 
     const addMessage = async () => {
       // await createMessage(dataToSubmit);
       // await getMessages();
-      setMessageContainer(messageContainer.concat(dataToSubmit));
-      console.log(messageContainer);
+      socket.emit('mensaje', dataToSubmit);
       setInputValue('');
     };
     addMessage();
@@ -52,12 +59,12 @@ function ChatBox() {
     <div className="chatBox">
       {messageContainer.map((message) => (
         <p key={message.id} className="chatBox__messageSent">
+          <strong>
+            {' '}
+            {message.author}
+          </strong>
+          :
           {' '}
-          De:
-          {' '}
-          {message.author}
-          {' '}
-          <br />
           {message.message}
         </p>
       ))}
