@@ -1,21 +1,27 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
+import { useSelector } from 'react-redux';
 import ChatInput from '../chatTextInput';
-import { getAllMessages, createMessage } from '../../services/messages';
+// import { getAllMessages, createMessage } from '../../services/messages';
 import './index.scss';
 
 function ChatBox() {
+  const socket = io('http://localhost:3001/');
+  const nombre = useSelector((state) => state.player.nick);
+
   const [messageContainer, setMessageContainer] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [inputValue, setInputValue] = useState('');
 
-  const getMessages = async () => {
-    const data = await getAllMessages();
-    setMessageContainer(data);
-  };
+  // const getMessages = async () => {
+  //   const data = await getAllMessages();
+  //   setMessageContainer(data);
+  // };
 
   useEffect(() => {
-    getMessages();
+    // getMessages();
+    socket.emit('conectado', `${nombre} esta conectado`);
   }, []);
 
   const inputValueHandler = (e) => {
@@ -29,12 +35,14 @@ function ChatBox() {
 
     const dataToSubmit = {
       message: msg,
-      author: 'Yo',
+      author: nombre,
     };
 
     const addMessage = async () => {
-      await createMessage(dataToSubmit);
-      await getMessages();
+      // await createMessage(dataToSubmit);
+      // await getMessages();
+      setMessageContainer(messageContainer.concat(dataToSubmit));
+      console.log(messageContainer);
       setInputValue('');
     };
     addMessage();
