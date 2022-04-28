@@ -29,8 +29,6 @@ function Lobby() {
 
   const getDonation = async () => {
     const dono = await getAllDonation();
-    console.log(dono);
-    console.log(dono.reverse());
     setDonations(dono);
   };
 
