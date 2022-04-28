@@ -1,15 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
 import { useSelector } from 'react-redux';
+import socket from '../../utils/socket';
 import ChatInput from '../chatTextInput';
 // import { getAllMessages, createMessage } from '../../services/messages';
 import './index.scss';
 
 function ChatBox() {
-  const socket = io('http://localhost:3001/');
   const playerName = useSelector((state) => state.player.nick);
-
+  const [nickPlayer, setNickPlayer] = useState(playerName);
   const [messageContainer, setMessageContainer] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [inputValue, setInputValue] = useState('');
@@ -21,8 +20,10 @@ function ChatBox() {
 
   useEffect(() => {
     // getMessages();
-    socket.emit('conectado', playerName);
-  }, []);
+    setNickPlayer(playerName);
+    socket.emit('conectado', nickPlayer);
+    return () => { socket.off(); };
+  }, [nickPlayer]);
 
   useEffect(() => {
     socket.on('mensajes', (info) => {
