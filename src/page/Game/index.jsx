@@ -1,13 +1,17 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import randomWords from 'random-words-es';
+import Modal from 'react-modal/lib/components/Modal';
 import WordEmpty from '../../components/GameComponent/WordEmpty';
 import WordCompleted from '../../components/GameComponent/WordCompleted';
 import WordCurrent from '../../components/GameComponent/WordCurrent';
 import useWindow from '../../Hooks/useWindow';
+import { editGame } from '../../services/games';
+import { saveEditProfile } from '../../services/player';
 import styles from './index.module.scss';
 import Keyboard from '../../components/GameComponent/Keyboard';
 
@@ -48,6 +52,11 @@ export default function Game() {
   const [completedWords, setCompletedWords] = useState([]);
   const [gameStatus, setGameStatus] = useState('playing');
   const letterAmount = useSelector((state) => state.gameLetters);
+  const gameId = useSelector((state) => state.gameId);
+  const player = useSelector((state) => state.player);
+  const [game, setGame] = useState({ id: gameId });
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const generateWord = () => {
@@ -56,10 +65,17 @@ export default function Game() {
         [word] = randomWords({ exactly: 1, maxLength: letterAmount });
       } while ([...word].length < letterAmount);
       setWordOfTheDay(word.toUpperCase());
+      setGame({ ...game, wordToGuess: word });
     };
-
     generateWord();
   }, []);
+
+  useEffect(() => {
+    async function saveGame() {
+      await editGame(game);
+    }
+    saveGame();
+  }, [game]);
 
   function onInput(letter) {
     const newWord = currentWord + letter;
@@ -74,13 +90,23 @@ export default function Game() {
   function onEnter() {
     if (currentWord === wordOfTheDay) {
       setCompletedWords([...completedWords, currentWord]);
+      setGame({ ...game, winnerId: player._id, attemptsPlayer1: [...completedWords, currentWord] });
       setGameStatus('won');
+      setModalIsOpen(true);
+      setMessage('You won!');
+      const playerWon = { ...player, gamePlayed: player.gamePlayed + 1, gameWon: player.gameWon + 1 };
+      saveEditProfile(playerWon);
       return;
     }
 
     if (turn === 6) {
       setCompletedWords([...completedWords, currentWord]);
+      setGame({ ...game, attemptsPlayer1: [...completedWords, currentWord] });
       setGameStatus('lost');
+      setModalIsOpen(true);
+      setMessage('You lost!');
+      const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
+      saveEditProfile(playerWon);
       return;
     }
 
@@ -121,6 +147,23 @@ export default function Game() {
 
   useWindow('keydown', handleKeyDown);
 
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '50%',
+      height: '50%',
+    },
+  };
+
+  const handlerCloseModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
     <>
       <div className={styles.mainContainer}>
@@ -136,6 +179,10 @@ export default function Game() {
         keys={keys}
         onKeyPressed={onKeyPressed}
       />
+
+      <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
+        <h2>{message}</h2>
+      </Modal>
     </>
   );
 }

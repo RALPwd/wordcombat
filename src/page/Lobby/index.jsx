@@ -1,9 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import { Letters, Update } from '../../Store/Actions';
+import { Letters, Update, GameId } from '../../Store/Actions';
 import { GAME_ROUTE } from '../../components/Constans/Routes';
+import { createGame } from '../../services/games';
 import { sessionPlayer } from '../../services/player';
 import NavBar from '../../components/NavBar';
 import PlayerProfile from '../../components/PlayerProfile';
@@ -62,10 +64,23 @@ function Lobby() {
     setGameLetters(e.target.value);
   };
 
-  const handleCreateGame = (e) => {
+  const handleCreateGame = async (e) => {
     e.preventDefault();
-    dispatch(Letters(parseInt(gameLetters, 10)));
-    navigate(GAME_ROUTE);
+    const game = {
+      playerOneId: data._id,
+      playerTwoId: null,
+      winnerId: null,
+      wordToGuess: null,
+      attemptsPlayer1: [],
+      attemptsPlayer2: [],
+    };
+
+    const gameCreated = await createGame(game);
+    if (gameCreated.status === 201) {
+      dispatch(Letters(parseInt(gameLetters, 10)));
+      dispatch(GameId(gameCreated.game._id));
+      navigate(GAME_ROUTE);
+    }
   };
 
   return (
