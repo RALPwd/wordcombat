@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
 import socket from '../../utils/socket';
 import ChatInput from '../chatTextInput';
@@ -18,7 +18,7 @@ function ChatBox() {
   //   setMessageContainer(data);
   // };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // getMessages();
     setNickPlayer(playerName);
     socket.emit('conectado', nickPlayer);

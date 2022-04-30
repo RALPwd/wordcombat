@@ -3,6 +3,7 @@ export const REGISTER_ROUTE = '/register';
 export const EDIT_ROUTE = '/edition';
 export const CHAT_ROUTE = '/chat';
 export const GAME_ROUTE = '/game';
+export const ONE_PLAYER = '/oneplayer';
 export const LOBBY_ROUTE = '/lobby';
 export const PAGENOTFOUND404 = '/pagenotfound';
 export const HELP = '/help';

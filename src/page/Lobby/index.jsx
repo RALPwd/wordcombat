@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import { Letters, Update, GameId } from '../../Store/Actions';
-import { GAME_ROUTE } from '../../components/Constans/Routes';
+import { ONE_PLAYER } from '../../components/Constans/Routes';
 import { createGame } from '../../services/games';
 import { sessionPlayer } from '../../services/player';
 import NavBar from '../../components/NavBar';
@@ -17,9 +17,11 @@ import './Lobby.scss';
 function Lobby() {
   Modal.setAppElement('#root');
   const data = useSelector((state) => state.player);
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [modalOnePlayerIsOpen, setModalOnePlayerIsOpen] = React.useState(false);
+  const [modalTwoPlayersIsOpen, setModalTwoPlayersIsOpen] = React.useState(false);
   const [donations, setDonations] = React.useState([]);
   const [gameLetters, setGameLetters] = React.useState(5);
+  const [step, setStep] = React.useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -34,7 +36,8 @@ function Lobby() {
     setDonations(dono);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
+    console.log(step);
     getDonation();
     session();
   }, []);
@@ -52,16 +55,29 @@ function Lobby() {
     },
   };
 
-  const handlerOpenModal = () => {
-    setModalIsOpen(true);
+  const handlerOpenOneplayerModal = () => {
+    setModalOnePlayerIsOpen(true);
+  };
+
+  const handlerOpenTwoPlayersModal = () => {
+    setModalTwoPlayersIsOpen(true);
   };
 
   const handlerCloseModal = () => {
-    setModalIsOpen(false);
+    setModalOnePlayerIsOpen(false);
+    setModalTwoPlayersIsOpen(false);
   };
 
   const handleSetValue = (e) => {
     setGameLetters(e.target.value);
+  };
+
+  const handleNextStep = () => {
+    setStep(step + 1);
+  };
+
+  const handlePreviousStep = () => {
+    setStep(step - 1);
   };
 
   const handleCreateGame = async (e) => {
@@ -79,7 +95,7 @@ function Lobby() {
     if (gameCreated.status === 201) {
       dispatch(Letters(parseInt(gameLetters, 10)));
       dispatch(GameId(gameCreated.game._id));
-      navigate(GAME_ROUTE);
+      navigate(ONE_PLAYER);
     }
   };
 
@@ -95,8 +111,8 @@ function Lobby() {
       />
       <div className="container-information">
         <div className="lobby-container__game-option">
-          <Button name="jugar solo" type="button" onClick={handlerOpenModal} />
-          <Button name="jugar contra un amigo" type="button" />
+          <Button name="jugar solo" type="button" onClick={handlerOpenOneplayerModal} />
+          <Button name="jugar contra un amigo" type="button" onClick={handlerOpenTwoPlayersModal} />
           <Button name="partida aleatoria" type="button" />
 
         </div>
@@ -130,7 +146,7 @@ function Lobby() {
 
       <ChatBox />
 
-      <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
+      <Modal isOpen={modalOnePlayerIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
         <form onSubmit={handleCreateGame}>
           <h2>Selecciona la cantidad de letras para tu palabra</h2>
           <div>
@@ -150,6 +166,71 @@ function Lobby() {
 
           <button type="submit">Empezar nuevo juego</button>
         </form>
+      </Modal>
+
+      <Modal isOpen={modalTwoPlayersIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
+        {
+          step === 1 && (
+            <>
+              <p>Primer paso</p>
+              <button type="button" onClick={handleNextStep}> Siguiente </button>
+            </>
+          )
+        }
+        {
+          step === 2 && (
+            <>
+              <p>Segundo paso</p>
+              <button type="button" onClick={handleNextStep}> Siguiente </button>
+              <button type="button" onClick={handlePreviousStep}> Anterior </button>
+            </>
+          )
+        }
+        {
+          step === 3 && (
+            <>
+              <p>Tercer paso</p>
+              <button type="button" onClick={handlePreviousStep}> Siguiente </button>
+            </>
+          )
+        }
+        {/* <form onSubmit={handleCreateGame}>
+          <h2>Selecciona la cantidad de letras para tu palabra</h2>
+          <div>
+            <label htmlFor="4letters">
+              <input
+                type="radio"
+                name="lettercount"
+                id="4letters"
+                value="4"
+                onChange={handleSetValue}
+              />
+              4 letras
+            </label>
+            <label htmlFor="5letters">
+              <input
+                type="radio"
+                name="lettercount"
+                id="5letters"
+                value="5"
+                onChange={handleSetValue}
+              />
+              5 letras
+            </label>
+            <label htmlFor="6letters">
+              <input
+                type="radio"
+                name="lettercount"
+                id="6letters"
+                value="6"
+                onChange={handleSetValue}
+              />
+              6 letras
+            </label>
+          </div>
+
+          <button type="submit">Empezar nuevo juego</button>
+        </form> */}
       </Modal>
     </div>
   );
