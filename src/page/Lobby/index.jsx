@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import { Letters, Update, GameId } from '../../Store/Actions';
-import { ONE_PLAYER } from '../../components/Constans/Routes';
+import { ONE_PLAYER, TWO_PLAYERS } from '../../components/Constans/Routes';
 import { createGame } from '../../services/games';
 import { sessionPlayer } from '../../services/player';
 import NavBar from '../../components/NavBar';
@@ -94,8 +94,25 @@ function Lobby() {
     const gameCreated = await createGame(game);
     if (gameCreated.status === 201) {
       dispatch(Letters(parseInt(gameLetters, 10)));
-      dispatch(GameId(gameCreated.game._id));
       navigate(ONE_PLAYER);
+    }
+  };
+
+  const handleCreateTwoPlayersGame = async () => {
+    const game = {
+      playerOneId: data._id,
+      playerTwoId: null,
+      winnerId: null,
+      wordToGuess: null,
+      attemptsPlayer1: [],
+      attemptsPlayer2: [],
+    };
+
+    const gameCreated = await createGame(game);
+    if (gameCreated.status === 201) {
+      dispatch(Letters(parseInt(gameLetters, 10)));
+      dispatch(GameId(gameCreated.game._id));
+      navigate(`${TWO_PLAYERS}/${gameCreated.game._id}`);
     }
   };
 
@@ -113,7 +130,7 @@ function Lobby() {
         <div className="lobby-container__game-option">
           <Button name="jugar solo" type="button" onClick={handlerOpenOneplayerModal} />
           <Button name="jugar contra un amigo" type="button" onClick={handlerOpenTwoPlayersModal} />
-          <Button name="partida aleatoria" type="button" />
+          <Button name="partida aleatoria" type="button" onClick={handleCreateTwoPlayersGame} />
 
         </div>
 
@@ -194,43 +211,6 @@ function Lobby() {
             </>
           )
         }
-        {/* <form onSubmit={handleCreateGame}>
-          <h2>Selecciona la cantidad de letras para tu palabra</h2>
-          <div>
-            <label htmlFor="4letters">
-              <input
-                type="radio"
-                name="lettercount"
-                id="4letters"
-                value="4"
-                onChange={handleSetValue}
-              />
-              4 letras
-            </label>
-            <label htmlFor="5letters">
-              <input
-                type="radio"
-                name="lettercount"
-                id="5letters"
-                value="5"
-                onChange={handleSetValue}
-              />
-              5 letras
-            </label>
-            <label htmlFor="6letters">
-              <input
-                type="radio"
-                name="lettercount"
-                id="6letters"
-                value="6"
-                onChange={handleSetValue}
-              />
-              6 letras
-            </label>
-          </div>
-
-          <button type="submit">Empezar nuevo juego</button>
-        </form> */}
       </Modal>
     </div>
   );
