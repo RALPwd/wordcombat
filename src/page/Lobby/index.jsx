@@ -13,6 +13,7 @@ import Button from '../../components/Button';
 import ChatBox from '../../components/ChatBox';
 import { getAllDonation } from '../../services/donation';
 import './Lobby.scss';
+import socket from '../../utils/socket';
 
 function Lobby() {
   Modal.setAppElement('#root');
@@ -21,7 +22,6 @@ function Lobby() {
   const [modalTwoPlayersIsOpen, setModalTwoPlayersIsOpen] = React.useState(false);
   const [donations, setDonations] = React.useState([]);
   const [gameLetters, setGameLetters] = React.useState(5);
-  const [step, setStep] = React.useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ function Lobby() {
   };
 
   React.useEffect(() => {
-    console.log(step);
+    // console.log(step);
     getDonation();
     session();
   }, []);
@@ -66,18 +66,11 @@ function Lobby() {
   const handlerCloseModal = () => {
     setModalOnePlayerIsOpen(false);
     setModalTwoPlayersIsOpen(false);
+    socket.emit('quitarEmprejamiento', socket.id);
   };
 
   const handleSetValue = (e) => {
     setGameLetters(e.target.value);
-  };
-
-  const handleNextStep = () => {
-    setStep(step + 1);
-  };
-
-  const handlePreviousStep = () => {
-    setStep(step - 1);
   };
 
   const handleCreateGame = async (e) => {
@@ -98,25 +91,27 @@ function Lobby() {
     }
   };
 
-  const handleCreateTwoPlayersGame = async () => {
-    const game = {
-      playerOneId: data._id,
-      playerTwoId: null,
-      winnerId: null,
-      wordToGuess: null,
-      attemptsPlayer1: [],
-      attemptsPlayer2: [],
-    };
-
-    const gameCreated = await createGame(game);
-    if (gameCreated.status === 201) {
-      dispatch(Letters(parseInt(gameLetters, 10)));
-      dispatch(GameId(gameCreated.game._id));
-      navigate(`${TWO_PLAYERS}/${gameCreated.game._id}`);
+  const handleCreateTwoPlayersGame = () => {
+    let amPlayer = 0;
+    handlerOpenTwoPlayersModal();
+    socket.on('cantidadPlayers', (amountPlayers) => {
+      amPlayer = amountPlayers;
+    });
+    if (amPlayer <= 2) {
+      socket.emit('agregarPlayers', data);
+    } else {
+      console.log('solo se permiten 2 jugadores');
     }
+
+    socket.on('createGame', async (gameid) => {
+      dispatch(Letters(parseInt(gameLetters, 10)));
+      dispatch(GameId(gameid));
+      navigate(`${TWO_PLAYERS}/${gameid}`);
+    });
   };
 
   return (
+
     <div className="lobby-container">
       <NavBar />
       <PlayerProfile
@@ -138,7 +133,7 @@ function Lobby() {
           <h2 className="donations__title">Donaciones</h2>
           <ul className="donations__container">
             {donations.reverse().slice(0, 5).map((donation) => (
-              <li className="donations__donationcard">
+              <li key={donation._id} className="donations__donationcard">
                 Gracias
                 <strong>
                   {' '}
@@ -154,7 +149,6 @@ function Lobby() {
                 Mensaje:
                 {' '}
                 <strong>{donation.message}</strong>
-
               </li>
             ))}
           </ul>
@@ -186,31 +180,10 @@ function Lobby() {
       </Modal>
 
       <Modal isOpen={modalTwoPlayersIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
-        {
-          step === 1 && (
-            <>
-              <p>Primer paso</p>
-              <button type="button" onClick={handleNextStep}> Siguiente </button>
-            </>
-          )
-        }
-        {
-          step === 2 && (
-            <>
-              <p>Segundo paso</p>
-              <button type="button" onClick={handleNextStep}> Siguiente </button>
-              <button type="button" onClick={handlePreviousStep}> Anterior </button>
-            </>
-          )
-        }
-        {
-          step === 3 && (
-            <>
-              <p>Tercer paso</p>
-              <button type="button" onClick={handlePreviousStep}> Siguiente </button>
-            </>
-          )
-        }
+        <h1>
+          Esperando jugador
+        </h1>
+
       </Modal>
     </div>
   );

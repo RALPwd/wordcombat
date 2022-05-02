@@ -8,7 +8,6 @@ import './index.scss';
 
 function ChatBox() {
   const playerName = useSelector((state) => state.player.nick);
-  const [nickPlayer, setNickPlayer] = useState(playerName);
   const [messageContainer, setMessageContainer] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [inputValue, setInputValue] = useState('');
@@ -18,12 +17,12 @@ function ChatBox() {
   //   setMessageContainer(data);
   // };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // getMessages();
-    setNickPlayer(playerName);
-    socket.emit('conectado', nickPlayer);
+
+    socket.emit('conectado', playerName);
     return () => { socket.off(); };
-  }, [nickPlayer]);
+  }, []);
 
   useEffect(() => {
     socket.on('mensajes', (info) => {
@@ -58,8 +57,10 @@ function ChatBox() {
 
   return (
     <div className="chatBox">
-      {messageContainer.map((message) => (
-        <p key={message.id} className="chatBox__messageSent">
+
+      {messageContainer ? messageContainer.map((message, key) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <p key={key} className="chatBox__messageSent">
           <strong>
             {' '}
             {message.author}
@@ -68,7 +69,8 @@ function ChatBox() {
           {' '}
           {message.message}
         </p>
-      ))}
+
+      )) : <p>cargando mensajes</p>}
       <ChatInput
         name="chat-input"
         id="ingreso-texto"

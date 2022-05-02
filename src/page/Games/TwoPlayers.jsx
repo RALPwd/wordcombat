@@ -4,13 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import randomWords from 'random-words-es';
-import { io } from 'socket.io-client';
 import useWindow from '../../Hooks/useWindow';
 import { saveEditProfile } from '../../services/player';
 import { editGame, getGame } from '../../services/games';
 import Game from '../Game';
 import socket from '../../utils/socket';
 import keys from '../../components/Constans/keys';
+import './twoplayers.scss';
 
 export default function TwoPlayers() {
   const [wordOfTheDay, setWordOfTheDay] = useState('');
@@ -25,6 +25,7 @@ export default function TwoPlayers() {
   const params = useParams();
   const gameId = params.id;
   const [game, setGame] = useState({ _id: gameId });
+  const [playersOnline, setPlayersOnline] = useState(0);
 
   useEffect(() => {
     const generateWord = () => {
@@ -60,15 +61,11 @@ export default function TwoPlayers() {
       await editGame(game);
     }
     saveGame();
-    socket.emit('juego', game);
-    socket.on('juego', (data) => {
-      console.log(data);
+    socket.on(`${params.id}`, (players) => {
+      setPlayersOnline(players);
+      console.log(players);
     });
-
-    socket.on(gameId, (data) => {
-      io.emit(gameId, data);
-      console.log(data);
-    });
+    return () => { socket.off(); };
   }, [game]);
 
   function onInput(letter) {
@@ -152,6 +149,7 @@ export default function TwoPlayers() {
 
   return (
     <div>
+      { console.log(playersOnline.player1)}
       <Game
         wordOfTheDay={wordOfTheDay}
         gameStatus={gameStatus}
@@ -163,6 +161,23 @@ export default function TwoPlayers() {
         message={message}
         turn={turn}
       />
+      {playersOnline === 0 ? <h1>cargando datos</h1> : (
+        <div className="playersProfileContainer">
+          <section className="players">
+            <img src={playersOnline?.player1.picture} alt={playersOnline?.player1.name} />
+            <h2>{playersOnline?.player1.nick}</h2>
+          </section>
+
+          <h1>vs</h1>
+
+          <section className="players">
+            <img src={playersOnline?.player2.picture} alt={playersOnline?.player2.name} />
+            <h2>{playersOnline?.player2.nick}</h2>
+          </section>
+        </div>
+      ) }
+
     </div>
+
   );
 }

@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HOME_ROUTE } from '../../components/Constans/Routes';
+import { HOME_ROUTE, LOBBY_ROUTE } from '../../components/Constans/Routes';
 
 import logo from '../../assets/img/WORD_COMBAT_LOGO_WHITE.png';
 import Input from '../../components/Input';
@@ -16,6 +16,12 @@ function Register() {
   const [confirmPassWord, setConfirmPassWord] = useState('');
   const [message, setMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.token) {
+      navigate(LOBBY_ROUTE);
+    }
+  }, []);
 
   const mesasgeValidation = (mess, visible) => {
     setMessage(mess);
