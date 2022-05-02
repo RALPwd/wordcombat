@@ -1,3 +1,27 @@
 .main{
   background-color: #4b4168e0;
 }
+
+.playersProfileContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 500px;
+}
+
+.players{
+  width: 150px;
+  display: block;
+  img{
+    width: 150px;
+    object-fit: contain;
+  }
+  h2{
+    color: white;
+    text-align: center;
+  }
+}
+
+.isPlayer{
+  background-color: #4b4168;
+}

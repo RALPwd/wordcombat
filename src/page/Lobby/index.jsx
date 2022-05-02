@@ -3,7 +3,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import { Letters, Update, GameId } from '../../Store/Actions';
+import {
+  Letters, Update, GameId, wordToGuess,
+} from '../../Store/Actions';
 import { ONE_PLAYER, TWO_PLAYERS } from '../../components/Constans/Routes';
 import { createGame } from '../../services/games';
 import { sessionPlayer } from '../../services/player';
@@ -103,10 +105,12 @@ function Lobby() {
       console.log('solo se permiten 2 jugadores');
     }
 
-    socket.on('createGame', async (gameid) => {
+    socket.on('createGame', async (game) => {
+      console.log(game);
       dispatch(Letters(parseInt(gameLetters, 10)));
-      dispatch(GameId(gameid));
-      navigate(`${TWO_PLAYERS}/${gameid}`);
+      dispatch(GameId(game.idGame));
+      dispatch(wordToGuess(game.word));
+      navigate(`${TWO_PLAYERS}/${game.idGame}`);
     });
   };
 
