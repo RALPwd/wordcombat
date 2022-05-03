@@ -7,6 +7,7 @@ import useWindow from '../../Hooks/useWindow';
 import { saveEditProfile } from '../../services/player';
 import { editGame, getGame } from '../../services/games';
 import Game from '../Game';
+import WordCompleted from '../../components/GameComponent/WordCompleted';
 import socket from '../../utils/socket';
 import keys from '../../components/Constans/keys';
 import styles from './GameStyles.module.scss';
@@ -27,17 +28,18 @@ export default function TwoPlayers() {
   const [game, setGame] = useState({ _id: gameId });
   const [playersOnline, setPlayersOnline] = useState(0);
   const [isPlayerOne, setIsPlayerOne] = useState(false);
+  const [oponentWord, setOponentWord] = useState('');
   const word = useSelector((state) => state.wordToGuess);
+  const playerId = player._id;
 
   useEffect(() => {
-    console.log(word);
     const generateWord = () => {
       setWordOfTheDay(word);
       setGame({ ...game, wordToGuess: word });
     };
     const getCurrentGame = async () => {
       const currentGame = await getGame(gameId);
-      if (currentGame.playerOneId === player._id) {
+      if (currentGame.playerOneId === playerId) {
         setIsPlayerOne(true);
         setCompletedWords(currentGame.attemptsPlayer1);
       } else {
@@ -90,13 +92,13 @@ export default function TwoPlayers() {
       if (isPlayerOne) {
         setGame({
           ...game,
-          winnerId: player._id,
+          winnerId: playerId,
           attemptsPlayer1: [...completedWords, currentWord],
         });
       } else {
         setGame({
           ...game,
-          winnerId: player._id,
+          winnerId: playerId,
           attemptsPlayer2: [...completedWords, currentWord],
         });
       }
@@ -134,24 +136,36 @@ export default function TwoPlayers() {
 
     setCompletedWords([...completedWords, currentWord]);
     setIsMyTurn(!isMyTurn);
-    socket.emit('emitTurn', 'Terminó mi turno');
+    socket.emit('emitTurn', { gameId, playerId, currentWord });
     getGame(gameId)
       .then((res) => {
         setGame(res);
+        console.log('lo que viene', res);
+        console.log('lo que seteo', game);
         if (isPlayerOne) {
           setGame({ ...game, attemptsPlayer1: [...completedWords, currentWord] });
+          console.log('Lo que envía el jugador uno', game);
         } else {
           setGame({ ...game, attemptsPlayer2: [...completedWords, currentWord] });
+          console.log('Lo que envia el jugador dos', game);
         }
-        // setGameStatus('waiting'); para el player one
-        // aqui un socket.emit que me permita avisar que terminé mi turno
       });
     setTurn(turn + 1);
     setCurrentWord('');
   }
 
   function onKeyPressed(key) {
+    socket.on('emitTurn', (data) => {
+      console.log(data);
+      if (data.gameId === gameId) {
+        if (data.playerId !== playerId) {
+          setIsMyTurn(true);
+          setOponentWord(data.currentWord);
+        }
+      }
+    });
     if (gameStatus !== 'playing' || isMyTurn !== true) return;
+    // if (gameStatus !== 'playing') return;
 
     if (key === 'BACKSPACE' && currentWord.length > 0) {
       onDelete();
@@ -183,6 +197,8 @@ export default function TwoPlayers() {
 
   return (
     <div>
+      <h1>{oponentWord}</h1>
+      <WordCompleted word={oponentWord} solution={word} />
       <Game
         wordOfTheDay={wordOfTheDay}
         gameStatus={gameStatus}
