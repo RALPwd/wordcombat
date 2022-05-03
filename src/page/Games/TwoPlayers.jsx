@@ -140,14 +140,10 @@ export default function TwoPlayers() {
     getGame(gameId)
       .then((res) => {
         setGame(res);
-        console.log('lo que viene', res);
-        console.log('lo que seteo', game);
         if (isPlayerOne) {
           setGame({ ...game, attemptsPlayer1: [...completedWords, currentWord] });
-          console.log('Lo que envía el jugador uno', game);
         } else {
           setGame({ ...game, attemptsPlayer2: [...completedWords, currentWord] });
-          console.log('Lo que envia el jugador dos', game);
         }
       });
     setTurn(turn + 1);
