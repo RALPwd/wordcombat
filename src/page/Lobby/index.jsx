@@ -106,7 +106,6 @@ function Lobby() {
     }
 
     socket.on('createGame', async (game) => {
-      console.log(game);
       dispatch(Letters(parseInt(gameLetters, 10)));
       dispatch(GameId(game.idGame));
       dispatch(wordToGuess(game.word));
@@ -159,7 +158,7 @@ function Lobby() {
         </div>
       </div>
 
-      <ChatBox />
+      <ChatBox typeChat="general" />
 
       <Modal isOpen={modalOnePlayerIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
         <form onSubmit={handleCreateGame}>

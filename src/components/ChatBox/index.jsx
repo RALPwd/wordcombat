@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import socket from '../../utils/socket';
 import ChatInput from '../chatTextInput';
 // import { getAllMessages, createMessage } from '../../services/messages';
 import './index.scss';
 
-function ChatBox() {
+function ChatBox({ typeChat }) {
   const playerName = useSelector((state) => state.player.nick);
   const [messageContainer, setMessageContainer] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -20,12 +21,12 @@ function ChatBox() {
   useEffect(() => {
     // getMessages();
 
-    socket.emit('conectado', playerName);
+    socket.emit('conectado', { playerName, typeChat });
     return () => { socket.off(); };
   }, []);
 
   useEffect(() => {
-    socket.on('mensajes', (info) => {
+    socket.on(`${typeChat}`, (info) => {
       setMessageContainer([...messageContainer, info]);
     });
 
@@ -49,7 +50,7 @@ function ChatBox() {
     const addMessage = async () => {
       // await createMessage(dataToSubmit);
       // await getMessages();
-      socket.emit('mensaje', dataToSubmit);
+      socket.emit('mensaje', { dataToSubmit, typeChat });
       setInputValue('');
     };
     addMessage();
@@ -83,5 +84,14 @@ function ChatBox() {
     </div>
   );
 }
+
+ChatBox.defaultProps = {
+  typeChat: '',
+};
+
+ChatBox.propTypes = {
+  typeChat: PropTypes.string,
+
+};
 
 export default ChatBox;

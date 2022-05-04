@@ -5,12 +5,14 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import useWindow from '../../Hooks/useWindow';
 import { saveEditProfile } from '../../services/player';
-import { editGame, getGame } from '../../services/games';
+import { getGame } from '../../services/games';
 import Game from '../Game';
 import WordCompleted from '../../components/GameComponent/WordCompleted';
 import socket from '../../utils/socket';
 import keys from '../../components/Constans/keys';
 import styles from './GameStyles.module.scss';
+import Chatbox from '../../components/ChatBox';
+import './twoplayers.scss';
 
 export default function TwoPlayers() {
   const [wordOfTheDay, setWordOfTheDay] = useState('');
@@ -29,52 +31,51 @@ export default function TwoPlayers() {
   const [playersOnline, setPlayersOnline] = useState(0);
   const [isPlayerOne, setIsPlayerOne] = useState(false);
   const [oponentWord, setOponentWord] = useState('');
-  const word = useSelector((state) => state.wordToGuess);
   const playerId = player._id;
 
-  useEffect(() => {
-    const generateWord = () => {
-      setWordOfTheDay(word);
-      setGame({ ...game, wordToGuess: word });
-    };
-    const getCurrentGame = async () => {
-      const currentGame = await getGame(gameId);
-      if (currentGame.playerOneId === playerId) {
-        setIsPlayerOne(true);
-        setCompletedWords(currentGame.attemptsPlayer1);
-      } else {
-        setIsMyTurn(false);
-        setCompletedWords(currentGame.attemptsPlayer2);
-      }
-      setGame(currentGame);
-      if (currentGame.attemptsPlayer1.length !== 0) {
-        setTurn(currentGame.attemptsPlayer1.length + 1);
-      }
-      if (currentGame.wordToGuess) {
-        setWordOfTheDay(currentGame.wordToGuess.toUpperCase());
-        setTurn(currentGame.attemptsPlayer1.length);
-      } else {
-        generateWord();
-      }
-      if (currentGame.winnerId) {
-        setGameStatus('won');
-      }
-    };
-    getCurrentGame();
-  }, []);
+  const getCurrentGame = async () => {
+    const currentGame = await getGame(gameId);
+    if (currentGame.playerOneId === playerId) {
+      setIsPlayerOne(true);
+      setCompletedWords(currentGame.attemptsPlayer1);
+    } else {
+      setIsMyTurn(false);
+      setCompletedWords(currentGame.attemptsPlayer2);
+    }
+    setGame(currentGame);
+    if (currentGame.attemptsPlayer1.length !== 0) {
+      setTurn(currentGame.attemptsPlayer1.length + 1);
+    }
+    if (currentGame.wordToGuess) {
+      setWordOfTheDay(currentGame.wordToGuess.toUpperCase());
+      setTurn(currentGame.attemptsPlayer1.length);
+    }
+    if (currentGame.winnerId) {
+      setGameStatus('won');
+    }
+  };
 
   useEffect(() => {
-    async function saveGame() {
-      await editGame(game);
-    }
-    saveGame();
     socket.on(`${params.id}`, (players) => {
       if (players) {
         setPlayersOnline(players);
       }
     });
+    getCurrentGame();
     return () => { socket.off(); };
-  }, [game]);
+  }, []);
+
+  useEffect(() => {
+    socket.on('emitTurn', (data) => {
+      if (data.gameId === gameId) {
+        if (data.playerId !== playerId) {
+          setIsMyTurn(true);
+          setOponentWord(data.currentWord);
+        }
+      }
+    });
+    return () => { socket.off(); };
+  }, [isMyTurn]);
 
   function onInput(letter) {
     const newWord = currentWord + letter;
@@ -135,8 +136,8 @@ export default function TwoPlayers() {
     // }
 
     setCompletedWords([...completedWords, currentWord]);
-    setIsMyTurn(!isMyTurn);
     socket.emit('emitTurn', { gameId, playerId, currentWord });
+    setIsMyTurn(!isMyTurn);
     getGame(gameId)
       .then((res) => {
         setGame(res);
@@ -151,15 +152,6 @@ export default function TwoPlayers() {
   }
 
   function onKeyPressed(key) {
-    socket.on('emitTurn', (data) => {
-      console.log(data);
-      if (data.gameId === gameId) {
-        if (data.playerId !== playerId) {
-          setIsMyTurn(true);
-          setOponentWord(data.currentWord);
-        }
-      }
-    });
     if (gameStatus !== 'playing' || isMyTurn !== true) return;
     // if (gameStatus !== 'playing') return;
 
@@ -192,35 +184,46 @@ export default function TwoPlayers() {
   useWindow('keydown', handleKeyDown);
 
   return (
-    <div>
-      <h1>{oponentWord}</h1>
-      <WordCompleted word={oponentWord} solution={word} />
-      <Game
-        wordOfTheDay={wordOfTheDay}
-        gameStatus={gameStatus}
-        onKeyPressed={onKeyPressed}
-        currentWord={currentWord}
-        completedWords={completedWords}
-        handlerCloseModal={handlerCloseModal}
-        modalIsOpen={modalIsOpen}
-        message={message}
-        turn={turn}
-      />
-      {playersOnline === 0 ? <h1>cargando datos</h1> : (
-        <div className={styles.playersProfileContainer}>
-          <section className={`${styles.players} ${isPlayerOne && styles.isPlayer}`}>
-            <img src={playersOnline?.player1.picture} alt={playersOnline?.player1.name} />
-            <h2>{playersOnline?.player1.nick}</h2>
-          </section>
+    <div className="onlinegame">
+      <section>
+        {playersOnline === 0 ? <h1>cargando datos</h1> : (
+          <div className={styles.playersProfileContainer}>
+            <section className={`${styles.players} ${isPlayerOne && styles.isPlayer}`}>
+              <img src={playersOnline?.player1.picture} alt={playersOnline?.player1.name} />
+              <h2>{playersOnline?.player1.nick}</h2>
+            </section>
 
-          <h1>vs</h1>
+            <h1>vs</h1>
 
-          <section className={`${styles.players} ${!isPlayerOne && styles.isPlayer}`}>
-            <img src={playersOnline?.player2.picture} alt={playersOnline?.player2.name} />
-            <h2>{playersOnline?.player2.nick}</h2>
-          </section>
+            <section className={`${styles.players} ${!isPlayerOne && styles.isPlayer}`}>
+              <img src={playersOnline?.player2.picture} alt={playersOnline?.player2.name} />
+              <h2>{playersOnline?.player2.nick}</h2>
+            </section>
+          </div>
+
+        ) }
+        <Game
+          wordOfTheDay={wordOfTheDay}
+          gameStatus={gameStatus}
+          onKeyPressed={onKeyPressed}
+          currentWord={currentWord}
+          completedWords={completedWords}
+          handlerCloseModal={handlerCloseModal}
+          modalIsOpen={modalIsOpen}
+          message={message}
+          turn={turn}
+        />
+      </section>
+
+      <section className="onlinegame__chat">
+        <div className="onlinegame__chat-chat--rivaltry">
+          <h2>ultimo intento contrincante</h2>
+          <WordCompleted word={oponentWord} solution={wordOfTheDay} />
         </div>
-      ) }
+
+        <Chatbox typeChat={gameId} />
+
+      </section>
 
     </div>
 

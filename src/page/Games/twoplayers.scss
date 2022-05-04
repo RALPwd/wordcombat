@@ -1,0 +1,15 @@
+.onlinegame{
+  display:flex;
+  height: 100vh;
+  &__chat{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+  }
+    .chatBox{
+      background-color: red;
+      height: 80%;
+    }
+}
