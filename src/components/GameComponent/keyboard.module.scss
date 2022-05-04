@@ -13,14 +13,14 @@
 .keyboardContainer {
   display: flex;
   flex-wrap: wrap;
-  width: 570px;
-  margin: 0 auto;
-  gap: 5px;
+  width: 394px;
+  margin: 0 auto 20px auto;
+  gap: 2.2px;
 }
 .key {
   @include keybase;
-  width: 50px;
-  height: 70px;
+  width: 37.25px;
+  height: 56px;
 }
 .emptyKey {
   width: 25px;
@@ -32,14 +32,14 @@
 
 .enterKey {
   @include keybase;
-  width: 80px;
-  height: 70px;
+  width: 60px;
+  height: 56px;
 }
 
 .deleteKey {
   @include keybase;
-  width: 75px;
-  height: 70px;
+  width: 55px;
+  height: 56px;
 }
 
 .correct {

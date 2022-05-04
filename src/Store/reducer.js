@@ -11,6 +11,8 @@ const initialState = {
     id: 0,
   },
   gameLetters: 5,
+  gameId: '',
+  wordToGuess: '',
 };
 
 // eslint-disable-next-line default-param-last
@@ -24,6 +26,12 @@ function Reducer(state = initialState, action) {
     }
     case 'LETTERS': {
       return { ...state, gameLetters: action.val };
+    }
+    case 'GAMEID': {
+      return { ...state, gameId: action.val };
+    }
+    case 'WORD': {
+      return { ...state, wordToGuess: action.val };
     }
     default:
       return state;

@@ -83,8 +83,7 @@ export async function saveAvatar(formData) {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       body: formData,
     });
-    const data = await (response.json());
-    console.log({ 'avatar upload': data });
+    await (response.json());
   } catch (error) {
     throw new Error(error);
   }
@@ -112,6 +111,6 @@ export async function ActivatePlayer(token) {
   try {
     await fetch(`${API_URL}/auth/local/verify-account/${token}`);
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 }
