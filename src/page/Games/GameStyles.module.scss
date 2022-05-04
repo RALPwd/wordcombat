@@ -2,26 +2,43 @@
   background-color: #4b4168e0;
 }
 
-.playersProfileContainer{
+.playersContainer{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 500px;
-}
-
-.players{
-  width: 150px;
-  display: block;
-  img{
+  margin-top: 20px;
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+  &__players{
     width: 150px;
-    object-fit: contain;
-  }
-  h2{
-    color: white;
-    text-align: center;
+    height: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    img{
+      width: 120px;
+      margin: 0 auto;
+    }
+    h2{
+      color: white;
+      text-align: center;
+    }
   }
 }
 
 .isPlayer{
   background-color: #4b4168;
+  background-color: #1DA7DD;
+}
+
+.twoplayers{
+  background-color: #4b4168e5;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.chatboxMultiplayer{
+  height: 1px;
 }

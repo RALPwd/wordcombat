@@ -7,7 +7,9 @@ import ChatInput from '../chatTextInput';
 // import { getAllMessages, createMessage } from '../../services/messages';
 import './index.scss';
 
-function ChatBox({ typeChat }) {
+function ChatBox({
+  typeChat, onFocus, onBlur, isWriting, player,
+}) {
   const playerName = useSelector((state) => state.player.nick);
   const [messageContainer, setMessageContainer] = useState([]);
   // eslint-disable-next-line no-unused-vars
@@ -72,6 +74,19 @@ function ChatBox({ typeChat }) {
         </p>
 
       )) : <p>cargando mensajes</p>}
+      <div className="chatBox__isWriting">
+        {
+          isWriting ? (
+            <p>
+              {player}
+              {' '}
+              is writing...
+            </p>
+          ) : (
+            ''
+          )
+        }
+      </div>
       <ChatInput
         name="chat-input"
         id="ingreso-texto"
@@ -79,6 +94,8 @@ function ChatBox({ typeChat }) {
         handleSubmit={sendMessageHandler}
         handleChange={inputValueHandler}
         inputValue={inputValue}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
 
     </div>
@@ -91,7 +108,10 @@ ChatBox.defaultProps = {
 
 ChatBox.propTypes = {
   typeChat: PropTypes.string,
-
+  onFocus: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  isWriting: PropTypes.bool.isRequired,
+  player: PropTypes.string.isRequired,
 };
 
 export default ChatBox;

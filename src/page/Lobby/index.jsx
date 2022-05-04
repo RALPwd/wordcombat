@@ -24,6 +24,7 @@ function Lobby() {
   const [modalTwoPlayersIsOpen, setModalTwoPlayersIsOpen] = React.useState(false);
   const [donations, setDonations] = React.useState([]);
   const [gameLetters, setGameLetters] = React.useState(5);
+  const [isWriting, setIsWriting] = React.useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -39,7 +40,6 @@ function Lobby() {
   };
 
   React.useEffect(() => {
-    // console.log(step);
     getDonation();
     session();
   }, []);
@@ -101,8 +101,6 @@ function Lobby() {
     });
     if (amPlayer <= 2) {
       socket.emit('agregarPlayers', data);
-    } else {
-      console.log('solo se permiten 2 jugadores');
     }
 
     socket.on('createGame', async (game) => {
@@ -111,6 +109,14 @@ function Lobby() {
       dispatch(wordToGuess(game.word));
       navigate(`${TWO_PLAYERS}/${game.idGame}`);
     });
+  };
+
+  const handleFocus = () => {
+    setIsWriting(true);
+  };
+
+  const handleBlur = () => {
+    setIsWriting(false);
   };
 
   return (
@@ -158,7 +164,7 @@ function Lobby() {
         </div>
       </div>
 
-      <ChatBox typeChat="general" />
+      <ChatBox typeChat="general" onFocus={handleFocus} onBlur={handleBlur} isWriting={isWriting} player={data.nick} />
 
       <Modal isOpen={modalOnePlayerIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
         <form onSubmit={handleCreateGame}>

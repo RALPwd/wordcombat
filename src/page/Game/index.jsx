@@ -31,7 +31,6 @@ export default function Game({
     <>
       <div className={styles.mainContainer}>
         {completedWords.map((word, i) => <WordCompleted key={i} word={word} solution={wordOfTheDay} />)}
-        { console.log(turn)}
         {
           gameStatus === 'playing' ? (
             <WordCurrent word={currentWord} />

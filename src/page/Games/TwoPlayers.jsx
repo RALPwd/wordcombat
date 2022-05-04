@@ -12,7 +12,7 @@ import socket from '../../utils/socket';
 import keys from '../../components/Constans/keys';
 import styles from './GameStyles.module.scss';
 import Chatbox from '../../components/ChatBox';
-import './twoplayers.scss';
+import './multiplayer.scss';
 
 export default function TwoPlayers() {
   const [wordOfTheDay, setWordOfTheDay] = useState('');
@@ -32,6 +32,7 @@ export default function TwoPlayers() {
   const [isPlayerOne, setIsPlayerOne] = useState(false);
   const [oponentWord, setOponentWord] = useState('');
   const playerId = player._id;
+  const [isWriting, setIsWriting] = useState(false);
 
   const getCurrentGame = async () => {
     const currentGame = await getGame(gameId);
@@ -152,7 +153,7 @@ export default function TwoPlayers() {
   }
 
   function onKeyPressed(key) {
-    if (gameStatus !== 'playing' || isMyTurn !== true) return;
+    if (gameStatus !== 'playing' || isMyTurn !== true || isWriting === true) return;
     // if (gameStatus !== 'playing') return;
 
     if (key === 'BACKSPACE' && currentWord.length > 0) {
@@ -183,19 +184,27 @@ export default function TwoPlayers() {
 
   useWindow('keydown', handleKeyDown);
 
+  const handleFocus = () => {
+    setIsWriting(true);
+  };
+
+  const handleBlur = () => {
+    setIsWriting(false);
+  };
+
   return (
-    <div className="onlinegame">
+    <div className={styles.twoplayers}>
       <section>
         {playersOnline === 0 ? <h1>cargando datos</h1> : (
-          <div className={styles.playersProfileContainer}>
-            <section className={`${styles.players} ${isPlayerOne && styles.isPlayer}`}>
+          <div className={styles.playersContainer}>
+            <section className={`${styles.playersContainer__players} ${isPlayerOne && styles.isPlayer}`}>
               <img src={playersOnline?.player1.picture} alt={playersOnline?.player1.name} />
               <h2>{playersOnline?.player1.nick}</h2>
             </section>
 
             <h1>vs</h1>
 
-            <section className={`${styles.players} ${!isPlayerOne && styles.isPlayer}`}>
+            <section className={`${styles.playersContainer__players} ${!isPlayerOne && styles.isPlayer}`}>
               <img src={playersOnline?.player2.picture} alt={playersOnline?.player2.name} />
               <h2>{playersOnline?.player2.nick}</h2>
             </section>
@@ -221,7 +230,14 @@ export default function TwoPlayers() {
           <WordCompleted word={oponentWord} solution={wordOfTheDay} />
         </div>
 
-        <Chatbox typeChat={gameId} />
+        <Chatbox
+          className="chatboxMultiplayer"
+          typeChat={gameId}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          isWriting={isWriting}
+          player={player.nick}
+        />
 
       </section>
 
