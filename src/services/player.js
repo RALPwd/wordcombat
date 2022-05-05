@@ -76,6 +76,19 @@ export async function sessionPlayer() {
   }
 }
 
+export async function getPlayerById(id) {
+  try {
+    const response = await fetch(`${API_URL}/api/players/${id}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
+    });
+    const data = await (response.json());
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function saveAvatar(formData) {
   try {
     const response = await fetch(`${API_URL}/api/players/upload`, {

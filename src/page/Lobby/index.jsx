@@ -87,9 +87,11 @@ function Lobby() {
     };
 
     const gameCreated = await createGame(game);
+    const gameId = gameCreated.game._id;
     if (gameCreated.status === 201) {
       dispatch(Letters(parseInt(gameLetters, 10)));
-      navigate(ONE_PLAYER);
+      dispatch(GameId(gameId));
+      navigate(`${ONE_PLAYER}/${gameId}`);
     }
   };
 
@@ -133,7 +135,7 @@ function Lobby() {
       <div className="container-information">
         <div className="lobby-container__game-option">
           <Button name="jugar solo" type="button" onClick={handlerOpenOneplayerModal} />
-          <Button name="jugar contra un amigo" type="button" onClick={handlerOpenTwoPlayersModal} />
+          <Button name="jugar contra un amigo" type="button" onClick={() => console.log('Aun no está habilitado este modo de juego')} />
           <Button name="partida aleatoria" type="button" onClick={handleCreateTwoPlayersGame} />
 
         </div>
