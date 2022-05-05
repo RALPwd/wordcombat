@@ -22,6 +22,7 @@ export default function TwoPlayers() {
   const [completedWords, setCompletedWords] = useState([]);
   const [gameStatus, setGameStatus] = useState('playing');
   const [isMyTurn, setIsMyTurn] = useState(true);
+  const [turnMessage, setTurnMessage] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [message, setMessage] = useState('');
   const letterAmount = useSelector((state) => state.gameLetters);
@@ -38,18 +39,16 @@ export default function TwoPlayers() {
     const currentGame = await getGame(gameId);
     if (currentGame.playerOneId === playerId) {
       setIsPlayerOne(true);
-      setCompletedWords(currentGame.attemptsPlayer1);
+      setTurnMessage('Tu turno');
+      // TODO: Recuperar juego -- setCompletedWords(currentGame.attemptsPlayer1);
     } else {
       setIsMyTurn(false);
-      setCompletedWords(currentGame.attemptsPlayer2);
+      setTurnMessage('Turno de tu oponente');
+      // TODO: Recuperar juego -- setCompletedWords(currentGame.attemptsPlayer2);
     }
     setGame(currentGame);
-    if (currentGame.attemptsPlayer1.length !== 0) {
-      setTurn(currentGame.attemptsPlayer1.length + 1);
-    }
     if (currentGame.wordToGuess) {
       setWordOfTheDay(currentGame.wordToGuess.toUpperCase());
-      setTurn(currentGame.attemptsPlayer1.length);
     }
     if (currentGame.winnerId) {
       setGameStatus('won');
@@ -71,8 +70,16 @@ export default function TwoPlayers() {
       if (data.gameId === gameId) {
         if (data.playerId !== playerId) {
           setIsMyTurn(true);
+          setTurnMessage('Tu turno');
           setOponentWord(data.currentWord);
+        } else {
+          setTurnMessage('Turno de tu oponente');
         }
+      }
+      if (data.winner === true) {
+        setGameStatus('lost');
+        setModalIsOpen(true);
+        setMessage('¡Tenemos un ganador! Fin del juego');
       }
     });
     return () => { socket.off(); };
@@ -89,21 +96,27 @@ export default function TwoPlayers() {
   }
 
   function onEnter() {
+    let winner = false;
     if (currentWord === wordOfTheDay) {
+      winner = true;
+      socket.emit('emitTurn', {
+        gameId, playerId, currentWord, winner,
+      });
       setCompletedWords([...completedWords, currentWord]);
-      if (isPlayerOne) {
-        setGame({
-          ...game,
-          winnerId: playerId,
-          attemptsPlayer1: [...completedWords, currentWord],
-        });
-      } else {
-        setGame({
-          ...game,
-          winnerId: playerId,
-          attemptsPlayer2: [...completedWords, currentWord],
-        });
-      }
+      // TODO: Guardar intento
+      // if (isPlayerOne) {
+      //   setGame({
+      //     ...game,
+      //     winnerId: playerId,
+      //     attemptsPlayer1: [...completedWords, currentWord],
+      //   });
+      // } else {
+      //   setGame({
+      //     ...game,
+      //     winnerId: playerId,
+      //     attemptsPlayer2: [...completedWords, currentWord],
+      //   });
+      // }
       setGameStatus('won');
       setModalIsOpen(true);
       setMessage('You won!');
@@ -117,15 +130,19 @@ export default function TwoPlayers() {
     }
 
     if (turn === 6) {
+      socket.emit('emitTurn', {
+        gameId, playerId, currentWord, winner,
+      });
       setCompletedWords([...completedWords, currentWord]);
-      if (isPlayerOne) {
-        setGame({ ...game, attemptsPlayer1: [...completedWords, currentWord] });
-      } else {
-        setGame({ ...game, attemptsPlayer2: [...completedWords, currentWord] });
-      }
+      // TODO: Guardar intento
+      // if (isPlayerOne) {
+      //   setGame({ ...game, attemptsPlayer1: [...completedWords, currentWord] });
+      // } else {
+      //   setGame({ ...game, attemptsPlayer2: [...completedWords, currentWord] });
+      // }
       setGameStatus('lost');
       setModalIsOpen(true);
-      setMessage('You lost!');
+      setMessage('¡Agotaste tus intentos! Fin del juego');
       const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
       saveEditProfile(playerWon);
       return;
@@ -137,7 +154,9 @@ export default function TwoPlayers() {
     // }
 
     setCompletedWords([...completedWords, currentWord]);
-    socket.emit('emitTurn', { gameId, playerId, currentWord });
+    socket.emit('emitTurn', {
+      gameId, playerId, currentWord, winner,
+    });
     setIsMyTurn(!isMyTurn);
     getGame(gameId)
       .then((res) => {
@@ -154,7 +173,6 @@ export default function TwoPlayers() {
 
   function onKeyPressed(key) {
     if (gameStatus !== 'playing' || isMyTurn !== true || isWriting === true) return;
-    // if (gameStatus !== 'playing') return;
 
     if (key === 'BACKSPACE' && currentWord.length > 0) {
       onDelete();
@@ -211,6 +229,7 @@ export default function TwoPlayers() {
           </div>
 
         ) }
+        <div className={styles.turnMessage}>{turnMessage}</div>
         <Game
           wordOfTheDay={wordOfTheDay}
           gameStatus={gameStatus}

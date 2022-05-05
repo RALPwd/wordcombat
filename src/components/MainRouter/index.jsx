@@ -27,7 +27,7 @@ function Mainrouter() {
         <Route path={EDIT_ROUTE} element={<Edition />} />
         <Route path={CHAT_ROUTE} element={<ChatBox />} />
         <Route path={GAME_ROUTE} element={<Game />} />
-        <Route path={ONE_PLAYER} element={<OnePlayer />} />
+        <Route path={`${ONE_PLAYER}/:id`} element={<OnePlayer />} />
         <Route path={`${TWO_PLAYERS}/:id`} element={<TwoPlayers />} />
         <Route path={LOBBY_ROUTE} element={<Lobby />} />
         <Route path={PAGENOTFOUND404} element={<NotFound404 />} />
