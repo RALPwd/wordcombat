@@ -34,9 +34,11 @@
 }
 
 .twoplayers{
+  height: 90vh;
   background-color: #4b4168e5;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  place-content: center;
 }
 
 .chatboxMultiplayer{
