@@ -1,7 +1,7 @@
 .chatBox {
     border: 1px solid black;
     width: 100%;
-    height: auto;
+    height: 100%;
     position: relative;
     color: white;
     &__messageSent{
@@ -13,4 +13,10 @@
       width: 100%;
       bottom: 35px;
     }
+}
+
+@media (max-width: 768px){
+  .chatBox{
+    height: 50%;
+  }
 }

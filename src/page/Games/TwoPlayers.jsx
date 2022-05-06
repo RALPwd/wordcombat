@@ -2,7 +2,8 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { LOBBY_ROUTE } from '../../components/Constans/Routes';
 import useWindow from '../../Hooks/useWindow';
 import { saveEditProfile } from '../../services/player';
 import { getGame } from '../../services/games';
@@ -11,8 +12,7 @@ import WordCompleted from '../../components/GameComponent/WordCompleted';
 import socket from '../../utils/socket';
 import keys from '../../components/Constans/keys';
 import styles from './GameStyles.module.scss';
-import Chatbox from '../../components/ChatBox';
-import './multiplayer.scss';
+import './GameStylesPlain.scss';
 
 export default function TwoPlayers() {
   const [wordOfTheDay, setWordOfTheDay] = useState('');
@@ -33,7 +33,6 @@ export default function TwoPlayers() {
   const [isPlayerOne, setIsPlayerOne] = useState(false);
   const [oponentWord, setOponentWord] = useState('');
   const playerId = player._id;
-  const [isWriting, setIsWriting] = useState(false);
 
   const getCurrentGame = async () => {
     const currentGame = await getGame(gameId);
@@ -172,7 +171,7 @@ export default function TwoPlayers() {
   }
 
   function onKeyPressed(key) {
-    if (gameStatus !== 'playing' || isMyTurn !== true || isWriting === true) return;
+    if (gameStatus !== 'playing' || isMyTurn !== true) return;
 
     if (key === 'BACKSPACE' && currentWord.length > 0) {
       onDelete();
@@ -202,17 +201,40 @@ export default function TwoPlayers() {
 
   useWindow('keydown', handleKeyDown);
 
-  const handleFocus = () => {
-    setIsWriting(true);
-  };
-
-  const handleBlur = () => {
-    setIsWriting(false);
-  };
-
   return (
     <div className={styles.twoplayers}>
-      <section>
+      <div>
+        <Link
+          to={LOBBY_ROUTE}
+          style={{
+            position: 'absolute', top: '0', right: 0, padding: '10px 20px 10px 0', fontSize: '18px', color: '#fff', fontFamily: '"Source Code Pro", monospace',
+          }}
+        >
+          Volver al lobby
+        </Link>
+        <section className="inGameScreen">
+
+          <Game
+            wordOfTheDay={wordOfTheDay}
+            gameStatus={gameStatus}
+            onKeyPressed={onKeyPressed}
+            currentWord={currentWord}
+            completedWords={completedWords}
+            handlerCloseModal={handlerCloseModal}
+            modalIsOpen={modalIsOpen}
+            message={message}
+            turn={turn}
+          />
+        </section>
+      </div>
+
+      <section className="onlinegame__chat">
+        <div className="onlinegame__chat-chat--rivaltry">
+          <h2>ultimo intento contrincante</h2>
+          <WordCompleted word={oponentWord} solution={wordOfTheDay} />
+        </div>
+
+        <div className={styles.turnMessage}>{turnMessage}</div>
         {playersOnline === 0 ? <h1>cargando datos</h1> : (
           <div className={styles.playersContainer}>
             <section className={`${styles.playersContainer__players} ${isPlayerOne && styles.isPlayer}`}>
@@ -229,35 +251,6 @@ export default function TwoPlayers() {
           </div>
 
         ) }
-        <div className={styles.turnMessage}>{turnMessage}</div>
-        <Game
-          wordOfTheDay={wordOfTheDay}
-          gameStatus={gameStatus}
-          onKeyPressed={onKeyPressed}
-          currentWord={currentWord}
-          completedWords={completedWords}
-          handlerCloseModal={handlerCloseModal}
-          modalIsOpen={modalIsOpen}
-          message={message}
-          turn={turn}
-        />
-      </section>
-
-      <section className="onlinegame__chat">
-        <div className="onlinegame__chat-chat--rivaltry">
-          <h2>ultimo intento contrincante</h2>
-          <WordCompleted word={oponentWord} solution={wordOfTheDay} />
-        </div>
-
-        <Chatbox
-          className="chatboxMultiplayer"
-          typeChat={gameId}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          isWriting={isWriting}
-          player={player.nick}
-        />
-
       </section>
 
     </div>

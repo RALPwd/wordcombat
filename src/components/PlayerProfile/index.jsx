@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FaKeyboard, FaTrophy, FaChartPie } from 'react-icons/fa';
 
 import './playerProfile.scss';
 
@@ -20,18 +21,21 @@ function PlayerProfile({
           </div>
           <article>
             <p>
-              partidas jugadas:
+              <FaKeyboard />
+              Partidas:
               {' '}
               {partidasJugadas}
             </p>
             <p>
-              partidas ganadas:
+              <FaTrophy />
+              Victorias:
               {' '}
               {Partidasganadas}
 
             </p>
             <p>
-              % de victorias:
+              <FaChartPie />
+              Winrate:
               {' '}
               { partidasJugadas === 0
                 ? 0
