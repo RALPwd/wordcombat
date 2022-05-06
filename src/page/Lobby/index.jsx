@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+/* eslint-disable no-underscore-dangle */
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import { Letters, Update } from '../../Store/Actions';
-import { GAME_ROUTE } from '../../components/Constans/Routes';
+import {
+  Letters, Update, GameId, wordToGuess,
+} from '../../Store/Actions';
+import { ONE_PLAYER, TWO_PLAYERS } from '../../components/Constans/Routes';
+import { createGame } from '../../services/games';
 import { sessionPlayer } from '../../services/player';
 import NavBar from '../../components/NavBar';
 import PlayerProfile from '../../components/PlayerProfile';
@@ -11,15 +15,33 @@ import Button from '../../components/Button';
 import ChatBox from '../../components/ChatBox';
 import { getAllDonation } from '../../services/donation';
 import './Lobby.scss';
+import socket from '../../utils/socket';
 
 function Lobby() {
   Modal.setAppElement('#root');
   const data = useSelector((state) => state.player);
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [modalOnePlayerIsOpen, setModalOnePlayerIsOpen] = React.useState(false);
+  const [modalTwoPlayersIsOpen, setModalTwoPlayersIsOpen] = React.useState(false);
+  const [modalTwoPlayersIsOpenFriend, setModalTwoPlayersIsOpenFriend] = React.useState(false);
   const [donations, setDonations] = React.useState([]);
   const [gameLetters, setGameLetters] = React.useState(5);
+  const [isWriting, setIsWriting] = React.useState(false);
+  const [code, setCode] = React.useState('');
+  const [generateCode, setGenerateCode] = React.useState('');
+  const [friendgame, setFriendGame] = React.useState(0);
+  const [placeholder, setPlaceholder] = React.useState('Ingresa codigo amigo');
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    socket.on('createGame', (game) => {
+      dispatch(Letters(parseInt(gameLetters, 10)));
+      dispatch(GameId(game.idGame));
+      dispatch(wordToGuess(game.word));
+      navigate(`${TWO_PLAYERS}/${game.idGame}`);
+    });
+    return () => { socket.off(); };
+  }, [friendgame]);
 
   const session = async () => {
     const player = await sessionPlayer();
@@ -29,12 +51,10 @@ function Lobby() {
 
   const getDonation = async () => {
     const dono = await getAllDonation();
-    console.log(dono);
-    console.log(dono.reverse());
     setDonations(dono);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     getDonation();
     session();
   }, []);
@@ -52,25 +72,106 @@ function Lobby() {
     },
   };
 
-  const handlerOpenModal = () => {
-    setModalIsOpen(true);
+  const handlerOpenOneplayerModal = () => {
+    setModalOnePlayerIsOpen(true);
+  };
+
+  const handlerOpenTwoPlayersModal = () => {
+    setModalTwoPlayersIsOpen(true);
   };
 
   const handlerCloseModal = () => {
-    setModalIsOpen(false);
+    setModalOnePlayerIsOpen(false);
+    setModalTwoPlayersIsOpen(false);
+    socket.emit('quitarEmprejamiento', socket.id);
+    return () => { socket.off(); };
   };
 
   const handleSetValue = (e) => {
     setGameLetters(e.target.value);
   };
 
-  const handleCreateGame = (e) => {
+  const handleCreateGame = async (e) => {
     e.preventDefault();
-    dispatch(Letters(parseInt(gameLetters, 10)));
-    navigate(GAME_ROUTE);
+    const game = {
+      playerOneId: data._id,
+      playerTwoId: null,
+      winnerId: null,
+      wordToGuess: null,
+      attemptsPlayer1: [],
+      attemptsPlayer2: [],
+    };
+
+    const gameCreated = await createGame(game);
+    const gameId = gameCreated.game._id;
+    if (gameCreated.status === 201) {
+      dispatch(Letters(parseInt(gameLetters, 10)));
+      dispatch(GameId(gameId));
+      navigate(`${ONE_PLAYER}/${gameId}`);
+    }
+  };
+
+  const handleCreateTwoPlayersGame = () => {
+    let amPlayer = 0;
+    handlerOpenTwoPlayersModal();
+    socket.on('cantidadPlayers', (amountPlayers) => {
+      amPlayer = amountPlayers;
+    });
+    if (amPlayer <= 2) {
+      socket.emit('agregarPlayers', data);
+    }
+
+    socket.on('createGame', (game) => {
+      dispatch(Letters(parseInt(gameLetters, 10)));
+      dispatch(GameId(game.idGame));
+      dispatch(wordToGuess(game.word));
+      navigate(`${TWO_PLAYERS}/${game.idGame}`);
+    });
+  };
+
+  function handleCreateGameFriend() {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < 6; i += 1) {
+      result += characters.charAt(Math.floor(Math.random()
+ * charactersLength));
+    }
+    setGenerateCode(result.toUpperCase());
+    socket.emit('emparejamientoamigo', { data, code: result.toUpperCase(), type: 'create' });
+  }
+
+  function handleJoinGame() {
+    // para el control z
+    if (!code.length) {
+      return alert('campo de codigo no puede estar vacio');
+    }
+    socket.emit('emparejamientoamigo', { data, code, type: 'join' });
+    socket.on('arrayOfCreater', (arrayGamesinWait) => {
+      if (arrayGamesinWait.find((arrayCode) => arrayCode.code === code)) {
+        socket.emit('verificateArray');
+      } else {
+        setPlaceholder('Código errado, verifica el código');
+        setCode('');
+      }
+      return () => { socket.off(); };
+    });
+    socket.on('friendMessage', (dataConfirmation) => {
+      if (dataConfirmation.menssaje === 'creada') { setFriendGame(dataConfirmation.idgame); }
+    });
+    return () => { socket.off(); };
+  }
+
+  const handleFocus = () => {
+    setIsWriting(true);
+  };
+
+  const handleBlur = () => {
+    setIsWriting(false);
   };
 
   return (
+
     <div className="lobby-container">
       <NavBar />
       <PlayerProfile
@@ -82,9 +183,9 @@ function Lobby() {
       />
       <div className="container-information">
         <div className="lobby-container__game-option">
-          <Button name="jugar solo" type="button" onClick={handlerOpenModal} />
-          <Button name="jugar contra un amigo" type="button" />
-          <Button name="partida aleatoria" type="button" />
+          <Button name="jugar solo" type="button" onClick={handlerOpenOneplayerModal} />
+          <Button name="jugar contra un amigo" type="button" onClick={() => { setModalTwoPlayersIsOpenFriend(true); }} />
+          <Button name="partida aleatoria" type="button" onClick={handleCreateTwoPlayersGame} />
 
         </div>
 
@@ -92,7 +193,7 @@ function Lobby() {
           <h2 className="donations__title">Donaciones</h2>
           <ul className="donations__container">
             {donations.reverse().slice(0, 5).map((donation) => (
-              <li className="donations__donationcard">
+              <li key={donation._id} className="donations__donationcard">
                 Gracias
                 <strong>
                   {' '}
@@ -108,16 +209,15 @@ function Lobby() {
                 Mensaje:
                 {' '}
                 <strong>{donation.message}</strong>
-
               </li>
             ))}
           </ul>
         </div>
       </div>
 
-      <ChatBox />
+      <ChatBox typeChat="general" onFocus={handleFocus} onBlur={handleBlur} isWriting={isWriting} player={data.nick} />
 
-      <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
+      <Modal isOpen={modalOnePlayerIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
         <form onSubmit={handleCreateGame}>
           <h2>Selecciona la cantidad de letras para tu palabra</h2>
           <div>
@@ -137,6 +237,34 @@ function Lobby() {
 
           <button type="submit">Empezar nuevo juego</button>
         </form>
+      </Modal>
+
+      <Modal isOpen={modalTwoPlayersIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
+        <h1>
+          Esperando jugador
+        </h1>
+
+      </Modal>
+
+      <Modal
+        isOpen={modalTwoPlayersIsOpenFriend}
+        style={customStyles}
+        onRequestClose={() => { setModalTwoPlayersIsOpenFriend(false); socket.emit('quitarEmprejamientoFriend', socket.id); setCode(''); setGenerateCode(''); }}
+      >
+        <ChatBox typeChat="general" onFocus={handleFocus} onBlur={handleBlur} isWriting={isWriting} player={data.nick} />
+        <button type="button" onClick={handleCreateGameFriend}>Create game</button>
+        {generateCode.length > 0 && (
+        <h2>
+          tu codigo
+          {' '}
+          {generateCode}
+        </h2>
+        )}
+
+        <input type="text" placeholder={placeholder} value={code} onChange={(e) => { setCode(e.target.value.toUpperCase().trim()); }} />
+
+        <button type="button" onClick={handleJoinGame}>unete</button>
+
       </Modal>
     </div>
   );

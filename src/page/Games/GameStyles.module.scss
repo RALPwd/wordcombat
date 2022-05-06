@@ -1,0 +1,72 @@
+.main{
+  background-color: #4b4168e0;
+}
+
+.playersContainer{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 500px;
+  margin-top: 20px;
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+  &__players{
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    img{
+      width: 120px;
+      margin: 0 auto;
+    }
+    h2{
+      color: white;
+      text-align: center;
+    }
+  }
+}
+
+.isPlayer{
+  background-color: #4b4168;
+  background-color: #1DA7DD;
+}
+
+.twoplayers{
+  height: 90vh;
+  background-color: #4b4168e5;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-content: center;
+}
+
+.chatboxMultiplayer{
+  height: 1px;
+}
+
+.turnMessage{
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+  text-align: center;
+}
+
+.onlinegame__chat{
+  display: block;
+}
+
+.onlinegame__chat-chat--rivaltry{
+  h2{
+    font-family: 'Source Code Pro', monospace;
+    color: white;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .twoplayers{
+    display: grid;
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}

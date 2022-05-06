@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { REGISTER_ROUTE, LOBBY_ROUTE, RECOVERY_ROUTE } from '../../components/Constans/Routes';
@@ -18,6 +18,12 @@ function Home() {
 
   const [message, setMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.token) {
+      navigate(LOBBY_ROUTE);
+    }
+  }, []);
 
   const mesasgeValidation = (mess, visible) => {
     setMessage(mess);

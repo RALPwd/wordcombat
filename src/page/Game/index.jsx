@@ -1,141 +1,66 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable max-len */
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import randomWords from 'random-words-es';
+import React from 'react';
+import Modal from 'react-modal/lib/components/Modal';
+import PropTypes from 'prop-types';
 import WordEmpty from '../../components/GameComponent/WordEmpty';
 import WordCompleted from '../../components/GameComponent/WordCompleted';
 import WordCurrent from '../../components/GameComponent/WordCurrent';
-import useWindow from '../../Hooks/useWindow';
 import styles from './index.module.scss';
 import Keyboard from '../../components/GameComponent/Keyboard';
+import keys from '../../components/Constans/keys';
 
-const keys = [
-  'Q',
-  'W',
-  'E',
-  'R',
-  'T',
-  'Y',
-  'U',
-  'I',
-  'O',
-  'P',
-  'A',
-  'S',
-  'D',
-  'F',
-  'G',
-  'H',
-  'J',
-  'K',
-  'L',
-  'Ñ',
-  'Z',
-  'X',
-  'C',
-  'V',
-  'B',
-  'N',
-  'M',
-];
-
-export default function Game() {
-  const [wordOfTheDay, setWordOfTheDay] = useState('');
-  const [turn, setTurn] = useState(1);
-  const [currentWord, setCurrentWord] = useState('');
-  const [completedWords, setCompletedWords] = useState([]);
-  const [gameStatus, setGameStatus] = useState('playing');
-  const letterAmount = useSelector((state) => state.gameLetters);
-
-  useEffect(() => {
-    const generateWord = () => {
-      let word;
-      do {
-        [word] = randomWords({ exactly: 1, maxLength: letterAmount });
-      } while ([...word].length < letterAmount);
-      setWordOfTheDay(word.toUpperCase());
-    };
-
-    generateWord();
-  }, []);
-
-  function onInput(letter) {
-    const newWord = currentWord + letter;
-    setCurrentWord(newWord);
-  }
-
-  function onDelete() {
-    const newWord = currentWord.slice(0, -1);
-    setCurrentWord(newWord);
-  }
-
-  function onEnter() {
-    if (currentWord === wordOfTheDay) {
-      setCompletedWords([...completedWords, currentWord]);
-      setGameStatus('won');
-      return;
-    }
-
-    if (turn === 6) {
-      setCompletedWords([...completedWords, currentWord]);
-      setGameStatus('lost');
-      return;
-    }
-
-    // if (currentWord.length === 5 && !isValidWord(currentWord)) {
-    //   alert('Palabra no valida');
-    //   return;
-    // }
-
-    setCompletedWords([...completedWords, currentWord]);
-    setTurn(turn + 1);
-    setCurrentWord('');
-  }
-
-  function onKeyPressed(key) {
-    if (gameStatus !== 'playing') return;
-
-    if (key === 'BACKSPACE' && currentWord.length > 0) {
-      onDelete();
-    }
-
-    if (key === 'ENTER' && currentWord.length === letterAmount && turn <= 6) {
-      onEnter();
-      return;
-    }
-
-    if (currentWord.length >= letterAmount) return;
-
-    if (keys.includes(key)) {
-      onInput(key);
-    }
-  }
-
-  function handleKeyDown(event) {
-    const key = event.key.toUpperCase();
-
-    onKeyPressed(key);
-  }
-
-  useWindow('keydown', handleKeyDown);
+export default function Game({
+  wordOfTheDay, onKeyPressed, currentWord, completedWords, gameStatus, modalIsOpen, handlerCloseModal, message, turn,
+}) {
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '50%',
+      height: '50%',
+    },
+  };
 
   return (
     <>
       <div className={styles.mainContainer}>
         {completedWords.map((word, i) => <WordCompleted key={i} word={word} solution={wordOfTheDay} />)}
+        {
+          gameStatus === 'playing' ? (
+            <WordCurrent word={currentWord} />
+          ) : null
+        }
 
-        {gameStatus === 'playing' ? (
-          <WordCurrent word={currentWord} />
-        ) : null}
-
-        {Array.from(Array(6 - turn)).map((_, i) => <WordEmpty key={i} />)}
+        {
+        Array.from(Array(6 - turn)).map((_, i) => <WordEmpty key={i} />)
+}
       </div>
       <Keyboard
         keys={keys}
         onKeyPressed={onKeyPressed}
       />
+
+      <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
+        <h2>{message}</h2>
+      </Modal>
     </>
   );
 }
+
+Game.propTypes = {
+  wordOfTheDay: PropTypes.string.isRequired,
+  onKeyPressed: PropTypes.func.isRequired,
+  currentWord: PropTypes.string.isRequired,
+  completedWords: PropTypes.arrayOf(PropTypes.string).isRequired,
+  gameStatus: PropTypes.string.isRequired,
+  modalIsOpen: PropTypes.bool.isRequired,
+  handlerCloseModal: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
+  turn: PropTypes.number.isRequired,
+};

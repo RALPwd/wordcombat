@@ -144,7 +144,7 @@ function Edition() {
         >
           Volver al lobby
         </Link>
-        <img src={image || formInfo.picture} alt="" width="100px" height="100px" />
+        <img src={image || formInfo.picture} alt="" width="100px" height="100px" style={{ objectFit: 'contain' }} />
 
         <Input
           type="text"
