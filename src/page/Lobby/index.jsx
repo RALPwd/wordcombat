@@ -29,6 +29,7 @@ function Lobby() {
   const [code, setCode] = React.useState('');
   const [generateCode, setGenerateCode] = React.useState('');
   const [friendgame, setFriendGame] = React.useState(0);
+  const [placeholder, setPlaceholder] = React.useState('Ingresa codigo amigo');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -150,10 +151,10 @@ function Lobby() {
       if (arrayGamesinWait.find((arrayCode) => arrayCode.code === code)) {
         socket.emit('verificateArray');
       } else {
-        alert('partida No encontrada');
-        setModalTwoPlayersIsOpenFriend(false);
+        setPlaceholder('Verifica el código');
         setCode('');
       }
+      return () => { socket.off(); };
     });
     socket.on('friendMessage', (dataConfirmation) => {
       if (dataConfirmation.menssaje === 'creada') { setFriendGame(dataConfirmation.idgame); }
@@ -260,7 +261,7 @@ function Lobby() {
         </h2>
         )}
 
-        <input type="text" placeholder="ingresa codigo amigo" value={code} onChange={(e) => { setCode(e.target.value.toUpperCase().trim()); }} />
+        <input type="text" placeholder={placeholder} value={code} onChange={(e) => { setCode(e.target.value.toUpperCase().trim()); }} />
 
         <button type="button" onClick={handleJoinGame}>unete</button>
 
