@@ -19,6 +19,7 @@
 
     ul{
         list-style: none;
+        display: none;
        li a {
         text-transform: capitalize;
         text-decoration: underline;
@@ -29,5 +30,49 @@
         }
        }
 
+    }
+
+    .nav-container__nav-mobile{
+      display: none;
+    }
+  }
+
+
+  @media (max-width: 768px) {
+    .nav-Container{
+      ul{
+        display: none;
+      }
+    }
+
+    .nav-container{
+      &__hamburger{
+        position: relative;
+        z-index: 99;
+      }
+      &__nav-mobile{
+        display: block !important;
+      }
+      &__menu-mobile{
+        width: 100vw;
+        height: 100vh;
+        background: #4b4168;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 9;
+        padding: 100px 20px;
+        display: flex;
+        font-size: 30px;
+        &.hidden{
+          display: none;
+        }
+        ul{
+          display: block !important;
+          li{
+            line-height: 7rem;
+          }
+        }
+      }
     }
   }

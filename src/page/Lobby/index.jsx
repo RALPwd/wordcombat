@@ -151,7 +151,7 @@ function Lobby() {
       if (arrayGamesinWait.find((arrayCode) => arrayCode.code === code)) {
         socket.emit('verificateArray');
       } else {
-        setPlaceholder('Verifica el código');
+        setPlaceholder('Código errado, verifica el código');
         setCode('');
       }
       return () => { socket.off(); };

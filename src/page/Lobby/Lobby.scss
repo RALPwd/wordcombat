@@ -4,11 +4,16 @@
   background-color: #4B4168;
   height: 100vh;
    &__game-option{
-    height: 15rem;
+    height: 10rem;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    >button{
+      width: 20rem;
+      font-size: 1rem;
+    }
    }
  .container-information{
   display: flex;
@@ -23,6 +28,7 @@
     font-family: 'Source Code Pro', monospace;
     height: 40vh;
     overflow-y: scroll;
+    display: none;
     ul{
      list-style-type: none;
     }
@@ -58,6 +64,9 @@
     height: 100vh;
     background-color: $main-background-color;
     background-image: url('https://res.cloudinary.com/team5-top20/image/upload/v1650827546/wordcombatbg_znd2jt.jpg');
+  }
+  .donations{
+    display: block !important;
   }
   .lobby-container {
     .container-information{

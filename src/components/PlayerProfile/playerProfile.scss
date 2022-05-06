@@ -6,7 +6,7 @@
     height: 100%;
     display: grid;
     position: relative;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 35% 65%;
     gap: 1rem;
     background-color: rgba($color: #fff, $alpha: 0.2);
     padding: 1rem 0.5rem;
@@ -14,12 +14,13 @@
     color: white;
     font-family: 'Source Code Pro', monospace;
     &__avatar{
-      display: grid;
-      place-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       img{
+        width: 90%;
         max-width: 12rem;
         max-height: 10rem;
-
       }
     }
     &__information{

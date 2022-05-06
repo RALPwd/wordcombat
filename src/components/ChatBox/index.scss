@@ -14,3 +14,9 @@
       bottom: 35px;
     }
 }
+
+@media (max-width: 768px){
+  .chatBox{
+    height: 50%;
+  }
+}
