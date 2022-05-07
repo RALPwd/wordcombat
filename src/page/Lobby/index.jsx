@@ -149,7 +149,6 @@ function Lobby() {
     socket.emit('emparejamientoamigo', { data, code, type: 'join' });
 
     socket.on('emparejamientoamigo', (dataConfirmation) => {
-      console.log(dataConfirmation);
       if (dataConfirmation.menssaje === 'creada') { setFriendGame(1); setModalTwoPlayersIsOpenFriend(false); } else {
         setCode('');
         setPlaceholder(dataConfirmation.menssaje);
