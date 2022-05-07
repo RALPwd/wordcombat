@@ -144,20 +144,15 @@ function Lobby() {
   function handleJoinGame() {
     // para el control z
     if (!code.length) {
-      return alert('campo de codigo no puede estar vacio');
+      return setPlaceholder('campo de codigo no puede estar vacio');
     }
     socket.emit('emparejamientoamigo', { data, code, type: 'join' });
-    socket.on('arrayOfCreater', (arrayGamesinWait) => {
-      if (arrayGamesinWait.find((arrayCode) => arrayCode.code === code)) {
-        socket.emit('verificateArray');
-      } else {
-        setPlaceholder('Código errado, verifica el código');
+
+    socket.on('emparejamientoamigo', (dataConfirmation) => {
+      if (dataConfirmation.menssaje === 'creada') { setFriendGame(1); setModalTwoPlayersIsOpenFriend(false); } else {
         setCode('');
+        setPlaceholder(dataConfirmation.menssaje);
       }
-      return () => { socket.off(); };
-    });
-    socket.on('friendMessage', (dataConfirmation) => {
-      if (dataConfirmation.menssaje === 'creada') { setFriendGame(dataConfirmation.idgame); }
     });
     return () => { socket.off(); };
   }
