@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import useWindow from '../../Hooks/useWindow';
 import { saveEditProfile } from '../../services/player';
 import { getGame, editGame } from '../../services/games';
@@ -12,6 +12,7 @@ import socket from '../../utils/socket';
 import keys from '../../components/Constans/keys';
 import styles from './GameStyles.module.scss';
 import './GameStylesPlain.scss';
+import { HOME_ROUTE } from '../../components/Constans/Routes';
 
 export default function TwoPlayers() {
   const [wordOfTheDay, setWordOfTheDay] = useState('');
@@ -32,6 +33,13 @@ export default function TwoPlayers() {
   const [isPlayerOne, setIsPlayerOne] = useState(false);
   const [oponentWord, setOponentWord] = useState('');
   const playerId = player._id;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.token) {
+      navigate(HOME_ROUTE);
+    }
+  }, []);
 
   const getCurrentGame = async () => {
     const currentGame = await getGame(gameId);
