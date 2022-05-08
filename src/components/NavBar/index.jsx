@@ -63,11 +63,15 @@ function NavBar() {
         </span>
         <div className={`nav-container__menu-mobile ${!showMenu && 'hidden'}`}>
           <ul>
-            {aLink.map((link) => (
-              <li key={link.id}>
-                <NavLink to={link.route} onClick={link.logout}>{link.name}</NavLink>
-              </li>
-            ))}
+            {
+              showMenu ? (
+                aLink.map((link) => (
+                  <li key={link.id}>
+                    <NavLink to={link.route} onClick={link.logout}>{link.name}</NavLink>
+                  </li>
+                ))
+              ) : null
+            }
           </ul>
         </div>
       </div>
