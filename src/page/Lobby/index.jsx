@@ -35,10 +35,12 @@ function Lobby() {
 
   React.useEffect(() => {
     socket.on('createGame', (game) => {
-      dispatch(Letters(parseInt(gameLetters, 10)));
-      dispatch(GameId(game.idGame));
-      dispatch(wordToGuess(game.word));
-      navigate(`${TWO_PLAYERS}/${game.idGame}`);
+      if (game.player1._id === data._id || game.player2._id === data._id) {
+        dispatch(Letters(parseInt(gameLetters, 10)));
+        dispatch(GameId(game.idGame));
+        dispatch(wordToGuess(game.word));
+        navigate(`${TWO_PLAYERS}/${game.idGame}`);
+      }
     });
     return () => { socket.off(); };
   }, [friendgame]);
@@ -122,10 +124,12 @@ function Lobby() {
     }
 
     socket.on('createGame', (game) => {
-      dispatch(Letters(parseInt(gameLetters, 10)));
-      dispatch(GameId(game.idGame));
-      dispatch(wordToGuess(game.word));
-      navigate(`${TWO_PLAYERS}/${game.idGame}`);
+      if (game.player1._id === data._id || game.player2._id === data._id) {
+        dispatch(Letters(parseInt(gameLetters, 10)));
+        dispatch(GameId(game.idGame));
+        dispatch(wordToGuess(game.word));
+        navigate(`${TWO_PLAYERS}/${game.idGame}`);
+      }
     });
   };
 

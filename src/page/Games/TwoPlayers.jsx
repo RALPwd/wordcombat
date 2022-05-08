@@ -60,6 +60,7 @@ export default function TwoPlayers() {
       }
     });
     getCurrentGame();
+    socket.emit('joinRoom', gameId);
     return () => { socket.off(); };
   }, []);
 
@@ -71,36 +72,36 @@ export default function TwoPlayers() {
           setTurnMessage('Tu turno');
           setOponentWord(data.currentWord);
         }
+        if (data.winner === true) {
+          setMessage(`¡Tenemos un ganador! ${data.playerName} la palabra es ${data.currentWord}`);
+          if (data.playerId === playerId) {
+            setGameStatus('won');
+            setModalIsOpen(true);
+            const playerWon = {
+              ...player,
+              gamePlayed: player.gamePlayed + 1,
+              gameWon: player.gameWon + 1,
+            };
+            editGame({ ...game, winnerId: playerId });
+            saveEditProfile(playerWon);
+          } else {
+            setGameStatus('lost');
+            setModalIsOpen(true);
+            const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
+            saveEditProfile(playerWon);
+          }
+        }
+        if (data.playerId === playerId) {
+          if (data.turn) {
+            setGameStatus('lost');
+            setModalIsOpen(true);
+            setMessage(`¡Agotaste tus intentos! Fin del juego la palabra era ${wordOfTheDay}`);
+            const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
+            saveEditProfile(playerWon);
+          }
+        }
       } else {
         setTurnMessage('Turno de tu oponente');
-      }
-      if (data.winner === true) {
-        setMessage(`¡Tenemos un ganador! ${data.playerName} la palabra es ${data.currentWord}`);
-        if (data.playerId === playerId) {
-          setGameStatus('won');
-          setModalIsOpen(true);
-          const playerWon = {
-            ...player,
-            gamePlayed: player.gamePlayed + 1,
-            gameWon: player.gameWon + 1,
-          };
-          editGame({ ...game, winnerId: playerId });
-          saveEditProfile(playerWon);
-        } else {
-          setGameStatus('lost');
-          setModalIsOpen(true);
-          const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
-          saveEditProfile(playerWon);
-        }
-      }
-      if (data.playerId === playerId) {
-        if (data.turn) {
-          setGameStatus('lost');
-          setModalIsOpen(true);
-          setMessage(`¡Agotaste tus intentos! Fin del juego la palabra era ${wordOfTheDay}`);
-          const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
-          saveEditProfile(playerWon);
-        }
       }
     });
     return () => { socket.off(); };
