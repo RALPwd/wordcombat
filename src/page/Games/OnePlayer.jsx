@@ -93,7 +93,7 @@ export default function OnePlayer() {
       });
       setGameStatus('won');
       setModalIsOpen(true);
-      setMessage('You won!');
+      setMessage(`¡Ganaste! la palabra es ${wordOfTheDay}`);
       const playerWon = {
         ...player,
         gamePlayed: player.gamePlayed + 1,

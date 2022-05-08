@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 
 function Button({
   // eslint-disable-next-line react/prop-types
-  name, type, onClick,
+  name, type, onClick, disabled,
 }) {
   // eslint-disable-next-line react/button-has-type
-  return <button type={type} onClick={onClick}>{name}</button>;
+  return <button type={type} onClick={onClick} disabled={disabled}>{name}</button>;
 }
 
 Button.propTypes = {

@@ -44,7 +44,6 @@ function PlayerProfile({
             </p>
           </article>
         </section>
-        <i>?</i>
       </div>
     </div>
   );

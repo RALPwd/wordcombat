@@ -26,6 +26,8 @@ export default function Game({
       transform: 'translate(-50%, -50%)',
       width: '50%',
       height: '50%',
+      backgroundColor: '#4B4168',
+      color: '#fff',
     },
   };
 
@@ -49,15 +51,17 @@ export default function Game({
       />
 
       <Modal isOpen={modalIsOpen} style={customStyles}>
-        <h2>{message}</h2>
-        <Link
-          to={LOBBY_ROUTE}
-          style={{
-            padding: '10px 20px 10px 0', fontSize: '18px', color: 'black', fontFamily: '"Source Code Pro", monospace',
-          }}
-        >
-          Volver al lobby
-        </Link>
+        <div className={styles.modalContainer}>
+          <h2>{message}</h2>
+          <Link
+            to={LOBBY_ROUTE}
+            style={{
+              padding: '10px 20px 10px 0', fontSize: '18px', color: 'white', fontFamily: '"Source Code Pro", monospace',
+            }}
+          >
+            Volver al lobby
+          </Link>
+        </div>
       </Modal>
     </>
   );

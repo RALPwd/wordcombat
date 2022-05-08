@@ -14,17 +14,17 @@ function NavBar() {
   const aLink = [
     {
       id: 0,
-      name: 'configuracion',
+      name: 'configuración',
       route: EDIT_ROUTE,
     },
     {
       id: 1,
-      name: 'Help',
+      name: '¿Cómo jugar?',
       route: HELP,
     },
     {
       id: 2,
-      name: 'Invitanos a un cafe',
+      name: 'Invítanos a un café',
       route: DONATION_ROUTE,
     },
     {

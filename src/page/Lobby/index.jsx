@@ -181,7 +181,7 @@ function Lobby() {
       <div className="container-information">
         <div className="lobby-container__game-option">
           <Button name="jugar solo" type="button" onClick={handlerOpenOneplayerModal} />
-          <Button name="jugar contra un amigo" type="button" onClick={() => { setModalTwoPlayersIsOpenFriend(true); }} />
+          <Button name="Próximamente" type="button" disabled onClick={() => { setModalTwoPlayersIsOpenFriend(true); }} />
           <Button name="partida aleatoria" type="button" onClick={handleCreateTwoPlayersGame} />
 
         </div>
