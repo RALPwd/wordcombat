@@ -190,7 +190,13 @@ function Lobby() {
       <div className="container-information">
         <div className="lobby-container__game-option">
           <Button name="jugar solo" type="button" onClick={handlerOpenOneplayerModal} />
-          <Button name="Próximamente" type="button" disabled onClick={() => { setModalTwoPlayersIsOpenFriend(true); }} />
+          {/* <Button
+            name="Próximamente"
+            type="button"
+            disabled
+            onClick={() => { setModalTwoPlayersIsOpenFriend(true); }}
+          /> */}
+          <button type="button" className="disabled_button" disabled>Próximamente</button>
           <Button name="partida aleatoria" type="button" onClick={handleCreateTwoPlayersGame} />
 
         </div>

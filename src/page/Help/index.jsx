@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { LOBBY_ROUTE } from '../../components/Constans/Routes';
-import logo from '../../assets/img/logo word combat.png';
+import { LOBBY_ROUTE, HOME_ROUTE } from '../../components/Constans/Routes';
+import logo from '../../assets/img/WORD_COMBAT_LOGO_WHITE.png';
 import WordCompleted from '../../components/GameComponent/WordCompleted';
-import { HOME_ROUTE } from '../../components/Constans/Routes';
 import './style.css';
 
 function Help() {

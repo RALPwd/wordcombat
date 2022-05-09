@@ -8,7 +8,7 @@ import {
   saveEditProfile, saveAvatar, sessionPlayer, saveEditPassword,
 } from '../../services/player';
 
-import logo from '../../assets/img/logo word combat.png';
+import logo from '../../assets/img/WORD_COMBAT_LOGO_WHITE.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import CardPresentation from '../../components/CardPresentation';

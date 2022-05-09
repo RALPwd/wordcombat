@@ -55,6 +55,20 @@
  }
 }
 
+.chatBoxContainer {
+  height: 60%;
+}
+
+.gameGenerateContainer {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  h2{
+    text-align: center;
+    font-family: 'Source Code Pro', monospace;
+  }
+}
+
 .modal-container {
   background-color: #4B4168;
   width: 100%;
@@ -66,6 +80,9 @@
     flex-direction: column;
     height: 100%;
     justify-content: space-between;
+    h2{
+      font-size: 1rem;
+    }
   }
   &__form{
     &__radios{
@@ -75,7 +92,7 @@
       justify-content: space-evenly;
       height: 100%;
       label{
-        font-size: 1.5rem;
+        font-size: 0.8rem;
         input[type=radio]{
           width: initial;
           margin-bottom: 0;
@@ -90,17 +107,21 @@
   }
 }
 
-.chatBoxContainer {
-  height: 60%;
-}
-
-.gameGenerateContainer {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  h2{
-    text-align: center;
-    font-family: 'Source Code Pro', monospace;
+.disabled_button{
+  border: none;
+  color: white;
+  background-color: gray;
+  padding: 0.5rem;
+  width: auto;
+  border-radius: 0.5rem;
+  display: inline;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-family: 'Source Code Pro', monospace;
+  &:hover {
+    background-color: black;
+    color: white;
   }
 }
 
@@ -163,6 +184,35 @@
     .chatBox{
       grid-area: chat;
 
+    }
+  }
+
+  .modal-container {
+    form{
+      h2{
+        font-size: 1.5rem;
+      }
+    }
+    &__form{
+      &__radios{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 100%;
+        label{
+          font-size: 1.5rem;
+          input[type=radio]{
+            width: initial;
+            margin-bottom: 0;
+            margin-right: 10px;
+            height: initial;
+            border: 0px;
+            height: 20px;
+            width: 20px;
+          }
+        }
+      }
     }
   }
 }
