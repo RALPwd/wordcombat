@@ -116,7 +116,7 @@ export default function OnePlayer() {
       setGame({ ...game, attemptsPlayer1: [...completedWords, currentWord] });
       setGameStatus('lost');
       setModalIsOpen(true);
-      setMessage(`Perdiste! la palabra es ${wordOfTheDay}`);
+      setMessage(`¡Perdiste! la palabra es ${wordOfTheDay}`);
       const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
       saveEditProfile(playerWon);
       return;
