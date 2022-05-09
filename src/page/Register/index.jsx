@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { HOME_ROUTE, LOBBY_ROUTE } from '../../components/Constans/Routes';
 
 import logo from '../../assets/img/WORD_COMBAT_LOGO_WHITE.png';
@@ -46,13 +46,25 @@ function Register() {
       const respon = await createPlayer(newPlayer);
       if (respon.status === 400) {
         mesasgeValidation(respon.message, true);
-      } else { navigate(HOME_ROUTE); }
+      } else {
+        mesasgeValidation('Registro exitoso porfavor revisa tu correo y activa  tu cuenta', true);
+        setTimeout(() => {
+          navigate(HOME_ROUTE);
+        }, 3000);
+      }
     } else { mesasgeValidation('Las contraseñas no coinciden', true); }
   };
 
   return (
     <CardPresentation logo={logo} title="Register" handleSubmit={handleSubmit} message={message} isVisible={isVisible}>
-
+      <Link
+        to={HOME_ROUTE}
+        style={{
+          position: 'absolute', top: '0', right: 0, padding: '10px 20px 10px 0', fontSize: '18px',
+        }}
+      >
+        Volver a Home
+      </Link>
       <Input
         type="text"
         name="nick"

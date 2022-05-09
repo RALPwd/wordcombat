@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import useWindow from '../../Hooks/useWindow';
 import { saveEditProfile } from '../../services/player';
 import { getGame, editGame } from '../../services/games';
@@ -12,6 +12,7 @@ import socket from '../../utils/socket';
 import keys from '../../components/Constans/keys';
 import styles from './GameStyles.module.scss';
 import './GameStylesPlain.scss';
+import { HOME_ROUTE } from '../../components/Constans/Routes';
 
 export default function TwoPlayers() {
   const [wordOfTheDay, setWordOfTheDay] = useState('');
@@ -32,6 +33,13 @@ export default function TwoPlayers() {
   const [isPlayerOne, setIsPlayerOne] = useState(false);
   const [oponentWord, setOponentWord] = useState('');
   const playerId = player._id;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.token) {
+      navigate(HOME_ROUTE);
+    }
+  }, []);
 
   const getCurrentGame = async () => {
     const currentGame = await getGame(gameId);
@@ -60,6 +68,7 @@ export default function TwoPlayers() {
       }
     });
     getCurrentGame();
+    socket.emit('joinRoom', gameId);
     return () => { socket.off(); };
   }, []);
 
@@ -71,36 +80,36 @@ export default function TwoPlayers() {
           setTurnMessage('Tu turno');
           setOponentWord(data.currentWord);
         }
+        if (data.winner === true) {
+          setMessage(`¡Tenemos un ganador! el ganador es ${data.playerName}. La palabra es ${data.currentWord}`);
+          if (data.playerId === playerId) {
+            setGameStatus('won');
+            setModalIsOpen(true);
+            const playerWon = {
+              ...player,
+              gamePlayed: player.gamePlayed + 1,
+              gameWon: player.gameWon + 1,
+            };
+            editGame({ ...game, winnerId: playerId });
+            saveEditProfile(playerWon);
+          } else {
+            setGameStatus('lost');
+            setModalIsOpen(true);
+            const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
+            saveEditProfile(playerWon);
+          }
+        }
+        if (data.playerId === playerId) {
+          if (data.turn) {
+            setGameStatus('lost');
+            setModalIsOpen(true);
+            setMessage(`¡Agotaste tus intentos! Fin del juego la palabra era ${wordOfTheDay}`);
+            const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
+            saveEditProfile(playerWon);
+          }
+        }
       } else {
         setTurnMessage('Turno de tu oponente');
-      }
-      if (data.winner === true) {
-        setMessage(`¡Tenemos un ganador! el ganador es ${data.playerName}. La palabra es ${data.currentWord}`);
-        if (data.playerId === playerId) {
-          setGameStatus('won');
-          setModalIsOpen(true);
-          const playerWon = {
-            ...player,
-            gamePlayed: player.gamePlayed + 1,
-            gameWon: player.gameWon + 1,
-          };
-          editGame({ ...game, winnerId: playerId });
-          saveEditProfile(playerWon);
-        } else {
-          setGameStatus('lost');
-          setModalIsOpen(true);
-          const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
-          saveEditProfile(playerWon);
-        }
-      }
-      if (data.playerId === playerId) {
-        if (data.turn) {
-          setGameStatus('lost');
-          setModalIsOpen(true);
-          setMessage(`¡Agotaste tus intentos! Fin del juego la palabra era ${wordOfTheDay}`);
-          const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
-          saveEditProfile(playerWon);
-        }
       }
     });
     return () => { socket.off(); };

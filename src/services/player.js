@@ -72,6 +72,7 @@ export async function sessionPlayer() {
     const data = await (response.json());
     return data;
   } catch (error) {
+    localStorage.removeItem('token');
     throw new Error(error);
   }
 }
