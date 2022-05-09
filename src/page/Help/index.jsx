@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/img/logo word combat.png';
 import ejemplo from '../../assets/img/ejemplo.png';
+import { HOME_ROUTE } from '../../components/Constans/Routes';
 import './style.css';
 
 function Help() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.token) {
+      navigate(HOME_ROUTE);
+    }
+  }, []);
+
   return (
     <div className="HelpContainer">
       <div className="divImg"><img src={logo} alt="" width="50%" /></div>

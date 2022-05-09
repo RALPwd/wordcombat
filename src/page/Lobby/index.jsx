@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Letters, Update, GameId, wordToGuess,
 } from '../../Store/Actions';
-import { ONE_PLAYER, TWO_PLAYERS } from '../../components/Constans/Routes';
+import { HOME_ROUTE, ONE_PLAYER, TWO_PLAYERS } from '../../components/Constans/Routes';
 import { createGame } from '../../services/games';
 import { sessionPlayer } from '../../services/player';
 import NavBar from '../../components/NavBar';
@@ -58,6 +58,11 @@ function Lobby() {
 
   React.useEffect(() => {
     getDonation();
+
+    if (!localStorage.token) {
+      navigate(HOME_ROUTE);
+    }
+
     session();
   }, []);
 
