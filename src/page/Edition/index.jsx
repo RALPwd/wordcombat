@@ -3,17 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import Modal from 'react-modal';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   saveEditProfile, saveAvatar, sessionPlayer, saveEditPassword,
 } from '../../services/player';
 
-import logo from '../../assets/img/logo word combat.png';
+import logo from '../../assets/img/WORD_COMBAT_LOGO_WHITE.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import CardPresentation from '../../components/CardPresentation';
 import { Update } from '../../Store/Actions';
-import { LOBBY_ROUTE } from '../../components/Constans/Routes';
+import { LOBBY_ROUTE, HOME_ROUTE } from '../../components/Constans/Routes';
 
 function Edition() {
   const dispatch = useDispatch();
@@ -26,12 +26,18 @@ function Edition() {
   const [isVisible, setIsVisible] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [image, setImage] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.token) {
+      navigate(HOME_ROUTE);
+    }
+  }, []);
 
   const session = async () => {
     Modal.setAppElement('#root');
     const player = await sessionPlayer();
     const { _doc } = player;
-
     dispatch(Update(_doc));
     setFormInfo(_doc);
   };

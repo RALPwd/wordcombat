@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Letters, Update, GameId, wordToGuess,
 } from '../../Store/Actions';
-import { ONE_PLAYER, TWO_PLAYERS } from '../../components/Constans/Routes';
+import { HOME_ROUTE, ONE_PLAYER, TWO_PLAYERS } from '../../components/Constans/Routes';
 import { createGame } from '../../services/games';
 import { sessionPlayer } from '../../services/player';
 import NavBar from '../../components/NavBar';
@@ -35,10 +35,12 @@ function Lobby() {
 
   React.useEffect(() => {
     socket.on('createGame', (game) => {
-      dispatch(Letters(parseInt(gameLetters, 10)));
-      dispatch(GameId(game.idGame));
-      dispatch(wordToGuess(game.word));
-      navigate(`${TWO_PLAYERS}/${game.idGame}`);
+      if (game.player1._id === data._id || game.player2._id === data._id) {
+        dispatch(Letters(parseInt(gameLetters, 10)));
+        dispatch(GameId(game.idGame));
+        dispatch(wordToGuess(game.word));
+        navigate(`${TWO_PLAYERS}/${game.idGame}`);
+      }
     });
     return () => { socket.off(); };
   }, [friendgame]);
@@ -56,6 +58,11 @@ function Lobby() {
 
   React.useEffect(() => {
     getDonation();
+
+    if (!localStorage.token) {
+      navigate(HOME_ROUTE);
+    }
+
     session();
   }, []);
 
@@ -69,6 +76,8 @@ function Lobby() {
       transform: 'translate(-50%, -50%)',
       width: '50%',
       height: '50%',
+      backgroundColor: '#4B4168',
+      color: '#fff',
     },
   };
 
@@ -122,10 +131,12 @@ function Lobby() {
     }
 
     socket.on('createGame', (game) => {
-      dispatch(Letters(parseInt(gameLetters, 10)));
-      dispatch(GameId(game.idGame));
-      dispatch(wordToGuess(game.word));
-      navigate(`${TWO_PLAYERS}/${game.idGame}`);
+      if (game.player1._id === data._id || game.player2._id === data._id) {
+        dispatch(Letters(parseInt(gameLetters, 10)));
+        dispatch(GameId(game.idGame));
+        dispatch(wordToGuess(game.word));
+        navigate(`${TWO_PLAYERS}/${game.idGame}`);
+      }
     });
   };
 
@@ -144,20 +155,15 @@ function Lobby() {
   function handleJoinGame() {
     // para el control z
     if (!code.length) {
-      return alert('campo de codigo no puede estar vacio');
+      setPlaceholder('El campo no puede estar vacío');
     }
     socket.emit('emparejamientoamigo', { data, code, type: 'join' });
-    socket.on('arrayOfCreater', (arrayGamesinWait) => {
-      if (arrayGamesinWait.find((arrayCode) => arrayCode.code === code)) {
-        socket.emit('verificateArray');
-      } else {
-        setPlaceholder('Código errado, verifica el código');
+
+    socket.on('emparejamientoamigo', (dataConfirmation) => {
+      if (dataConfirmation.menssaje === 'creada') { setFriendGame(1); setModalTwoPlayersIsOpenFriend(false); } else {
         setCode('');
+        setPlaceholder(dataConfirmation.menssaje);
       }
-      return () => { socket.off(); };
-    });
-    socket.on('friendMessage', (dataConfirmation) => {
-      if (dataConfirmation.menssaje === 'creada') { setFriendGame(dataConfirmation.idgame); }
     });
     return () => { socket.off(); };
   }
@@ -184,7 +190,13 @@ function Lobby() {
       <div className="container-information">
         <div className="lobby-container__game-option">
           <Button name="jugar solo" type="button" onClick={handlerOpenOneplayerModal} />
-          <Button name="jugar contra un amigo" type="button" onClick={() => { setModalTwoPlayersIsOpenFriend(true); }} />
+          {/* <Button
+            name="Próximamente"
+            type="button"
+            disabled
+            onClick={() => { setModalTwoPlayersIsOpenFriend(true); }}
+          /> */}
+          <button type="button" className="disabled_button" disabled>Próximamente</button>
           <Button name="partida aleatoria" type="button" onClick={handleCreateTwoPlayersGame} />
 
         </div>
@@ -218,31 +230,34 @@ function Lobby() {
       <ChatBox typeChat="general" onFocus={handleFocus} onBlur={handleBlur} isWriting={isWriting} player={data.nick} />
 
       <Modal isOpen={modalOnePlayerIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
-        <form onSubmit={handleCreateGame}>
-          <h2>Selecciona la cantidad de letras para tu palabra</h2>
-          <div>
-            <label htmlFor="4letters">
-              <input type="radio" name="lettercount" id="4letters" value="4" onChange={handleSetValue} />
-              4 letras
-            </label>
-            <label htmlFor="5letters">
-              <input type="radio" name="lettercount" id="5letters" value="5" onChange={handleSetValue} />
-              5 letras
-            </label>
-            <label htmlFor="6letters">
-              <input type="radio" name="lettercount" id="6letters" value="6" onChange={handleSetValue} />
-              6 letras
-            </label>
-          </div>
-
-          <button type="submit">Empezar nuevo juego</button>
-        </form>
+        <div className="modal-container">
+          <form onSubmit={handleCreateGame}>
+            <h2>Selecciona la cantidad de letras para tu palabra</h2>
+            <div className="modal-container__form__radios">
+              <label htmlFor="4letters">
+                <input type="radio" name="lettercount" id="4letters" value="4" onChange={handleSetValue} />
+                4 letras
+              </label>
+              <label htmlFor="5letters">
+                <input type="radio" name="lettercount" id="5letters" value="5" onChange={handleSetValue} />
+                5 letras
+              </label>
+              <label htmlFor="6letters">
+                <input type="radio" name="lettercount" id="6letters" value="6" onChange={handleSetValue} />
+                6 letras
+              </label>
+            </div>
+            <button type="submit">Empezar nuevo juego</button>
+          </form>
+        </div>
       </Modal>
 
       <Modal isOpen={modalTwoPlayersIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
-        <h1>
-          Esperando jugador
-        </h1>
+        <div className="modal-container">
+          <h1>
+            Esperando jugador
+          </h1>
+        </div>
 
       </Modal>
 
@@ -251,19 +266,23 @@ function Lobby() {
         style={customStyles}
         onRequestClose={() => { setModalTwoPlayersIsOpenFriend(false); socket.emit('quitarEmprejamientoFriend', socket.id); setCode(''); setGenerateCode(''); }}
       >
-        <ChatBox typeChat="general" onFocus={handleFocus} onBlur={handleBlur} isWriting={isWriting} player={data.nick} />
-        <button type="button" onClick={handleCreateGameFriend}>Create game</button>
-        {generateCode.length > 0 && (
-        <h2>
-          tu codigo
-          {' '}
-          {generateCode}
-        </h2>
-        )}
-
-        <input type="text" placeholder={placeholder} value={code} onChange={(e) => { setCode(e.target.value.toUpperCase().trim()); }} />
-
-        <button type="button" onClick={handleJoinGame}>unete</button>
+        <div className="chatBoxContainer">
+          <ChatBox typeChat="general" onFocus={handleFocus} onBlur={handleBlur} isWriting={isWriting} player={data.nick} />
+        </div>
+        <div className="gameGenerateContainer">
+          <button type="button" onClick={handleCreateGameFriend}>Puedes crear un nuevo juego aquí</button>
+          {generateCode.length > 0 ? (
+            <h2>
+              Dale este código a tu amigo:
+              {' '}
+              {generateCode}
+            </h2>
+          ) : (
+            <h2> O también puedes unirte a un juego:</h2>
+          )}
+          <input type="text" placeholder={placeholder} value={code} onChange={(e) => { setCode(e.target.value.toUpperCase().trim()); }} />
+          <button type="button" onClick={handleJoinGame}>unete</button>
+        </div>
 
       </Modal>
     </div>

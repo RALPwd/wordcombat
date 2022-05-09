@@ -4,15 +4,17 @@
 import React from 'react';
 import Modal from 'react-modal/lib/components/Modal';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import WordEmpty from '../../components/GameComponent/WordEmpty';
 import WordCompleted from '../../components/GameComponent/WordCompleted';
 import WordCurrent from '../../components/GameComponent/WordCurrent';
 import styles from './index.module.scss';
 import Keyboard from '../../components/GameComponent/Keyboard';
 import keys from '../../components/Constans/keys';
+import { LOBBY_ROUTE } from '../../components/Constans/Routes';
 
 export default function Game({
-  wordOfTheDay, onKeyPressed, currentWord, completedWords, gameStatus, modalIsOpen, handlerCloseModal, message, turn,
+  wordOfTheDay, onKeyPressed, currentWord, completedWords, gameStatus, modalIsOpen, message, turn,
 }) {
   const customStyles = {
     content: {
@@ -24,6 +26,8 @@ export default function Game({
       transform: 'translate(-50%, -50%)',
       width: '50%',
       height: '50%',
+      backgroundColor: '#4B4168',
+      color: '#fff',
     },
   };
 
@@ -46,8 +50,18 @@ export default function Game({
         onKeyPressed={onKeyPressed}
       />
 
-      <Modal isOpen={modalIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
-        <h2>{message}</h2>
+      <Modal isOpen={modalIsOpen} style={customStyles}>
+        <div className={styles.modalContainer}>
+          <h2>{message}</h2>
+          <Link
+            to={LOBBY_ROUTE}
+            style={{
+              padding: '10px 20px 10px 0', fontSize: '18px', color: 'white', fontFamily: '"Source Code Pro", monospace',
+            }}
+          >
+            Volver al lobby
+          </Link>
+        </div>
       </Modal>
     </>
   );
@@ -60,7 +74,6 @@ Game.propTypes = {
   completedWords: PropTypes.arrayOf(PropTypes.string).isRequired,
   gameStatus: PropTypes.string.isRequired,
   modalIsOpen: PropTypes.bool.isRequired,
-  handlerCloseModal: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
   turn: PropTypes.number.isRequired,
 };

@@ -22,9 +22,9 @@ export default function Keyboard({ keys, onKeyPressed }) {
     <div className={styles.keyboardContainer}>
       {Array.from(Array(10)).map((_, i) => <button type="button" key={i} className={styles.key} onClick={handleInput}>{keys[i]}</button>)}
       {Array.from(Array(10)).map((_, i) => <button type="button" key={i + 10} className={styles.key} onClick={handleInput}>{keys[i + 10]}</button>)}
-      <button type="button" className={styles.enterKey} onClick={handleEnter}>ENTER</button>
+      <button type="button" className={styles.enterKey} onClick={handleEnter}>↵</button>
       {Array.from(Array(7)).map((_, i) => <button type="button" key={i + 20} className={styles.key} onClick={handleInput}>{keys[i + 20]}</button>)}
-      <button type="button" className={styles.deleteKey} onClick={handleDelete}>DELETE</button>
+      <button type="button" className={styles.deleteKey} onClick={handleDelete}>DEL</button>
     </div>
   );
 }

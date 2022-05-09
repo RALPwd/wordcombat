@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import CardPresentation from '../../components/CardPresentation';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import { HOME_ROUTE, LOGO } from '../../components/Constans/Routes';
+import { HOME_ROUTE, LOGO, LOBBY_ROUTE } from '../../components/Constans/Routes';
 import { passworRecovery } from '../../services/player';
 
 function PasswordRecovery() {
   const [formInfo, setFormInfo] = useState({});
   const [message, setMessage] = useState('');
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.token) {
+      navigate(LOBBY_ROUTE);
+    }
+  }, []);
 
   const messageValidation = (mess, visible) => {
     setMessage(mess);

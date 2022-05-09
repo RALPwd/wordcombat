@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import randomWords from 'random-words-es';
 import { Letters, Update } from '../../Store/Actions';
 import useWindow from '../../Hooks/useWindow';
@@ -12,6 +12,7 @@ import Game from '../Game';
 import PlayerProfile from '../../components/PlayerProfile';
 import styles from './GameStyles.module.scss';
 import keys from '../../components/Constans/keys';
+import { HOME_ROUTE } from '../../components/Constans/Routes';
 
 export default function OnePlayer() {
   const [wordOfTheDay, setWordOfTheDay] = React.useState('');
@@ -29,6 +30,13 @@ export default function OnePlayer() {
   const [game, setGame] = React.useState({ _id: gameId });
   const playerId = player._id;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.token) {
+      navigate(HOME_ROUTE);
+    }
+  }, []);
 
   const getCurrentGame = async () => {
     const currentGame = await getGame(gameId);
@@ -93,7 +101,7 @@ export default function OnePlayer() {
       });
       setGameStatus('won');
       setModalIsOpen(true);
-      setMessage('You won!');
+      setMessage(`¡Ganaste! la palabra es ${wordOfTheDay}`);
       const playerWon = {
         ...player,
         gamePlayed: player.gamePlayed + 1,
@@ -108,7 +116,7 @@ export default function OnePlayer() {
       setGame({ ...game, attemptsPlayer1: [...completedWords, currentWord] });
       setGameStatus('lost');
       setModalIsOpen(true);
-      setMessage('You lost!');
+      setMessage(`¡Perdiste! la palabra es ${wordOfTheDay}`);
       const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
       saveEditProfile(playerWon);
       return;

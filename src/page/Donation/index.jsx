@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { Grid } from 'react-loader-spinner';
 import CardPresentation from '../../components/CardPresentation';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { sendDonation } from '../../services/donation';
-import { LOBBY_ROUTE } from '../../components/Constans/Routes';
+import { HOME_ROUTE, LOBBY_ROUTE } from '../../components/Constans/Routes';
 import './Donation.scss';
 
 function Donation() {
@@ -18,6 +17,13 @@ function Donation() {
   const [title, setTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [nextPage, setNextPage] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.token) {
+      navigate(HOME_ROUTE);
+    }
+  }, []);
 
   const mesasgeValidation = (mess, visible) => {
     setMessage(mess);

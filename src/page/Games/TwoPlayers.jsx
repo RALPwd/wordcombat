@@ -2,17 +2,17 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
-import { LOBBY_ROUTE } from '../../components/Constans/Routes';
+import { useParams, useNavigate } from 'react-router-dom';
 import useWindow from '../../Hooks/useWindow';
 import { saveEditProfile } from '../../services/player';
-import { getGame } from '../../services/games';
+import { getGame, editGame } from '../../services/games';
 import Game from '../Game';
 import WordCompleted from '../../components/GameComponent/WordCompleted';
 import socket from '../../utils/socket';
 import keys from '../../components/Constans/keys';
 import styles from './GameStyles.module.scss';
 import './GameStylesPlain.scss';
+import { HOME_ROUTE } from '../../components/Constans/Routes';
 
 export default function TwoPlayers() {
   const [wordOfTheDay, setWordOfTheDay] = useState('');
@@ -33,6 +33,13 @@ export default function TwoPlayers() {
   const [isPlayerOne, setIsPlayerOne] = useState(false);
   const [oponentWord, setOponentWord] = useState('');
   const playerId = player._id;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.token) {
+      navigate(HOME_ROUTE);
+    }
+  }, []);
 
   const getCurrentGame = async () => {
     const currentGame = await getGame(gameId);
@@ -61,6 +68,7 @@ export default function TwoPlayers() {
       }
     });
     getCurrentGame();
+    socket.emit('joinRoom', gameId);
     return () => { socket.off(); };
   }, []);
 
@@ -71,14 +79,37 @@ export default function TwoPlayers() {
           setIsMyTurn(true);
           setTurnMessage('Tu turno');
           setOponentWord(data.currentWord);
-        } else {
-          setTurnMessage('Turno de tu oponente');
         }
-      }
-      if (data.winner === true) {
-        setGameStatus('lost');
-        setModalIsOpen(true);
-        setMessage('¡Tenemos un ganador! Fin del juego');
+        if (data.winner === true) {
+          setMessage(`¡Tenemos un ganador! el ganador es ${data.playerName}. La palabra es ${data.currentWord}`);
+          if (data.playerId === playerId) {
+            setGameStatus('won');
+            setModalIsOpen(true);
+            const playerWon = {
+              ...player,
+              gamePlayed: player.gamePlayed + 1,
+              gameWon: player.gameWon + 1,
+            };
+            editGame({ ...game, winnerId: playerId });
+            saveEditProfile(playerWon);
+          } else {
+            setGameStatus('lost');
+            setModalIsOpen(true);
+            const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
+            saveEditProfile(playerWon);
+          }
+        }
+        if (data.playerId === playerId) {
+          if (data.turn) {
+            setGameStatus('lost');
+            setModalIsOpen(true);
+            setMessage(`¡Agotaste tus intentos! Fin del juego la palabra era ${wordOfTheDay}`);
+            const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
+            saveEditProfile(playerWon);
+          }
+        }
+      } else {
+        setTurnMessage('Turno de tu oponente');
       }
     });
     return () => { socket.off(); };
@@ -95,11 +126,10 @@ export default function TwoPlayers() {
   }
 
   function onEnter() {
-    let winner = false;
     if (currentWord === wordOfTheDay) {
-      winner = true;
+      const winner = true;
       socket.emit('emitTurn', {
-        gameId, playerId, currentWord, winner,
+        gameId, playerId, currentWord, winner, playerName: player.nick,
       });
       setCompletedWords([...completedWords, currentWord]);
       // TODO: Guardar intento
@@ -116,21 +146,12 @@ export default function TwoPlayers() {
       //     attemptsPlayer2: [...completedWords, currentWord],
       //   });
       // }
-      setGameStatus('won');
-      setModalIsOpen(true);
-      setMessage('You won!');
-      const playerWon = {
-        ...player,
-        gamePlayed: player.gamePlayed + 1,
-        gameWon: player.gameWon + 1,
-      };
-      saveEditProfile(playerWon);
       return;
     }
 
     if (turn === 6) {
       socket.emit('emitTurn', {
-        gameId, playerId, currentWord, winner,
+        gameId, playerId, currentWord, turn,
       });
       setCompletedWords([...completedWords, currentWord]);
       // TODO: Guardar intento
@@ -139,11 +160,7 @@ export default function TwoPlayers() {
       // } else {
       //   setGame({ ...game, attemptsPlayer2: [...completedWords, currentWord] });
       // }
-      setGameStatus('lost');
-      setModalIsOpen(true);
-      setMessage('¡Agotaste tus intentos! Fin del juego');
-      const playerWon = { ...player, gamePlayed: player.gamePlayed + 1 };
-      saveEditProfile(playerWon);
+
       return;
     }
 
@@ -154,7 +171,7 @@ export default function TwoPlayers() {
 
     setCompletedWords([...completedWords, currentWord]);
     socket.emit('emitTurn', {
-      gameId, playerId, currentWord, winner,
+      gameId, playerId, currentWord,
     });
     setIsMyTurn(!isMyTurn);
     getGame(gameId)
@@ -195,23 +212,12 @@ export default function TwoPlayers() {
     onKeyPressed(key);
   }
 
-  const handlerCloseModal = () => {
-    setModalIsOpen(false);
-  };
-
   useWindow('keydown', handleKeyDown);
 
   return (
     <div className={styles.twoplayers}>
       <div>
-        <Link
-          to={LOBBY_ROUTE}
-          style={{
-            position: 'absolute', top: '0', right: 0, padding: '10px 20px 10px 0', fontSize: '18px', color: '#fff', fontFamily: '"Source Code Pro", monospace',
-          }}
-        >
-          Volver al lobby
-        </Link>
+
         <section className="inGameScreen">
 
           <Game
@@ -220,11 +226,11 @@ export default function TwoPlayers() {
             onKeyPressed={onKeyPressed}
             currentWord={currentWord}
             completedWords={completedWords}
-            handlerCloseModal={handlerCloseModal}
             modalIsOpen={modalIsOpen}
             message={message}
             turn={turn}
           />
+          <br />
         </section>
       </div>
 
