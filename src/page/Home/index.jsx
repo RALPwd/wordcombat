@@ -71,9 +71,10 @@ function Home() {
         placeholder="contraseña"
         value={formInfo.password}
         onChange={handleChange}
+        data-cy="password"
       />
 
-      <Button type="submit" name="Login" />
+      <Button type="submit" name="Login" data-cy="login" />
       <Link to={REGISTER_ROUTE} style={{ paddingBottom: '10px' }}>Registrate</Link>
       <Link to={RECOVERY_ROUTE}>Olvidaste tu contraseña?</Link>
     </CardPresentation>

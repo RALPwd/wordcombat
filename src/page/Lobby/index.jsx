@@ -76,6 +76,8 @@ function Lobby() {
       transform: 'translate(-50%, -50%)',
       width: '50%',
       height: '50%',
+      backgroundColor: '#4B4168',
+      color: '#fff',
     },
   };
 
@@ -153,7 +155,7 @@ function Lobby() {
   function handleJoinGame() {
     // para el control z
     if (!code.length) {
-      return setPlaceholder('campo de codigo no puede estar vacio');
+      setPlaceholder('El campo no puede estar vacío');
     }
     socket.emit('emparejamientoamigo', { data, code, type: 'join' });
 
@@ -188,7 +190,7 @@ function Lobby() {
       <div className="container-information">
         <div className="lobby-container__game-option">
           <Button name="jugar solo" type="button" onClick={handlerOpenOneplayerModal} />
-          <Button name="jugar contra un amigo" type="button" onClick={() => { setModalTwoPlayersIsOpenFriend(true); }} />
+          <Button name="Próximamente" type="button" disabled onClick={() => { setModalTwoPlayersIsOpenFriend(true); }} />
           <Button name="partida aleatoria" type="button" onClick={handleCreateTwoPlayersGame} />
 
         </div>
@@ -222,31 +224,34 @@ function Lobby() {
       <ChatBox typeChat="general" onFocus={handleFocus} onBlur={handleBlur} isWriting={isWriting} player={data.nick} />
 
       <Modal isOpen={modalOnePlayerIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
-        <form onSubmit={handleCreateGame}>
-          <h2>Selecciona la cantidad de letras para tu palabra</h2>
-          <div>
-            <label htmlFor="4letters">
-              <input type="radio" name="lettercount" id="4letters" value="4" onChange={handleSetValue} />
-              4 letras
-            </label>
-            <label htmlFor="5letters">
-              <input type="radio" name="lettercount" id="5letters" value="5" onChange={handleSetValue} />
-              5 letras
-            </label>
-            <label htmlFor="6letters">
-              <input type="radio" name="lettercount" id="6letters" value="6" onChange={handleSetValue} />
-              6 letras
-            </label>
-          </div>
-
-          <button type="submit">Empezar nuevo juego</button>
-        </form>
+        <div className="modal-container">
+          <form onSubmit={handleCreateGame}>
+            <h2>Selecciona la cantidad de letras para tu palabra</h2>
+            <div className="modal-container__form__radios">
+              <label htmlFor="4letters">
+                <input type="radio" name="lettercount" id="4letters" value="4" onChange={handleSetValue} />
+                4 letras
+              </label>
+              <label htmlFor="5letters">
+                <input type="radio" name="lettercount" id="5letters" value="5" onChange={handleSetValue} />
+                5 letras
+              </label>
+              <label htmlFor="6letters">
+                <input type="radio" name="lettercount" id="6letters" value="6" onChange={handleSetValue} />
+                6 letras
+              </label>
+            </div>
+            <button type="submit">Empezar nuevo juego</button>
+          </form>
+        </div>
       </Modal>
 
       <Modal isOpen={modalTwoPlayersIsOpen} style={customStyles} onRequestClose={handlerCloseModal}>
-        <h1>
-          Esperando jugador
-        </h1>
+        <div className="modal-container">
+          <h1>
+            Esperando jugador
+          </h1>
+        </div>
 
       </Modal>
 
@@ -255,19 +260,23 @@ function Lobby() {
         style={customStyles}
         onRequestClose={() => { setModalTwoPlayersIsOpenFriend(false); socket.emit('quitarEmprejamientoFriend', socket.id); setCode(''); setGenerateCode(''); }}
       >
-        <ChatBox typeChat="general" onFocus={handleFocus} onBlur={handleBlur} isWriting={isWriting} player={data.nick} />
-        <button type="button" onClick={handleCreateGameFriend}>Create game</button>
-        {generateCode.length > 0 && (
-        <h2>
-          tu codigo
-          {' '}
-          {generateCode}
-        </h2>
-        )}
-
-        <input type="text" placeholder={placeholder} value={code} onChange={(e) => { setCode(e.target.value.toUpperCase().trim()); }} />
-
-        <button type="button" onClick={handleJoinGame}>unete</button>
+        <div className="chatBoxContainer">
+          <ChatBox typeChat="general" onFocus={handleFocus} onBlur={handleBlur} isWriting={isWriting} player={data.nick} />
+        </div>
+        <div className="gameGenerateContainer">
+          <button type="button" onClick={handleCreateGameFriend}>Puedes crear un nuevo juego aquí</button>
+          {generateCode.length > 0 ? (
+            <h2>
+              Dale este código a tu amigo:
+              {' '}
+              {generateCode}
+            </h2>
+          ) : (
+            <h2> O también puedes unirte a un juego:</h2>
+          )}
+          <input type="text" placeholder={placeholder} value={code} onChange={(e) => { setCode(e.target.value.toUpperCase().trim()); }} />
+          <button type="button" onClick={handleJoinGame}>unete</button>
+        </div>
 
       </Modal>
     </div>

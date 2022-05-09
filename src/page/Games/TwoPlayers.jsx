@@ -81,7 +81,7 @@ export default function TwoPlayers() {
           setOponentWord(data.currentWord);
         }
         if (data.winner === true) {
-          setMessage(`¡Tenemos un ganador! ${data.playerName} la palabra es ${data.currentWord}`);
+          setMessage(`¡Tenemos un ganador! el ganador es ${data.playerName}. La palabra es ${data.currentWord}`);
           if (data.playerId === playerId) {
             setGameStatus('won');
             setModalIsOpen(true);
@@ -230,6 +230,7 @@ export default function TwoPlayers() {
             message={message}
             turn={turn}
           />
+          <br />
         </section>
       </div>
 
